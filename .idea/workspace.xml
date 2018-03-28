@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05429c4b-c9f9-49e1-898f-72e3aeb8c865" name="Default" comment="" />
+    <list default="true" id="05429c4b-c9f9-49e1-898f-72e3aeb8c865" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/string-mismatch.js" afterPath="$PROJECT_DIR$/lib/string-mismatch.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/test.js" afterPath="$PROJECT_DIR$/test/test.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -17,8 +21,8 @@
       <file leaf-file-name="string-mismatch.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/string-mismatch.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="2" lean-forward="true" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
+            <state relative-caret-position="45">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -94,7 +98,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="/usr/local/lib/node_modules/@angular/cli" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
@@ -111,8 +115,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Mocha.string-mismatch tests">
-    <configuration name="string-mismatch tests" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Mocha.test">
+    <configuration name="test" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
@@ -120,15 +124,29 @@
       <envs />
       <ui>bdd</ui>
       <extra-mocha-options />
-      <test-kind>SUITE</test-kind>
-      <test-file>$PROJECT_DIR$/test/test.js</test-file>
-      <test-names>
-        <name value="string-mismatch tests" />
-      </test-names>
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory>$PROJECT_DIR$/test</test-directory>
+      <recursive>true</recursive>
     </configuration>
+    <configuration name="test/test.js" type="mocha-javascript-test-runner" factoryName="Mocha" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST_FILE</test-kind>
+      <test-file>$PROJECT_DIR$/test/test.js</test-file>
+    </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="Mocha.test" />
+      <item index="1" class="java.lang.String" itemvalue="Mocha.test/test.js" />
+    </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Mocha.string-mismatch tests" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Mocha.test" />
+        <item index="1" class="java.lang.String" itemvalue="Mocha.test/test.js" />
       </list>
     </recent_temporary>
   </component>
@@ -145,23 +163,44 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522242906723</updated>
-      <workItem from="1522242908080" duration="5065000" />
+      <workItem from="1522242908080" duration="6864000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="string-mismatch_tests - 2018.03.28 at 11h 14m 14s.xml">
-      <configuration name="string-mismatch tests" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="test - 2018.03.28 at 11h 34m 57s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="string-mismatch_tests - 2018.03.28 at 11h 15m 08s.xml">
-      <configuration name="string-mismatch tests" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="test - 2018.03.28 at 11h 36m 20s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
     </history-entry>
-    <history-entry file="string-mismatch_tests - 2018.03.28 at 11h 16m 22s.xml">
-      <configuration name="string-mismatch tests" configurationId="mocha-javascript-test-runner" />
+    <history-entry file="test - 2018.03.28 at 11h 36m 59s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 37m 13s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 38m 48s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 38m 56s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 39m 16s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 40m 11s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 45m 13s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
+    </history-entry>
+    <history-entry file="test - 2018.03.28 at 11h 45m 31s.xml">
+      <configuration name="test" configurationId="mocha-javascript-test-runner" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5065000" />
+    <option name="totallyTimeSpent" value="6864000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1368" height="739" extended-state="6" />
@@ -171,9 +210,9 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32899022" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.80618894" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37459284" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -214,37 +253,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="23" lean-forward="true" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+        <state relative-caret-position="135">
+          <caret line="9" column="46" lean-forward="true" selection-start-line="9" selection-start-column="46" selection-end-line="9" selection-end-column="46" />
           <folding>
-            <marker date="1522244823556" expanded="true" signature="0:698" ph="{&quot;name&quot;: &quot;string-mismatch&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="119:146" ph="{&quot;node&quot;: &quot;&gt;=4.2.4&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="183:246" ph="{&quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="264:350" ph="{&quot;type&quot;: &quot;git&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="366:384" ph="[...]" />
-            <marker date="1522244823556" expanded="true" signature="444:510" ph="{&quot;url&quot;: &quot;https://github.com/wil92/string-mismatch/issues&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="598:647" ph="{&quot;chai&quot;: &quot;^4.1.2&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="598:696" ph="{&quot;chai&quot;: &quot;^4.1.2&quot;...}" />
-            <marker date="1522244823556" expanded="true" signature="667:696" ph="{&quot;lodash&quot;: &quot;^4.17.5&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="0:688" ph="{&quot;name&quot;: &quot;string-mismatch&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="119:146" ph="{&quot;node&quot;: &quot;&gt;=4.2.4&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="183:236" ph="{&quot;test&quot;: &quot;mocha --ui bdd --recursive ./test&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="254:340" ph="{&quot;type&quot;: &quot;git&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="356:374" ph="[...]" />
+            <marker date="1522250841172" expanded="true" signature="434:500" ph="{&quot;url&quot;: &quot;https://github.com/wil92/string-mismatch/issues&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="588:637" ph="{&quot;chai&quot;: &quot;^4.1.2&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="588:686" ph="{&quot;chai&quot;: &quot;^4.1.2&quot;...}" />
+            <marker date="1522250841172" expanded="true" signature="657:686" ph="{&quot;lodash&quot;: &quot;^4.17.5&quot;...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        <state relative-caret-position="77">
+          <caret line="22" column="31" lean-forward="false" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
           <folding>
-            <marker date="1522250322316" expanded="true" signature="142:376" ph="{...}" />
-            <marker date="1522250322316" expanded="true" signature="201:372" ph="{...}" />
+            <marker date="1522251556644" expanded="true" signature="142:1154" ph="{...}" />
+            <marker date="1522251556644" expanded="true" signature="210:379" ph="{...}" />
+            <marker date="1522251556644" expanded="true" signature="433:561" ph="{...}" />
+            <marker date="1522251556644" expanded="true" signature="641:766" ph="{...}" />
+            <marker date="1522251556644" expanded="true" signature="829:957" ph="{...}" />
+            <marker date="1522251556644" expanded="true" signature="1022:1150" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/string-mismatch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="2" lean-forward="true" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
