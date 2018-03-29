@@ -41,4 +41,12 @@ describe('string-mismatch tests', function() {
             expected = 'dasd as';
         expect(sm.rotate(value, -8)).to.equal(expected);
     });
+
+    it('check getMatchingSubstring method for find matches', function(){
+        var start = 'poasdf fdfsaf',
+            end = 'bgasdfsdfs',
+            mValue = 0;
+        expect(sm.getMatchingSubstring(start, end, mValue)).to.deep.include({fis: 2, mtc: mValue, sbs: "asdf"});
+    });
+
 });

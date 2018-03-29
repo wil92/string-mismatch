@@ -7,6 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "start": "node ./example/mismatch",
     "test": "mocha --ui bdd --recursive ./test"
   },
   "repository": {
