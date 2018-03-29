@@ -1,4 +1,4 @@
-var sm = require('../lib/string-mismatch');
+var sm = require('../string-mismatch');
 
 // console.log("arguments", process.argv);
 

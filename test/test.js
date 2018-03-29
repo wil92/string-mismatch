@@ -1,7 +1,7 @@
 'use strict';
 
 var expect = require('chai').expect;
-var sm = require('../lib/string-mismatch');
+var sm = require('../string-mismatch');
 
 describe('string-mismatch tests', function() {
     it('check how slice work in javascript language', function () {
