@@ -57,4 +57,11 @@ describe('string-mismatch tests', function() {
         expect(sm.diff(start, end, precision)).to.deep.equal(expected);
     });
 
+    it('check diff function with real values without precision parameter', function(){
+        var start = 'This is a test for see how work the library',
+            end = 'This is a test for know how work the new library',
+            expected = [ { mtc: 'This is a test for ', del: 'see', ins: 'know', sbs: ' how work the ' }, { mtc: '', del: '', ins: 'new ', sbs: 'library' } ];
+        expect(sm.diff(start, end)).to.deep.equal(expected);
+    });
+
 });

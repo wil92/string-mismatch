@@ -1,10 +1,10 @@
-'user strict';
+'use strict';
 
 /**
  * return the list of changes in the original text
  * @param start start text
  * @param end end text
- * @param precision number of characters to expand the search for the text
+ * @param precision number of characters to expand the search for the text (by default is 5)
  * @return {[{mtc, del, ins, sbs}]}
  *      {mtc: start part of the section
  *      del: erase part of the section
@@ -12,6 +12,7 @@
  *      sbs: last part of the section}
  */
 exports.diff = function (start, end, precision) {
+    precision = precision | 5;
     var changeData = this.getChanges(start, end, "", precision),
         nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),    // remaining part of "s"
         nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length), // remaining part of "this"
