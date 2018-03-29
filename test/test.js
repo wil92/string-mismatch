@@ -49,4 +49,12 @@ describe('string-mismatch tests', function() {
         expect(sm.getMatchingSubstring(start, end, mValue)).to.deep.include({fis: 2, mtc: mValue, sbs: "asdf"});
     });
 
+    it('check diff function with real values 1', function(){
+        var start = 'This is a test for see how work the library',
+            end = 'This is a test for know how work the new library',
+            expected = [ { mtc: 'This is a test for ', del: 'see', ins: 'know', sbs: ' how work the ' }, { mtc: '', del: '', ins: 'new ', sbs: 'library' } ],
+            precision = 5;
+        expect(sm.diff(start, end, precision)).to.deep.equal(expected);
+    });
+
 });
