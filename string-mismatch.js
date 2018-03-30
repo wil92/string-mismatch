@@ -6,7 +6,7 @@
  * @param end end text
  * @param percent percent of correct characters of the original text
  * @param precision number of characters to expand the search for the text (by default is 5)
- * @return {[{good, diffs: [{mtc, del, ins, sbs}]}]}
+ * @return {{good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
 exports.evaluateCharacterPercent = function (start, end, percent, precision) {
     var diffs,
@@ -32,6 +32,7 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision) {
 /**
  * Erase the in-between, start and end spaces
  * @param text
+ * @return {string}
  */
 exports.eraseSpaces = function (text) {
     var newText = '',
@@ -60,11 +61,11 @@ exports.eraseSpaces = function (text) {
  * @param start start text
  * @param end end text
  * @param precision number of characters to expand the search for the text (by default is 5)
- * @return {[{mtc, del, ins, sbs}]}
- *      {mtc: start part of the section
+ * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
+ *      mtc: start part of the section
  *      del: erase part of the section
  *      ins: new part of the section
- *      sbs: last part of the section}
+ *      sbs: last part of the section
  */
 exports.diff = function (start, end, precision) {
     precision = precision | 5;
@@ -91,7 +92,7 @@ exports.diff = function (start, end, precision) {
  * @param end end text
  * @param m parameter no needed (is only for inside use)
  * @param precision presition or
- * @returns {{fis, fil, sbs: string, mtc: *}}
+ * @returns {{fis: string, fil: string, sbs: string, mtc: string}}
  */
 exports.getChanges = function (start, end, m, precision) {
     var isThisLonger = start.length >= end.length,
@@ -136,7 +137,7 @@ exports.getChanges = function (start, end, m, precision) {
  * @param source begin text
  * @param changed end text
  * @param m
- * @returns {{fis, mtc: *, sbs: string}}
+ * @returns {{fis: string, mtc: string, sbs: string}}
  */
 exports.getMatchingSubstring = function (source, changed, m) {
     var i = 0,
@@ -166,7 +167,7 @@ exports.getMatchingSubstring = function (source, changed, m) {
  * rotate a string (n) times to the left, if it's a negative value then rotate (-n) times to the right
  * @param text string to rotate
  * @param n time to rotate
- * @returns {*} new rotate string
+ * @returns {string} new rotate string
  */
 exports.rotate = function (text, n) {
     n = n | 0;
