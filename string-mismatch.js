@@ -6,7 +6,7 @@
  * @param end end text
  * @param percent percent of correct characters of the original text
  * @param precision number of characters to expand the search for the text (by default is 5)
- * @return {{good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
+ * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
 exports.evaluateCharacterPercent = function (start, end, percent, precision) {
     var diffs,
