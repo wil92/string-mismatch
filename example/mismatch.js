@@ -1,3 +1,4 @@
+// noinspection JSUnresolvedFunction
 var sm = require('../string-mismatch');
 
 // console.log("arguments", process.argv);
