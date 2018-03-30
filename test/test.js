@@ -64,4 +64,30 @@ describe('string-mismatch tests', function() {
         expect(sm.diff(start, end)).to.deep.equal(expected);
     });
 
+    it('check eraseSpace function', function(){
+        var text = '      This     is    a    test      for    see how     work the library   ',
+            expected = 'This is a test for see how work the library';
+        expect(sm.eraseSpaces(text)).to.equal(expected);
+    });
+
+    it('check eraseSpace function empty string', function(){
+        var text = '',
+            expected = '';
+        expect(sm.eraseSpaces(text)).to.equal(expected);
+    });
+
+    it('check eraseSpace function only spaces', function(){
+        var text = '       ',
+            expected = '';
+        expect(sm.eraseSpaces(text)).to.equal(expected);
+    });
+
+    it('check evaluateCharacterPercent with real data', function(){
+        var start = 'Guillermo Gonzalez Jimenez',
+            end = 'Guillelmo   Gonzales   Jimenes',
+            expected = { good: true, diffs: [ { mtc: 'Guille', del: 'r', ins: 'l', sbs: 'mo Gonzale' }, { mtc: '', del: 'z', ins: 's', sbs: ' Jimene' }, { mtc: '', del: 'z', ins: 's', sbs: '' } ] };
+        expect(sm.evaluateCharacterPercent(start, end, 0.6, 5)).to.deep.equal(expected);
+    });
+
+
 });

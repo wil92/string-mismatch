@@ -1,6 +1,61 @@
 'use strict';
 
 /**
+ * With this function you can evaluate if two string are equals, with a percent of differences characters.
+ * @param start start text
+ * @param end end text
+ * @param percent percent of correct characters of the original text
+ * @param precision number of characters to expand the search for the text (by default is 5)
+ * @return {[{good, diffs: [{mtc, del, ins, sbs}]}]}
+ */
+exports.evaluateCharacterPercent = function (start, end, percent, precision) {
+    var diffs,
+        wc = 0;
+
+    start = this.eraseSpaces(start);
+    end = this.eraseSpaces(end);
+
+
+    diffs = this.diff(start, end, precision);
+
+    for (var i = 0, diff = diffs[i]; i < diffs.length; i++) {
+        wc += Math.max(diff.del.length, diff.ins.length);
+    }
+
+    // calculate the percent of mistakes
+    wc = Math.min(start.length, wc);
+    return {
+        good: percent > wc / start.length,
+        diffs: diffs};
+};
+
+/**
+ * Erase the in-between, start and end spaces
+ * @param text
+ */
+exports.eraseSpaces = function (text) {
+    var newText = '',
+        flag = false;
+    // erase in-between spaces
+    for (var i = 0; i < text.length; i++) {
+        if (text[i] === ' ' && !flag) {
+            flag = true;
+            newText += text[i];
+        } else if (text[i] !== ' ') {
+            flag = false;
+            newText += text[i];
+        }
+    }
+    if (newText[0] === ' ') {
+        newText = newText.slice(1);
+    }
+    if (newText[newText.length - 1] === ' ') {
+        newText = newText.slice(0, newText.length - 1);
+    }
+    return newText;
+};
+
+/**
  * return the list of changes in the original text
  * @param start start text
  * @param end end text
@@ -21,9 +76,10 @@ exports.diff = function (start, end, precision) {
         mtc: changeData.mtc,
         del: changeData.del,
         ins: changeData.ins,
-        sbs: changeData.sbs});
+        sbs: changeData.sbs
+    });
 
-    if(nextThis !== "" || nextS !== ""){
+    if (nextThis !== "" || nextS !== "") {
         result = result.concat(this.diff(nextThis, nextS, precision));
     }
     return result;
@@ -107,7 +163,7 @@ exports.getMatchingSubstring = function (source, changed, m) {
 };
 
 /**
- * rotate a string n times to the left, if is negative the value then rotate to the right
+ * rotate a string (n) times to the left, if it's a negative value then rotate (-n) times to the right
  * @param text string to rotate
  * @param n time to rotate
  * @returns {*} new rotate string
