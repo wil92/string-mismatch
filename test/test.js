@@ -100,7 +100,7 @@ describe('string-mismatch tests', function() {
     it('check evaluateCharacterPercent with real data', function(){
         var start = 'Guillermo Gonzalez Jimenez',
             end = 'Guillelmo   Gonzales   Jimenes',
-            expected = { good: true, diffs: [ { mtc: 'Guille', del: 'r', ins: 'l', sbs: 'mo Gonzale' }, { mtc: '', del: 'z', ins: 's', sbs: ' Jimene' }, { mtc: '', del: 'z', ins: 's', sbs: '' } ] };
+            expected = { good: true, percent: 0.11538461538461539, diffs: [ { mtc: 'Guille', del: 'r', ins: 'l', sbs: 'mo Gonzale' }, { mtc: '', del: 'z', ins: 's', sbs: ' Jimene' }, { mtc: '', del: 'z', ins: 's', sbs: '' } ] };
         // noinspection JSUnresolvedVariable
         expect(sm.evaluateCharacterPercent(start, end, 0.6, 5)).to.deep.equal(expected);
     });

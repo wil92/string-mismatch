@@ -25,6 +25,7 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision) {
     // calculate the percent of mistakes
     wc = Math.min(start.length, wc);
     return {
+        percent: wc / start.length,
         good: percent > wc / start.length,
         diffs: diffs};
 };
