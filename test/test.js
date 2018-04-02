@@ -105,5 +105,13 @@ describe('string-mismatch tests', function() {
         expect(sm.evaluateCharacterPercent(start, end, 0.6, 5)).to.deep.equal(expected);
     });
 
+    it('check evaluateCharacterPercent with real data ignore case', function(){
+        var start = 'guillermo Gonzalez jimEnEz',
+            end = 'Guillelmo   gonzales   Jimenes',
+            expected = {"diffs": [{"del": "r", "ins": "l", "mtc": "Guille", "sbs": "mo gonzale"}, {"del": "z", "ins": "s", "mtc": "", "sbs": " Jimene"}, {"del": "z", "ins": "s", "mtc": "", "sbs": ""}], "good": true, "percent": 0.11538461538461539};
+        // noinspection JSUnresolvedVariable
+        expect(sm.evaluateCharacterPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
+    });
+
 
 });
