@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 /**
  * With this function you can evaluate if two string are equals, with a percent of differences characters.
  * @param start start text
@@ -12,9 +14,9 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision) {
     var diffs,
         wc = 0;
 
+    // toDo: guille, 4/1/18 use to lowercase function for lodash
     start = this.eraseSpaces(start);
     end = this.eraseSpaces(end);
-
 
     diffs = this.diff(start, end, precision);
 
@@ -27,34 +29,19 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision) {
     return {
         percent: wc / start.length,
         good: percent > wc / start.length,
-        diffs: diffs};
+        diffs: diffs
+    };
 };
 
 /**
+ * todo: replace this method for .trim in lodash
  * Erase the in-between, start and end spaces
  * @param text
  * @return {string}
  */
 exports.eraseSpaces = function (text) {
-    var newText = '',
-        flag = false;
-    // erase in-between spaces
-    for (var i = 0; i < text.length; i++) {
-        if (text[i] === ' ' && !flag) {
-            flag = true;
-            newText += text[i];
-        } else if (text[i] !== ' ') {
-            flag = false;
-            newText += text[i];
-        }
-    }
-    if (newText[0] === ' ') {
-        newText = newText.slice(1);
-    }
-    if (newText[newText.length - 1] === ' ') {
-        newText = newText.slice(0, newText.length - 1);
-    }
-    return newText;
+    var newText = _.replace(text, /\s\s+/g, ' ');
+    return _.trim(newText);
 };
 
 /**
