@@ -28,7 +28,7 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision, ign
     wc = Math.min(start.length, wc);
     return {
         percent: wc / start.length,
-        good: percent > wc / start.length,
+        good: percent < 1 - wc / start.length,
         diffs: diffs
     };
 };

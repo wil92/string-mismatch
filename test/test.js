@@ -113,5 +113,13 @@ describe('string-mismatch tests', function() {
         expect(sm.evaluateCharacterPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
     });
 
+    it('check evaluateCharacterPercent with real data bug in production', function(){
+        var start = 'my name is juan',
+            end = 'mi nombre es juan',
+            expected = {"diffs": [{"del": "y", "ins": "i", "mtc": "m", "sbs": " n"}, {"del": "am", "ins": "ombr", "mtc": "", "sbs": "e "}, {"del": "i", "ins": "e", "mtc": "", "sbs": "s juan"}], "good": false, "percent": 0.2};
+        // noinspection JSUnresolvedVariable
+        expect(sm.evaluateCharacterPercent(start, end, 0.9, 2, true)).to.deep.equal(expected);
+    });
+
 
 });
