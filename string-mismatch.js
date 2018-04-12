@@ -8,6 +8,7 @@ var _ = require('lodash');
  * @param end {string} end text
  * @param percent {number} percent of correct characters of the original text
  * @param precision {number} number of characters to expand the search for the text (by default is 5)
+ * @param ignoreCase {boolean}
  * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
 exports.evaluateCharacterPercent = function (start, end, percent, precision, ignoreCase) {
@@ -59,8 +60,8 @@ exports.diff = function (start, end, precision, ignoreCase) {
     precision = defaultFor(precision, 5);
     ignoreCase = defaultFor(ignoreCase, false);
     var changeData = this.getChanges(start, end, "", precision, ignoreCase),
-        nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),    // remaining part of "s"
-        nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length), // remaining part of "this"
+        nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),
+        nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length),
         result = [];
     result.push({
         mtc: changeData.mtc,
@@ -87,32 +88,31 @@ exports.diff = function (start, end, precision, ignoreCase) {
 exports.getChanges = function (start, end, m, precision, ignoreCase) {
     ignoreCase = defaultFor(ignoreCase, false);
     var isThisLonger = start.length >= end.length,
-        bi = 0,  // base index designating the index of first mismacthing character in both strings
+        bi = 0,
         longer = isThisLonger ? start : end,
         shorter = isThisLonger ? end : start;
 
-    while (this.ignoreCase(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi; // make bi the index of first mismatching character
-    longer = longer.slice(bi);   // as the longer string will be rotated it is converted into array
-    shorter = shorter.slice(bi);           // shorter and longer now starts from the first mismatching character
+    while (this.ignoreCase(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
+    longer = longer.slice(bi);
+    shorter = shorter.slice(bi);
 
-    var len = longer.length,              // length of the longer string
+    var len = longer.length,
         cd = {
-            fis: shorter.length,       // the index of matching string in the shorter string
-            fil: len,                  // the index of matching string in the longer string
-            sbs: "",                   // the matching substring itself
+            fis: shorter.length,
+            fil: len,
+            sbs: "",
             mtc: m + end.slice(0, bi)
-        },   // if exists mtc holds the matching string at the front
-        sub = {sbs: ""};                   // returned substring per 1 character rotation of the longer string
+        },
+        sub = {sbs: ""};
 
     if (shorter !== "") {
-        for (var rc = 0; rc < len && sub.sbs.length < precision; rc++) {           // rc -> rotate count, precision -> precision factor
-            sub = this.getMatchingSubstring(shorter, this.rotate(longer, rc), cd.mtc, ignoreCase); // rotate longer string 1 char and get substring
-            sub.fil = rc < len - sub.fis ? sub.fis + rc                     // mismatch is longer than the mismatch in short
-                : sub.fis - len + rc;              // mismatch is shorter than the mismatch in short
-            sub.sbs.length > cd.sbs.length && (cd = sub);                   // only keep the one with the longest substring.
+        for (var rc = 0; rc < len && sub.sbs.length < precision; rc++) {
+            sub = this.getMatchingSubstring(shorter, this.rotate(longer, rc), cd.mtc, ignoreCase);
+            sub.fil = rc < len - sub.fis ? sub.fis + rc
+                : sub.fis - len + rc;
+            sub.sbs.length > cd.sbs.length && (cd = sub);
         }
     }
-    // insert the mismatching delete subsrt and insert substr to the cd object and attach the previous substring
     cd.del = isThisLonger ? longer.slice(0, cd.fil) : shorter.slice(0, cd.fis);
     cd.ins = isThisLonger ? shorter.slice(0, cd.fis) : longer.slice(0, cd.fil);
 
@@ -136,11 +136,10 @@ exports.getMatchingSubstring = function (source, changed, m, ignoreCase) {
     var i = 0,
         slen = source.length,
         match = false,
-        o = {fis: slen, mtc: m, sbs: ""};       // temporary object used to construct the cd (change data) object
+        o = {fis: slen, mtc: m, sbs: ""};
     while (i < slen) {
         if (this.ignoreCase(changed[i], source[i], ignoreCase)) {
             if (match) {
-                // o.sbs holds the matching substring itsef
                 o.sbs += source[i];
             } else {
                 match = true;
@@ -148,7 +147,6 @@ exports.getMatchingSubstring = function (source, changed, m, ignoreCase) {
                 o.sbs = source[i];
             }
         } else if (match) {
-            // stop after the first found substring
             break;
         }
         ++i;
