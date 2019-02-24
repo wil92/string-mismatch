@@ -6,10 +6,13 @@ var config = {
     output: {
         path: path.resolve(__dirname, 'lib'),
         globalObject: "this",
-        filename: libraryName + '.min.js',
+        filename: libraryName + '.js',
         library: libraryName,
         libraryTarget: 'umd',
         umdNamedDefine: true
+    },
+    optimization: {
+        minimize: false
     }
 };
 

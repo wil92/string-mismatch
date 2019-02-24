@@ -5,12 +5,12 @@ var trim = require('lodash/trim');
 var toLower = require('lodash/toLower');
 
 /**
- * With this function you can evaluate if two string are equals, with a percent of differences characters.
+ * With this function you can evaluate if two string are equals, with a percent of different characters.
  * @param start {string} start text
  * @param end {string} end text
  * @param percent {number} percent of correct characters of the original text
  * @param precision {number} number of characters to expand the search for the text (by default is 5)
- * @param ignoreCase {boolean}
+ * @param ignoreCase {boolean} ignore upper or lower characters (by default is false)
  * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
 exports.evaluateCharacterPercent = function (start, end, percent, precision, ignoreCase) {
@@ -51,7 +51,7 @@ exports.eraseSpaces = function (text) {
  * @param start {string} start text
  * @param end {string} end text
  * @param precision {number} number of characters to expand the search for the text (by default is 5)
- * @param ignoreCase {boolean}
+ * @param ignoreCase {boolean} ignore upper or lower characters (by default is false)
  * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
  *      mtc: start part of the section
  *      del: erase part of the section
@@ -130,7 +130,7 @@ exports.getChanges = function (start, end, m, precision, ignoreCase) {
  * @param source {string} begin text
  * @param changed {string} end text
  * @param m {string}
- * @param ignoreCase {boolean}
+ * @param ignoreCase {boolean} ignore upper or lower characters
  * @returns {{fis: number, mtc: string, sbs: string}}
  */
 exports.getMatchingSubstring = function (source, changed, m, ignoreCase) {
@@ -160,7 +160,7 @@ exports.getMatchingSubstring = function (source, changed, m, ignoreCase) {
  * Compare two text ignoring the lower or upper characters
  * @param text1 {string} first text to compare
  * @param text2 {string} second text to compare
- * @param ignoreCase {boolean}
+ * @param ignoreCase {boolean} ignore upper or lower characters
  * @return {boolean}
  */
 exports.ignoreCase = function (text1, text2, ignoreCase) {

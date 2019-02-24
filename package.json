@@ -1,13 +1,13 @@
 {
   "name": "string-mismatch",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "All mismatch between two strings",
   "engines": {
     "node": ">=4.2.4"
   },
   "main": "lib/string-mismatch.js",
   "scripts": {
-    "start": "node ./example/mismatch",
+    "start": "npm run build && node ./example/mismatch",
     "test": "mocha --ui bdd --recursive ./test",
     "build": "node ./scripts/build"
   },

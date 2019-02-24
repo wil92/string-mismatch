@@ -1,7 +1,6 @@
 # ignore from the project
 .gitignore
 test
-src
 example
 scripts
 webpack.config.js
