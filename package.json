@@ -8,7 +8,8 @@
   "main": "src/string-mismatch.js",
   "scripts": {
     "start": "node ./example/mismatch",
-    "test": "mocha --ui bdd --recursive ./test"
+    "test": "mocha --ui bdd --recursive ./test",
+    "build": "node ./scripts/build"
   },
   "repository": {
     "type": "git",
