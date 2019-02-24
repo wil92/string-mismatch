@@ -1,6 +1,6 @@
 {
   "name": "string-mismatch",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "All mismatch between two strings",
   "engines": {
     "node": ">=4.2.4"
