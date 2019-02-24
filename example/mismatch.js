@@ -1,5 +1,5 @@
 // noinspection JSUnresolvedFunction
-var sm = require('../src/string-mismatch');
+var sm = require('../lib/string-mismatch');
 
 // console.log("arguments", process.argv);
 
