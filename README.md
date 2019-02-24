@@ -13,7 +13,7 @@ npm install --save string-mismatch
 How to use the library and see the differences between two strings:
 
 ```
-var sm = require('../src/string-mismatch');
+var sm = require('string-mismatch');
 
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
@@ -51,7 +51,7 @@ The result is an object array with the mismatch result. Each object with the nex
 The resulting string can be concatenated like the next example:
 
 ```
-var sm = require('../src/string-mismatch');
+var sm = require('string-mismatch');
 
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
