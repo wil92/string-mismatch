@@ -5,10 +5,11 @@
   "engines": {
     "node": ">=4.2.4"
   },
-  "main": "string-mismatch.js",
+  "main": "src/string-mismatch.js",
   "scripts": {
     "start": "node ./example/mismatch",
-    "test": "mocha --ui bdd --recursive ./test"
+    "test": "mocha --ui bdd --recursive ./test",
+    "build": "node ./scripts/build"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,11 @@
   "keywords": [
     "string"
   ],
-  "author": "wil92",
+  "author": {
+    "name": "wil92",
+    "email": "ggjnez92@gmail.com",
+    "url": "https://github.com/wil92"
+  },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/wil92/string-mismatch/issues"
@@ -28,6 +33,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.0.5"
+    "mocha": "^5.0.5",
+    "webpack": "^4.29.5"
   }
 }
