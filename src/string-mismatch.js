@@ -1,6 +1,8 @@
 'use strict';
 
-var _ = require('lodash');
+var replace = require('lodash/replace');
+var trim = require('lodash/trim');
+var toLower = require('lodash/toLower');
 
 /**
  * With this function you can evaluate if two string are equals, with a percent of differences characters.
@@ -40,8 +42,8 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision, ign
  * @return {string}
  */
 exports.eraseSpaces = function (text) {
-    var newText = _.replace(text, /\s\s+/g, ' ');
-    return _.trim(newText);
+    var newText = replace(text, /\s\s+/g, ' ');
+    return trim(newText);
 };
 
 /**
@@ -165,7 +167,7 @@ exports.ignoreCase = function (text1, text2, ignoreCase) {
     if(!ignoreCase){
         return text1 === text2;
     }
-    return _.toLower(text1) === _.toLower(text2);
+    return toLower(text1) === toLower(text2);
 };
 
 /**
