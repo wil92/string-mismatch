@@ -12,11 +12,7 @@ removeFiles(webpackConfig.output.path).then(function () {
         });
     })
 }).then(function () {
-    return copyFile('package.json')
-}).then(function () {
-    return copyFile('README.md')
-}).then(function () {
-    return copyFile('LICENSE.md');
+    console.info('Build: DONE');
 }).catch(function (err) {
     console.log('ERROR', err);
 });

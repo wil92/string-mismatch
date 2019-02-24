@@ -4,7 +4,8 @@ var libraryName = 'string-mismatch';
 var config = {
     entry: path.join(__dirname, '/src/string-mismatch.js'),
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'lib'),
+        globalObject: "this",
         filename: libraryName + '.js',
         library: libraryName,
         libraryTarget: 'umd',
