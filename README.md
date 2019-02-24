@@ -10,7 +10,7 @@ npm install --save string-mismatch
 
 ## Getting started
 
-Example of how to use the library for see the differences between two strings:
+How to use the library and see the differences between two strings:
 
 ```
 var sm = require('../src/string-mismatch');
@@ -83,7 +83,6 @@ npm test
 
 ## Built With
 
-* [sails](https://sailsjs.com/) - The web server framework used
 * [webpack](https://webpack.js.org/) - For build the project
 * [npm](https://www.npmjs.com/) - Dependency Management
 * [mocha](https://mochajs.org/) - The test frameword used
