@@ -3,7 +3,7 @@
 // noinspection JSUnresolvedVariable, JSUnresolvedFunction
 var expect = require('chai').expect;
 // noinspection JSUnresolvedFunction
-var sm = require('../string-mismatch');
+var sm = require('../src/string-mismatch');
 
 describe('string-mismatch tests', function() {
     it('check how slice work in javascript language', function () {
