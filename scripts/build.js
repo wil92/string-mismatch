@@ -1,13 +1,21 @@
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
-var webpackConfig = require('../webpack.config');
+
+var webpackConfigProd = require('../webpack.config');
+var webpackConfigDev = require('../webpack.dev.config');
 
 var projectPath = path.resolve(__dirname, '..');
 
-removeFiles(webpackConfig.output.path).then(function () {
+removeFiles(webpackConfigProd.output.path).then(function () {
     return new Promise(function (resolve, reject) {
-        webpack(webpackConfig, function (err, stats) {
+        webpack(webpackConfigProd, function (err, stats) {
+            return err ? reject(err) : resolve(stats);
+        });
+    })
+}).then(function () {
+    return new Promise(function (resolve, reject) {
+        webpack(webpackConfigDev, function (err, stats) {
             return err ? reject(err) : resolve(stats);
         });
     })
@@ -21,7 +29,7 @@ function copyFile(filePath) {
     return new Promise(function (resolve, reject) {
         fs.copyFile(
             path.resolve(projectPath, filePath),
-            path.resolve(webpackConfig.output.path, filePath),
+            path.resolve(webpackConfigProd.output.path, filePath),
             function (err) {
                 return err ? reject(err) : resolve();
             });
