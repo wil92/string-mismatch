@@ -126,7 +126,7 @@ describe('string-mismatch tests', function() {
             end = 'n',
             expected = {"diffs": [{"del": "a", "ins": "", "mtc": "", "sbs": "n"}, {"del": "imal", "ins": "", "mtc": "", "sbs": ""}], "good": false, "percent": 0.8333333333333334};
         // noinspection JSUnresolvedVariable
-        expect(sm.evaluateCharacterPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
+            expect(sm.evaluateCharacterPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
     });
 
 

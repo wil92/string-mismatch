@@ -13,7 +13,7 @@ var toLower = require('lodash/toLower');
  * @param ignoreCase {boolean} ignore upper or lower characters (by default is false)
  * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
-exports.evaluateCharacterPercent = function (start, end, percent, precision, ignoreCase) {
+exports.diffPercent = function (start, end, percent, precision, ignoreCase) {
     ignoreCase = defaultFor(ignoreCase, false);
     var diffs,
         wc = 0;
@@ -36,6 +36,18 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision, ign
         diffs: diffs
     };
 };
+
+/**
+ * With this function you can evaluate if two string are equals, with a percent of different characters.
+ * @deprecated Will be deleted in version 2.0. Use diffPercent instead
+ * @param start {string} start text
+ * @param end {string} end text
+ * @param percent {number} percent of correct characters of the original text
+ * @param precision {number} number of characters to expand the search for the text (by default is 5)
+ * @param ignoreCase {boolean} ignore upper or lower characters (by default is false)
+ * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
+ */
+exports.evaluateCharacterPercent = exports.diffPercent;
 
 /**
  * Erase the in-between, start and end spaces
