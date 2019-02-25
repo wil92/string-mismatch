@@ -11,6 +11,7 @@ console.log('----------------------------------------------------------');
 var start = 'This is a test for see how work the library',
     end = 'This is a test for know how work the new library';
 console.log('start text,', start);
+console.log('start text,', end);
 console.log('sm.diff(start, end, 5)');
 var m = sm.diff(start, end, 5);
 console.log(m);
@@ -18,11 +19,7 @@ console.log('----------------------------------------------------------');
 console.log(showResult(m));
 console.log('----------------------------------------------------------');
 console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
+
 var good = 'aGuillermo Gonzalez Jimenez',
     bad = 'Guillelmo   Gonzales   Jimenes';
 console.log('good,', good);
@@ -34,10 +31,15 @@ console.log('----------------------------------------------------------');
 console.log(showResult(m.diffs));
 console.log('----------------------------------------------------------');
 console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
-console.log('----------------------------------------------------------');
 
-
+var t1 = 'aGuillermo Gonzalez Jimenez',
+    t2 = 'ljfsdl kjaslfjasldfjasldk fjladsf';
+console.log('t1,', t1);
+console.log('t2,', t2);
+console.log('sm.diff(t1, t2, 5)');
+m = sm.diff(t1, t2, 5);
+console.log(m);
+console.log('----------------------------------------------------------');
+console.log(showResult(m));
+console.log('----------------------------------------------------------');
+console.log('----------------------------------------------------------');
