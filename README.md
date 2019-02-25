@@ -1,6 +1,6 @@
 # string-mismatch
 
-This library share functions for compare two strings and see the differences between them.
+This library share functions for compare two strings and see the differences.
 
 ## Install
 
