@@ -23,7 +23,8 @@ exports.evaluateCharacterPercent = function (start, end, percent, precision, ign
 
     diffs = this.diff(start, end, precision, ignoreCase);
 
-    for (var i = 0, diff = diffs[i]; i < diffs.length; i++) {
+    for (var i = 0; i < diffs.length; i++) {
+        var diff = diffs[i];
         wc += Math.max(diff.del.length, diff.ins.length);
     }
 

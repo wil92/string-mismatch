@@ -116,9 +116,17 @@ describe('string-mismatch tests', function() {
     it('check evaluateCharacterPercent with real data bug in production', function(){
         var start = 'my name is juan',
             end = 'mi nombre es juan',
-            expected = {"diffs": [{"del": "y", "ins": "i", "mtc": "m", "sbs": " n"}, {"del": "am", "ins": "ombr", "mtc": "", "sbs": "e "}, {"del": "i", "ins": "e", "mtc": "", "sbs": "s juan"}], "good": false, "percent": 0.2};
+            expected = {"diffs": [{"del": "y", "ins": "i", "mtc": "m", "sbs": " n"}, {"del": "am", "ins": "ombr", "mtc": "", "sbs": "e "}, {"del": "i", "ins": "e", "mtc": "", "sbs": "s juan"}], "good": false, "percent": 0.4};
         // noinspection JSUnresolvedVariable
         expect(sm.evaluateCharacterPercent(start, end, 0.9, 2, true)).to.deep.equal(expected);
+    });
+
+    it('should return evaluateCharacterPercent false with real data (bug in production)', function(){
+        var start = 'animal',
+            end = 'n',
+            expected = {"diffs": [{"del": "a", "ins": "", "mtc": "", "sbs": "n"}, {"del": "imal", "ins": "", "mtc": "", "sbs": ""}], "good": false, "percent": 0.8333333333333334};
+        // noinspection JSUnresolvedVariable
+        expect(sm.evaluateCharacterPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
     });
 
 
