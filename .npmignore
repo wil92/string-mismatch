@@ -4,7 +4,6 @@ test
 example
 scripts
 webpack.config.js
-webpack.dev.config.js
 
 # Logs
 logs
