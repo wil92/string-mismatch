@@ -5,10 +5,12 @@
     <title>String Mismatch example</title>
 </head>
 <body>
-    <textarea id="start"></textarea>
-    <textarea id="end"></textarea>
-    <div id="diffResultJSON"></div>
-    <div id="diffResult" style="display: flex;flex-direction: row;"></div>
+    <div style="display: flex;flex-direction: column;">
+        <textarea id="start"></textarea>
+        <textarea id="end"></textarea>
+        <div id="diffResult" style="display: flex;flex-direction: row;"></div>
+        <div id="diffResultJSON"></div>
+    </div>
 
     <script src="../lib/string-mismatch.min.js" type="application/javascript"></script>
     <script type="application/javascript">
@@ -17,8 +19,15 @@
         var resultDiffJSON = document.getElementById("diffResultJSON");
         var resultDiff = document.getElementById("diffResult");
 
+        startText.value = 'This is a test for see how work the library';
+        endText.value = 'This is a test for know how work the new library';
+
         startText.addEventListener('change', onChangeEvent);
+        startText.addEventListener('keyup', onChangeEvent);
         endText.addEventListener('change', onChangeEvent);
+        endText.addEventListener('keyup', onChangeEvent);
+
+        calculateDiff(startText.value, endText.value);
 
         function onChangeEvent() {
             console.log('onChangeEvent', 'aaa');
@@ -27,20 +36,20 @@
 
         function calculateDiff(start, end) {
             var diffs = sm.diff(start, end, 5);
-            resultDiffJSON.innerHTML = JSON.stringify(diffs, null, '  ');
+            resultDiffJSON.innerHTML = JSON.stringify(diffs, 3, '  ');
             var result = '';
             for (var i = 0; i < diffs.length; i++) {
-                if (diffs[i].mtc) {
-                    result += '<p>' + diffs[i].mtc + '<p>';
+                if (diffs[i].mtc !== '') {
+                    result += '<span style="white-space: pre;">' + diffs[i].mtc + '</span>';
                 }
-                if (diffs[i].del) {
-                    result += '<p style="color: #ff0000">' + diffs[i].del + '<p>';
+                if (diffs[i].del !== '') {
+                    result += '<span style="color: #ff0000;white-space: pre;">' + diffs[i].del + '</span>';
                 }
-                if (diffs[i].ins) {
-                    result += '<p style="color: #05bf2e">' + diffs[i].ins + '<p>';
+                if (diffs[i].ins !== '') {
+                    result += '<span style="color: #05bf2e;white-space: pre;">' + diffs[i].ins + '</span>';
                 }
-                if (diffs[i].sbs) {
-                    result += '<p>' + diffs[i].sbs + '<p>';
+                if (diffs[i].sbs !== '') {
+                    result += '<span style="white-space: pre;">' + diffs[i].sbs + '</span>';
                 }
             }
             resultDiff.innerHTML = result;
