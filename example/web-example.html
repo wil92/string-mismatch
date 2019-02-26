@@ -8,12 +8,18 @@
     <div style="display: flex;flex-direction: column;">
         <textarea id="start"></textarea>
         <textarea id="end"></textarea>
-        <div id="diffResult" style="display: flex;flex-direction: row;"></div>
-        <div id="diffResultJSON"></div>
+        <div id="diffResult" style="margin-top: 10px;display: flex;flex-direction: row;"></div>
+        <div id="diffResultJSON" style="margin-top: 10px;"></div>
     </div>
 
     <!--Load library-->
-    <script src="../lib/string-mismatch.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        function error() {
+            var resultDiff = document.getElementById("diffResult");
+            resultDiff.innerHTML = '<span>For test the example, make a build: <code style="background-color: #333;color: #f7f7f7;padding: 2px;border-radius: 5px;">npm run build</code></span>';
+        }
+    </script>
+    <script src="../lib/string-mismatch.min.js" type="application/javascript" onerror="error()"></script>
     <script type="application/javascript">
         var startText = document.getElementById("start");
         var endText = document.getElementById("end");
@@ -31,7 +37,6 @@
         calculateDiff(startText.value, endText.value);
 
         function onChangeEvent() {
-            console.log('onChangeEvent', 'aaa');
             calculateDiff(startText.value, endText.value);
         }
 
