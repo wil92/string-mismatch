@@ -10,9 +10,31 @@ npm install --save string-mismatch
 
 ## Getting started
 
+### Web application example
+
+Import the library
+
+```html5
+<script src="lib/string-mismatch.js" type="application/javascript"></script>
+<!--Minified version-->
+<script src="lib/string-mismatch.min.js" type="application/javascript"></script>
+```
+
+Use the library
+
+```html5
+<script type="application/javascript">
+    var start = 'This is a test for see how work the library';
+    var end = 'This is a test for know how work the new library';
+    var diffs = sm.diff(start, end, 5);
+    console.log(diffs);
+</script>
+```
+
+### Nodejs application example
 How to use the library and see the differences between two strings:
 
-```
+```es5
 var sm = require('string-mismatch');
 
 var start = 'This is a test for see how work the library',
@@ -39,7 +61,7 @@ result:
 
 The result is an object array with the mismatch result. Each object with the next structure:
 
-```
+```es5
 {
   mtc: string, // Start of the sub-string
   del: string, // Deleted sub-string from the start string
@@ -50,7 +72,7 @@ The result is an object array with the mismatch result. Each object with the nex
 
 The resulting string can be concatenated like the next example:
 
-```
+```es5
 var sm = require('string-mismatch');
 
 var start = 'This is a test for see how work the library',
