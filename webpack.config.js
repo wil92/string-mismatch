@@ -1,15 +1,26 @@
 var path = require('path');
-var libraryName = 'string-mismatch';
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 var config = {
-    entry: path.join(__dirname, '/src/string-mismatch.js'),
+    entry: {
+        "string-mismatch": path.join(__dirname, '/src/string-mismatch.js'),
+        "string-mismatch.min": path.join(__dirname, '/src/string-mismatch.js'),
+    },
+    devtool: "source-map",
     output: {
         path: path.resolve(__dirname, 'lib'),
         globalObject: "this",
-        filename: libraryName + '.js',
+        filename: "[name].js",
         library: 'sm',
         libraryTarget: 'umd',
         umdNamedDefine: true
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin({
+                include: /\.min\.js$/
+            })
+        ]
     }
 };
 

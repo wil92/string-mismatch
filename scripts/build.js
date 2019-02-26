@@ -3,21 +3,12 @@ var path = require('path');
 var webpack = require('webpack');
 
 var webpackConfigProd = require('../webpack.config');
-var webpackConfigProdWeb = require('../webpack.config.web');
 
 var projectPath = path.resolve(__dirname, '..');
-
-var env = process.env['ENV'];
 
 removeFiles(webpackConfigProd.output.path).then(function () {
     return new Promise(function (resolve, reject) {
         webpack(webpackConfigProd, function (err, stats) {
-            return err ? reject(err) : resolve(stats);
-        });
-    })
-}).then(function () {
-    return new Promise(function (resolve, reject) {
-        webpack(webpackConfigProdWeb, function (err, stats) {
             return err ? reject(err) : resolve(stats);
         });
     })
