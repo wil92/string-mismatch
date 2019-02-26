@@ -25,7 +25,7 @@ var good = 'aGuillermo Gonzalez Jimenez',
 console.log('good,', good);
 console.log('bad,', bad);
 console.log('sm.evaluateCharacterPercent(good, bad, 0.6, 5)');
-m = sm.evaluateCharacterPercent(good, bad, 0.6, 5);
+m = sm.diffPercent(good, bad, 0.6, 5);
 console.log(m);
 console.log('----------------------------------------------------------');
 console.log(showResult(m.diffs));
