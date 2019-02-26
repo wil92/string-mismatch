@@ -7,18 +7,18 @@
 <body>
     <textarea id="start"></textarea>
     <textarea id="end"></textarea>
-    <div id="diffResult"></div>
+    <div id="diffResultJSON"></div>
+    <div id="diffResult" style="display: flex;flex-direction: row;"></div>
 
     <script src="../lib/string-mismatch.min.js" type="application/javascript"></script>
     <script type="application/javascript">
         var startText = document.getElementById("start");
         var endText = document.getElementById("end");
+        var resultDiffJSON = document.getElementById("diffResultJSON");
         var resultDiff = document.getElementById("diffResult");
 
         startText.addEventListener('change', onChangeEvent);
         endText.addEventListener('change', onChangeEvent);
-
-
 
         function onChangeEvent() {
             console.log('onChangeEvent', 'aaa');
@@ -26,7 +26,24 @@
         }
 
         function calculateDiff(start, end) {
-            resultDiff.innerHTML = JSON.stringify(sm.diff(start, end, 5));
+            var diffs = sm.diff(start, end, 5);
+            resultDiffJSON.innerHTML = JSON.stringify(diffs, null, '  ');
+            var result = '';
+            for (var i = 0; i < diffs.length; i++) {
+                if (diffs[i].mtc) {
+                    result += '<p>' + diffs[i].mtc + '<p>';
+                }
+                if (diffs[i].del) {
+                    result += '<p style="color: #ff0000">' + diffs[i].del + '<p>';
+                }
+                if (diffs[i].ins) {
+                    result += '<p style="color: #05bf2e">' + diffs[i].ins + '<p>';
+                }
+                if (diffs[i].sbs) {
+                    result += '<p>' + diffs[i].sbs + '<p>';
+                }
+            }
+            resultDiff.innerHTML = result;
         }
     </script>
 </body>
