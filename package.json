@@ -1,6 +1,6 @@
 {
   "name": "string-mismatch",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "All mismatch between two strings",
   "main": "lib/string-mismatch.js",
   "scripts": {
