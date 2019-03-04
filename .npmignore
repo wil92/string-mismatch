@@ -4,6 +4,7 @@ example
 scripts
 webpack.config.js
 src/**/*.test.js
+.eslintrc
 
 # Logs
 logs
