@@ -5,6 +5,7 @@ scripts
 webpack.config.js
 src/**/*.test.js
 .eslintrc
+.travis.yml
 
 # Logs
 logs
