@@ -15,47 +15,12 @@ describe("string-mismatch tests", function() {
         expect(arrayCopy.length).to.equal(4);
     });
 
-    it("check rotate library function", function(){
-        var value = "asd asd",
-            expected = "sd asda";
-        // noinspection JSUnresolvedVariable
-        expect(sm.rotate(value, 1)).to.equal(expected);
-    });
-
-    it("check rotate library function (undefine or empty value)", function(){
-        var value = "asd asd",
-            expected = "asd asd";
-        // noinspection JSUnresolvedVariable
-        expect(sm.rotate(value)).to.equal(expected);
-    });
-
-    it("check rotate library function (offset)", function(){
-        var value = "asd asd",
-            expected = "sd asda";
-        // noinspection JSUnresolvedVariable
-        expect(sm.rotate(value, 8)).to.equal(expected);
-    });
-
-    it("check rotate library function (negative)", function(){
-        var value = "asd asd",
-            expected = "dasd as";
-        // noinspection JSUnresolvedVariable
-        expect(sm.rotate(value, -1)).to.equal(expected);
-    });
-
-    it("check rotate library function (negative offset)", function(){
-        var value = "asd asd",
-            expected = "dasd as";
-        // noinspection JSUnresolvedVariable
-        expect(sm.rotate(value, -8)).to.equal(expected);
-    });
-
     it("check getMatchingSubstring method for find matches", function(){
         var start = "poasdf fdfsaf",
             end = "bgasdfsdfs",
             mValue = 0;
         // noinspection JSUnresolvedFunction, JSUnresolvedVariable
-        expect(sm.getMatchingSubstring(start, end, mValue)).to.deep.include({fis: 2, mtc: mValue, sbs: "asdf"});
+        expect(sm.getMatchingSubstring(start, end, 0, mValue)).to.deep.include({fis: 2, mtc: mValue, sbs: "asdf"});
     });
 
     it("check diff function with real values 1", function(){

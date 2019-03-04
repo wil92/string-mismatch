@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node ./scripts/build",
     "lint": "eslint -c .eslintrc src/**/*.js",
+    "perf": "node ./scripts/performance-test",
     "start": "npm run build && node ./example/mismatch",
     "test": "mocha --ui bdd --recursive ./src",
     "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./src",
