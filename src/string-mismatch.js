@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-var replace = require('lodash/replace');
-var trim = require('lodash/trim');
-var toLower = require('lodash/toLower');
+var replace = require("lodash/replace");
+var trim = require("lodash/trim");
+var toLower = require("lodash/toLower");
 
 /**
  * With this function you can evaluate if two string are equals, with a percent of different characters.
@@ -55,7 +55,7 @@ exports.evaluateCharacterPercent = exports.diffPercent;
  * @return {string}
  */
 exports.eraseSpaces = function (text) {
-    var newText = replace(text, /\s\s+/g, ' ');
+    var newText = replace(text, /\s\s+/g, " ");
     return trim(newText);
 };
 
@@ -196,7 +196,7 @@ exports.rotate = function (text, n) {
     if (n % len === 0) {
         return text;
     }
-    var res = '';
+    var res = "";
     for (var i = 0; i < len; i++) {
         res += text[(i + (len + n % len)) % len];
     }
@@ -204,5 +204,5 @@ exports.rotate = function (text, n) {
 };
 
 function defaultFor(arg, val){
-    return typeof arg !== 'undefined' ? arg : val;
+    return typeof arg !== "undefined" ? arg : val;
 }
