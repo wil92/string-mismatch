@@ -8,7 +8,8 @@
     "lint": "eslint -c .eslintrc src/**/*.js",
     "start": "npm run build && node ./example/mismatch",
     "test": "mocha --ui bdd --recursive ./src",
-    "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./src"
+    "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./src",
+    "upd": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
