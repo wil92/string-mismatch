@@ -1,8 +1,8 @@
 "use strict";
 
-const replace = require("lodash/replace");
-const trim = require("lodash/trim");
-const toLower = require("lodash/toLower");
+var replace = require("lodash/replace");
+var trim = require("lodash/trim");
+var toLower = require("lodash/toLower");
 
 /**
  * With this function you can evaluate if two string are equals, with a percent of different characters.
@@ -15,7 +15,7 @@ const toLower = require("lodash/toLower");
  */
 exports.diffPercent = function (start, end, percent, precision, ignoreCase) {
     ignoreCase = defaultFor(ignoreCase, false);
-    let diffs,
+    var diffs,
         wc = 0;
 
     start = this.eraseSpaces(start);
@@ -23,8 +23,8 @@ exports.diffPercent = function (start, end, percent, precision, ignoreCase) {
 
     diffs = this.diff(start, end, precision, ignoreCase);
 
-    for (let i = 0; i < diffs.length; i++) {
-        const diff = diffs[i];
+    for (var i = 0; i < diffs.length; i++) {
+        var diff = diffs[i];
         wc += Math.max(diff.del.length, diff.ins.length);
     }
 
@@ -39,7 +39,7 @@ exports.diffPercent = function (start, end, percent, precision, ignoreCase) {
 
 /**
  * With this function you can evaluate if two string are equals, with a percent of different characters.
- * @deprecated Will be deleted in version 2.0. Use diffPercent instead
+ * @deprecated Will be devared in version 2.0. Use diffPercent instead
  * @param start {string} start text
  * @param end {string} end text
  * @param percent {number} percent of correct characters of the original text
@@ -73,7 +73,7 @@ exports.eraseSpaces = function (text) {
 exports.diff = function (start, end, precision, ignoreCase) {
     precision = defaultFor(precision, 5);
     ignoreCase = defaultFor(ignoreCase, false);
-    let changeData = this.getChanges(start, end, "", precision, ignoreCase),
+    var changeData = this.getChanges(start, end, "", precision, ignoreCase),
         nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),
         nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length),
         result = [];
@@ -101,7 +101,7 @@ exports.diff = function (start, end, precision, ignoreCase) {
  */
 exports.getChanges = function (start, end, m, precision, ignoreCase) {
     ignoreCase = defaultFor(ignoreCase, false);
-    let isThisLonger = start.length >= end.length,
+    var isThisLonger = start.length >= end.length,
         bi = 0,
         longer = isThisLonger ? start : end,
         shorter = isThisLonger ? end : start;
@@ -110,7 +110,7 @@ exports.getChanges = function (start, end, m, precision, ignoreCase) {
     longer = longer.slice(bi);
     shorter = shorter.slice(bi);
 
-    let len = longer.length,
+    var len = longer.length,
         cd = {
             fis: shorter.length,
             fil: len,
@@ -120,7 +120,7 @@ exports.getChanges = function (start, end, m, precision, ignoreCase) {
         sub = {sbs: ""};
 
     if (shorter !== "") {
-        for (let rc = 0; rc < len && sub.sbs.length < precision; rc++) {
+        for (var rc = 0; rc < len && sub.sbs.length < precision; rc++) {
             sub = this.getMatchingSubstring(shorter, this.rotate(longer, rc), cd.mtc, ignoreCase);
             sub.fil = rc < len - sub.fis ? sub.fis + rc
                 : sub.fis - len + rc;
@@ -147,7 +147,7 @@ exports.getChanges = function (start, end, m, precision, ignoreCase) {
  */
 exports.getMatchingSubstring = function (source, changed, m, ignoreCase) {
     ignoreCase = defaultFor(ignoreCase, false);
-    let i = 0,
+    var i = 0,
         slen = source.length,
         match = false,
         o = {fis: slen, mtc: m, sbs: ""};
@@ -190,13 +190,13 @@ exports.ignoreCase = function (text1, text2, ignoreCase) {
  */
 exports.rotate = function (text, n) {
     n = n | 0;
-    const len = text.length;
+    var len = text.length;
     n = n < 0 ? len - Math.abs(n) % len : n;
     if (n % len === 0) {
         return text;
     }
-    let res = "";
-    for (let i = 0; i < len; i++) {
+    var res = "";
+    for (var i = 0; i < len; i++) {
         res += text[(i + (len + n % len)) % len];
     }
     return res;
