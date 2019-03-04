@@ -121,7 +121,7 @@ exports.getChanges = function (start, end, m, precision, ignoreCase) {
 
     if (shorter !== "") {
         for (var rc = 0; rc < len && sub.sbs.length < precision; rc++) {
-            sub = this.getMatchingSubstring(shorter, this.rotate(longer, rc), cd.mtc, ignoreCase);
+            sub = this.getMatchingSubstring(shorter, longer, rc, cd.mtc, ignoreCase);
             sub.fil = rc < len - sub.fis ? sub.fis + rc
                 : sub.fis - len + rc;
             sub.sbs.length > cd.sbs.length && (cd = sub);
@@ -141,18 +141,21 @@ exports.getChanges = function (start, end, m, precision, ignoreCase) {
  * returns the first matching substring in-between the two strings
  * @param source {string} begin text
  * @param changed {string} end text
+ * @param rot
  * @param m {string}
  * @param ignoreCase {boolean} ignore upper or lower characters
  * @returns {{fis: number, mtc: string, sbs: string}}
  */
-exports.getMatchingSubstring = function (source, changed, m, ignoreCase) {
+exports.getMatchingSubstring = function (source, changed, rot, m, ignoreCase) {
     ignoreCase = defaultFor(ignoreCase, false);
     var i = 0,
         slen = source.length,
         match = false,
         o = {fis: slen, mtc: m, sbs: ""};
     while (i < slen) {
-        if (this.ignoreCase(changed[i], source[i], ignoreCase)) {
+        var len = changed.length;
+        var indexRot = (i + (rot < 0 ? len - Math.abs(rot) % len : rot)) % len;
+        if (this.ignoreCase(changed[indexRot], source[i], ignoreCase)) {
             if (match) {
                 o.sbs += source[i];
             } else {
@@ -180,26 +183,6 @@ exports.ignoreCase = function (text1, text2, ignoreCase) {
         return text1 === text2;
     }
     return toLower(text1) === toLower(text2);
-};
-
-/**
- * rotate a string (n) times to the left, if it's a negative value then rotate (-n) times to the right
- * @param text {string} string to rotate
- * @param n {number} time to rotate
- * @returns {string} new rotate string
- */
-exports.rotate = function (text, n) {
-    n = n | 0;
-    var len = text.length;
-    n = n < 0 ? len - Math.abs(n) % len : n;
-    if (n % len === 0) {
-        return text;
-    }
-    var res = "";
-    for (var i = 0; i < len; i++) {
-        res += text[(i + (len + n % len)) % len];
-    }
-    return res;
 };
 
 function defaultFor(arg, val){

@@ -8,7 +8,7 @@ for (var i = 0; i < 5000; i++) {
     dest += getRandomChar();
 }
 
-var result = performance(10);
+var result = performance(20);
 console.log("result", result);
 
 function getRandomChar() {
