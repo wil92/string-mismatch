@@ -2,7 +2,7 @@
 
 This library share functions for compare two strings and see the differences.
 
-[![codecov.io](https://img.shields.io/codecov/c/github/wil92/string-mismatch/dev.svg?style=flat-square)](http://codecov.io/github/wil92/string-mismatch?branch=dev)
+[![codecov.io](https://img.shields.io/codecov/c/github/wil92/string-mismatch/master.svg?style=flat-square)](http://codecov.io/github/wil92/string-mismatch?branch=master)
 
 ## Install
 
