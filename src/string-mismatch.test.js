@@ -1,9 +1,8 @@
-'use strict';
+const chai = require('chai');
 
-// noinspection JSUnresolvedVariable, JSUnresolvedFunction
-var expect = require('chai').expect;
-// noinspection JSUnresolvedFunction
-var sm = require('../src/string-mismatch');
+const sm = require('./string-mismatch');
+
+const expect = chai.expect;
 
 describe('string-mismatch tests', function() {
     it('check how slice work in javascript language', function () {
@@ -126,7 +125,7 @@ describe('string-mismatch tests', function() {
             end = 'n',
             expected = {"diffs": [{"del": "a", "ins": "", "mtc": "", "sbs": "n"}, {"del": "imal", "ins": "", "mtc": "", "sbs": ""}], "good": false, "percent": 0.8333333333333334};
         // noinspection JSUnresolvedVariable
-            expect(sm.diffPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
+        expect(sm.diffPercent(start, end, 0.6, 5, true)).to.deep.equal(expected);
     });
 
 
