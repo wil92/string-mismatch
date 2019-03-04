@@ -1,9 +1,10 @@
 # ignore from the project
 .gitignore
-test
 example
 scripts
 webpack.config.js
+src/**/*.test.js
+.eslintrc
 
 # Logs
 logs
@@ -39,7 +40,6 @@ bower_components
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 dist
-lib
 
 # Dependency directories
 node_modules/
