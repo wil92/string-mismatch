@@ -6,4 +6,4 @@ before_install:
 after_success:
   - codecov --file coverage/lcov.info --disable search
 script:
-  - npm test:cov
+  - npm run test:cov
