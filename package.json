@@ -11,7 +11,7 @@
     "perf": "node ./scripts/performance-test",
     "start": "npm run build:prod && node ./example/mismatch",
     "test": "mocha --ui bdd --recursive ./src",
-    "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./src",
+    "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --ui bdd --recursive ./src",
     "pub": "npm run build && npm publish"
   },
   "repository": {
