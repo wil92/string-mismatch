@@ -1,5 +1,6 @@
 var merge = require("lodash/merge");
 var toLower = require("lodash/toLower");
+var defaultFor = require("../utils/object").defaultFor;
 
 module.exports = function (options) {
     module.exports.options = merge({precision: 5, ignoreCase: true}, options);
@@ -130,7 +131,3 @@ module.exports.ignoreCase = function (text1, text2, ignoreCase) {
     }
     return toLower(text1) === toLower(text2);
 };
-
-function defaultFor(arg, val) {
-    return typeof arg !== "undefined" ? arg : val;
-}
