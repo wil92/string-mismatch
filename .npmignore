@@ -2,7 +2,7 @@
 .gitignore
 example
 scripts
-webpack.config.js
+*.config.js
 src/**/*.test.js
 .eslintrc
 .travis.yml

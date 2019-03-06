@@ -1,11 +1,10 @@
 var fs = require("fs");
 var path = require("path");
 
-var webpackConfigProd = require("../webpack.config");
-
+var projectLib = path.resolve(__dirname, "..", "lib");
 var projectDist = path.resolve(__dirname, "..", "dist");
 
-removeFiles(webpackConfigProd.output.path).then(function () {
+removeFiles(projectLib).then(function () {
     if (fs.existsSync(projectDist)) {
         return removeFiles(projectDist);
     }
@@ -20,7 +19,7 @@ function copyFile(filePath) {
     return new Promise(function (resolve, reject) {
         fs.copyFile(
             path.resolve(projectPath, filePath),
-            path.resolve(webpackConfigProd.output.path, filePath),
+            path.resolve(projectLib, filePath),
             function (err) {
                 return err ? reject(err) : resolve();
             });

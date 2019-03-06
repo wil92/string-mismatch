@@ -23,4 +23,26 @@ var config = {
     }
 };
 
-module.exports = config;
+var configLevenshtein = {
+    entry: {
+        "levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.js")
+    },
+    devtool: "source-map",
+    output: {
+        path: path.resolve(__dirname, "lib"),
+        globalObject: "this",
+        filename: "[name].js",
+        library: "levenshtein",
+        libraryTarget: "umd",
+        umdNamedDefine: true
+    },
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin({
+                include: /\.min\.js$/
+            })
+        ]
+    }
+};
+
+module.exports = [config, configLevenshtein];
