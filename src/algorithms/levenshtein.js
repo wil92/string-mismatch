@@ -9,7 +9,7 @@ module.exports.differences = function (start, end) {
     module.exports.calculateMatrix(start, end);
     var result = [];
     var sub = {mtc: '', del: '', ins: '', sbs: ''};
-    var subResult = module.exports.fun(start, start.length, end, end.length);
+    var subResult = module.exports.reconstructSolution(start, start.length, end, end.length);
     for (var i = 0, j = 0; i < subResult.length; i++) {
         if (subResult[i].eq !== '' && j === 0) {
             sub.mtc += subResult[i].eq;
@@ -41,7 +41,7 @@ module.exports.differences = function (start, end) {
     return result;
 };
 
-module.exports.fun = function (start, si, end, ei) {
+module.exports.reconstructSolution = function (start, si, end, ei) {
     if (si === 0 && ei === 0) {
         return [];
     }
@@ -55,7 +55,7 @@ module.exports.fun = function (start, si, end, ei) {
         }
         return module.exports.dp[o[0]][o[1]] - module.exports.dp[p[0]][p[1]];
     })[0];
-    var result = module.exports.fun(start, mi[0], end, mi[1]);
+    var result = module.exports.reconstructSolution(start, mi[0], end, mi[1]);
     if (mi[0] !== si && mi[1] !== ei) {
         result.push({eq: start[mi[0]], del: '', ins: ''});
     } else if (mi[0] !== si) {
@@ -67,6 +67,7 @@ module.exports.fun = function (start, si, end, ei) {
 };
 
 module.exports.calculateMatrix = function (start, end) {
+    // Fill the dp with the initial values
     module.exports.dp = [];
     for (var i = 0; i < start.length + 1; i++) {
         var array = [];
@@ -75,12 +76,11 @@ module.exports.calculateMatrix = function (start, end) {
         }
         module.exports.dp.push(array);
     }
-    // console.log('calculateMatrix', module.exports.dp);
-    calculate(start, 0, end, 0);
+    calculateLevenshtein(start, 0, end, 0);
     return module.exports.dp;
 };
 
-function calculate(start, si, end, ei) {
+function calculateLevenshtein(start, si, end, ei) {
     if (si > start.length || ei > end.length) {
         return 99999999;
     }
@@ -91,8 +91,8 @@ function calculate(start, si, end, ei) {
         return module.exports.dp[si][ei];
     }
     return module.exports.dp[si][ei] = Math.min(
-        calculate(start, si + 1, end, ei) + 1,
-        calculate(start, si, end, ei + 1) + 1,
-        calculate(start, si + 1, end, ei + 1) + (start[si] === end[ei] ? 0 : 1)
+        calculateLevenshtein(start, si + 1, end, ei) + 1,
+        calculateLevenshtein(start, si, end, ei + 1) + 1,
+        calculateLevenshtein(start, si + 1, end, ei + 1) + (start[si] === end[ei] ? 0 : 1)
     );
 }

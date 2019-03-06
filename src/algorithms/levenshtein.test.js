@@ -42,7 +42,7 @@ describe("levenshtein.js", function () {
         var start = "my",
             end = "you";
         lev.dp = lev.calculateMatrix(start, end);
-        expect(lev.fun(start, start.length, end, end.length)).to.deep.equal([{eq: '', del: 'm', ins: ''},
+        expect(lev.reconstructSolution(start, start.length, end, end.length)).to.deep.equal([{eq: '', del: 'm', ins: ''},
             {eq: '', del: '', ins: 'y'},
             {eq: '', del: '', ins: 'o'},
             {eq: '', del: 'y', ins: ''},
