@@ -9,7 +9,7 @@
     "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
     "lint": "eslint -c .eslintrc src/**/*.js",
     "perf": "node ./scripts/performance-test",
-    "start": "npm run build && node ./example/mismatch",
+    "start": "npm run build:prod && node ./example/mismatch",
     "test": "mocha --ui bdd --recursive ./src",
     "test:cov": "nyc --reporter=lcov mocha --ui bdd --recursive ./src",
     "pub": "npm run build && npm publish"

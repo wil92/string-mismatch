@@ -1,5 +1,5 @@
 // noinspection JSUnresolvedFunction
-var sm = require('../lib/string-mismatch');
+var sm = require('../lib/string-mismatch.min');
 
 function showResult(diffs) {
     return diffs.reduce(function (text, value) {
