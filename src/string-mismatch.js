@@ -1,5 +1,3 @@
-"use strict";
-
 var replace = require("lodash/replace");
 var trim = require("lodash/trim");
 var toLower = require("lodash/toLower");

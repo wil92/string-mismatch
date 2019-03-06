@@ -1,5 +1,8 @@
+var merge = require("lodash/merge");
+
 module.exports = function (options) {
-    module.exports.options = options;
+    module.exports.options = merge({ignoreCase: true}, options);
+    return module.exports;
 };
 
 module.exports.differences = function (start, end) {
@@ -22,7 +25,7 @@ module.exports.differences = function (start, end) {
             j = 2;
         }
         if (subResult[i].ins !== '') {
-            if (j>2) {
+            if (j > 2) {
                 result.push(sub);
                 sub = {mtc: '', del: '', ins: '', sbs: ''};
             }

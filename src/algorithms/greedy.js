@@ -2,7 +2,7 @@ var merge = require("lodash/merge");
 var toLower = require("lodash/toLower");
 
 module.exports = function (options) {
-    module.exports.options = merge({precision: 5}, options);
+    module.exports.options = merge({precision: 5, ignoreCase: true}, options);
     return module.exports;
 };
 
@@ -21,9 +21,7 @@ module.exports.differences = function (start, end) {
  *      sbs: last part of the section
  */
 module.exports.diff = function (start, end) {
-    var precision = defaultFor(module.exports.options.precision, 5);
-    var ignoreCase = defaultFor(ignoreCase, false);
-    var changeData = module.exports.getChanges(start, end, "", precision, ignoreCase),
+    var changeData = module.exports.getChanges(start, end, ""),
         nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),
         nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length),
         result = [];
@@ -45,12 +43,11 @@ module.exports.diff = function (start, end) {
  * @param start {string} start text
  * @param end {string} end text
  * @param m {string} parameter no needed (is only for inside use)
- * @param precision {number} presition or
- * @param ignoreCase {boolean} ignore upper or lower characters
  * @returns {{fis: number, fil: number, sbs: string, mtc: string}}
  */
-module.exports.getChanges = function (start, end, m, precision, ignoreCase) {
-    ignoreCase = defaultFor(ignoreCase, false);
+module.exports.getChanges = function (start, end, m) {
+    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false);
+    var precision = defaultFor(module.exports.options.precision, 5);
     var isThisLonger = start.length >= end.length,
         bi = 0,
         longer = isThisLonger ? start : end,
@@ -71,7 +68,7 @@ module.exports.getChanges = function (start, end, m, precision, ignoreCase) {
 
     if (shorter !== "") {
         for (var rc = 0; rc < len && sub.sbs.length < precision; rc++) {
-            sub = module.exports.getMatchingSubstring(shorter, longer, rc, cd.mtc, ignoreCase);
+            sub = module.exports.getMatchingSubstring(shorter, longer, rc, cd.mtc);
             sub.fil = rc < len - sub.fis ? sub.fis + rc
                 : sub.fis - len + rc;
             sub.sbs.length > cd.sbs.length && (cd = sub);
@@ -83,7 +80,7 @@ module.exports.getChanges = function (start, end, m, precision, ignoreCase) {
     if (cd.del.indexOf(" ") === -1 || cd.ins.indexOf(" ") === -1 || cd.del === "" || cd.ins === "" || cd.sbs === "") {
         return cd;
     } else {
-        return module.exports.getChanges(cd.del, cd.ins, cd.mtc, precision, ignoreCase);
+        return module.exports.getChanges(cd.del, cd.ins, cd.mtc);
     }
 };
 
@@ -93,11 +90,10 @@ module.exports.getChanges = function (start, end, m, precision, ignoreCase) {
  * @param changed {string} end text
  * @param rot
  * @param m {string}
- * @param ignoreCase {boolean} ignore upper or lower characters
  * @returns {{fis: number, mtc: string, sbs: string}}
  */
-module.exports.getMatchingSubstring = function (source, changed, rot, m, ignoreCase) {
-    ignoreCase = defaultFor(ignoreCase, false);
+module.exports.getMatchingSubstring = function (source, changed, rot, m) {
+    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false);
     var i = 0,
         slen = source.length,
         match = false,
@@ -129,12 +125,12 @@ module.exports.getMatchingSubstring = function (source, changed, rot, m, ignoreC
  * @return {boolean}
  */
 module.exports.ignoreCase = function (text1, text2, ignoreCase) {
-    if(!ignoreCase){
+    if (!ignoreCase) {
         return text1 === text2;
     }
     return toLower(text1) === toLower(text2);
 };
 
-function defaultFor(arg, val){
+function defaultFor(arg, val) {
     return typeof arg !== "undefined" ? arg : val;
 }

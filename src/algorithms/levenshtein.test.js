@@ -1,10 +1,14 @@
 const chai = require("chai");
 
-const lev = require('./levenshtein');
-
 const expect = chai.expect;
 
 describe("levenshtein.js", function () {
+    let lev;
+
+    beforeEach(function () {
+        lev = require('./levenshtein')();
+    });
+
     it('should calculate the matrix dp', function () {
         var start = "my",
             end = "you";
