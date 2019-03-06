@@ -3,7 +3,6 @@ var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 var config = {
     entry: {
-        "string-mismatch": path.join(__dirname, "/src/string-mismatch.js"),
         "string-mismatch.min": path.join(__dirname, "/src/string-mismatch.js")
     },
     devtool: "source-map",

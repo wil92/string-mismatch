@@ -1,17 +1,15 @@
 var fs = require("fs");
 var path = require("path");
-var webpack = require("webpack");
 
 var webpackConfigProd = require("../webpack.config");
 
-var projectPath = path.resolve(__dirname, "..");
+var projectDist = path.resolve(__dirname, "..", "dist");
 
 removeFiles(webpackConfigProd.output.path).then(function () {
-    return new Promise(function (resolve, reject) {
-        webpack(webpackConfigProd, function (err, stats) {
-            return err ? reject(err) : resolve(stats);
-        });
-    });
+    if (fs.existsSync(projectDist)) {
+        return removeFiles(projectDist);
+    }
+    return fs.mkdir(projectDist);
 }).then(function () {
     console.info("Build: DONE");
 }).catch(function (err) {
@@ -52,7 +50,7 @@ function removeFiles(dirPath, deleteDir) {
     });
 }
 
-function removeDir (dirPath) {
+function removeDir(dirPath) {
     return new Promise(function (resolve, reject) {
         fs.rmdir(dirPath, function (err) {
             return err ? reject(err) : resolve();
@@ -62,7 +60,7 @@ function removeDir (dirPath) {
 
 function removeFile(filePath) {
     return new Promise(function (resolve, reject) {
-        fs.unlink(filePath, function(err) {
+        fs.unlink(filePath, function (err) {
             return err ? reject(err) : resolve();
         });
     });
