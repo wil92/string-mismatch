@@ -14,12 +14,10 @@ module.exports.use = function (algorithm) {
  * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
 module.exports.diffPercent = function (start, end, percent) {
-    isNil(module.exports.algorithm) && module.exports.use();
+    module.exports.checkAlgorithm();
     var wc = 0;
-
     start = this.eraseSpaces(start);
     end = this.eraseSpaces(end);
-
     var diffs = module.exports.algorithm.differences(start, end);
 
     for (var i = 0; i < diffs.length; i++) {
@@ -47,6 +45,25 @@ module.exports.diffPercent = function (start, end, percent) {
  * @return {{percent: number, good: boolean, diffs: ({mtc, del, ins, sbs}[])}}
  */
 module.exports.evaluateCharacterPercent = exports.diffPercent;
+
+/**
+ * return the list of changes in the original text
+ * @param start {string} start text
+ * @param end {string} end text
+ * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
+ *      mtc: start part of the section
+ *      del: erase part of the section
+ *      ins: new part of the section
+ *      sbs: last part of the section
+ */
+module.exports.diff = function (start, end) {
+    module.exports.checkAlgorithm();
+    return module.exports.algorithm.differences(start, end);
+};
+
+module.exports.checkAlgorithm = function () {
+    isNil(module.exports.algorithm) && module.exports.use();
+};
 
 /**
  * Erase the in-between, start and end spaces
