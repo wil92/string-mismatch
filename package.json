@@ -6,7 +6,7 @@
   "scripts": {
     "bundle-report": "webpack-bundle-analyzer dist/stats.json -h localhost -p 8085",
     "build": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --config ./webpack.config.js --json > dist/stats.json && npm run bundle-report",
-    "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
+    "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --mode=\"production\" --config ./webpack.config.js",
     "lint": "eslint -c .eslintrc src/**/*.js",
     "perf": "node ./scripts/performance-test",
     "start": "npm run build:prod && node ./example/mismatch",

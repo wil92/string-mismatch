@@ -62,20 +62,31 @@
 
     function calculateDiff(start, end) {
         var diffs = sm.diff(start, end, 5);
+        for (var i = 0; i < sm.algorithm.dp.length; i++) {
+            var s = '';
+            for (var j = 0; j < sm.algorithm.dp[i].length; j++) {
+                s += sm.algorithm.dp[i][j] + (sm.algorithm.dp[i][j] < 10 ? " " : "") + " ";
+            }
+            console.log(s);
+        }
+        console.log('calculateDiff', sm.algorithm.reconstructSolution(start, start.length - 1, end, end.length - 1));
         resultDiffJSON.innerHTML = JSON.stringify(diffs, 3, '  ');
         var result = '';
         for (var i = 0; i < diffs.length; i++) {
-            if (diffs[i].mtc !== '') {
-                result += '<span style="white-space: pre;">' + diffs[i].mtc + '</span>';
-            }
-            if (diffs[i].del !== '') {
-                result += '<span style="color: #ff0000;white-space: pre;">' + diffs[i].del + '</span>';
-            }
-            if (diffs[i].ins !== '') {
-                result += '<span style="color: #05bf2e;white-space: pre;">' + diffs[i].ins + '</span>';
-            }
-            if (diffs[i].sbs !== '') {
-                result += '<span style="white-space: pre;">' + diffs[i].sbs + '</span>';
+            switch (diffs[i].type) {
+                case 'eql':
+                    result += '<span style="white-space: pre;">' + diffs[i].value + '</span>';
+                    break;
+                case 'del':
+                    result += '<span style="background-color: #ff0000;white-space: pre;">' + diffs[i].value + '</span>';
+                    break;
+                case 'ins':
+                    result += '<span style="background-color: #05bf2e;white-space: pre;">' + diffs[i].value + '</span>';
+                    break;
+                case 'sub':
+                    result += '<span style="background-color: #ff0000;border: 1px solid #180abf;white-space: pre;">' + diffs[i].value[0] + '</span>';
+                    result += '<span style="background-color: #05bf2e;border: 1px solid #180abf;white-space: pre;">' + diffs[i].value[1] + '</span>';
+                    break;
             }
         }
         resultDiff.innerHTML = result;

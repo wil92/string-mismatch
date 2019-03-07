@@ -1,4 +1,14 @@
 var merge = require("lodash/merge");
+var defaultFor = require('../utils/object').defaultFor;
+
+var MAX_VALUE = 9999999999;
+var SUB = 0,
+    DEL = 1,
+    INS = 2;
+var SUB_NAME = 'sub',
+    DEL_NAME = 'del',
+    EQL_NAME = 'eql',
+    INS_NAME = 'ins';
 
 module.exports = function (options) {
     module.exports.options = merge({ignoreCase: true}, options);
@@ -8,70 +18,77 @@ module.exports = function (options) {
 module.exports.differences = function (start, end) {
     module.exports.calculateMatrix(start, end);
     var result = [];
-    var sub = {mtc: '', del: '', ins: '', sbs: ''};
-    var subResult = module.exports.reconstructSolution(start, start.length, end, end.length);
-    for (var i = 0, j = 0; i < subResult.length; i++) {
-        if (subResult[i].eq !== '' && j === 0) {
-            sub.mtc += subResult[i].eq;
-            subResult[i].eq = '';
-            j = 1;
-        }
-        if (subResult[i].del !== '') {
-            if (j > 2) {
+    var subResult = module.exports.reconstructSolution(start, end);
+    console.log('differences', subResult);
+    if (subResult.length > 0) {
+        var sub = {type: subResult[0].type, value: subResult[0].value};
+        for (var i = 1; i < subResult.length; i++) {
+            if (subResult[i].type !== sub.type || sub.type === SUB_NAME) {
                 result.push(sub);
-                sub = {mtc: '', del: '', ins: '', sbs: ''};
+                sub = {type: subResult[i].type, value: ''};
             }
-            sub.del += subResult[i].del;
-            j = 2;
+            sub.value += subResult[i].value;
         }
-        if (subResult[i].ins !== '') {
-            if (j > 2) {
-                result.push(sub);
-                sub = {mtc: '', del: '', ins: '', sbs: ''};
-            }
-            sub.ins += subResult[i].ins;
-            j = 2;
-        }
-        if (subResult[i].eq !== '') {
-            sub.sbs += subResult[i].eq;
-            j = 3;
-        }
+        result.push(sub);
     }
-    result.push(sub);
     return result;
 };
 
-module.exports.reconstructSolution = function (start, si, end, ei) {
-    if (si === 0 && ei === 0) {
-        return [];
-    }
-    var options = [];
-    ei - 1 >= 0 && options.push([si, ei - 1, 0]);
-    si - 1 >= 0 && ei - 1 >= 0 && options.push([si - 1, ei - 1, 1]);
-    si - 1 >= 0 && options.push([si - 1, ei, 2]);
-    var mi = options.sort(function (o, p) {
-        if (module.exports.dp[o[0]][o[1]] === module.exports.dp[p[0]][p[1]]) {
-            return o[2] - p[2];
+module.exports.reconstructSolution = function (start, end) {
+    var result = [];
+    var si = 0, sl = start.length,
+        ei = 0, el = end.length;
+    var best = [si, ei, SUB];
+    // var sub = '     ';
+    // for (var i = 0; i < end.length; i++) {
+    //     sub += end[i] + '  ';
+    // }
+    // console.log(sub);sub='     ';
+    // for (var i = 0; i < end.length; i++) {
+    //     sub += i + (i< 10 ? ' ': '') + ' ';
+    // }
+    // console.log(sub);
+    // for (var i = 0; i < start.length; i++) {
+    //     sub = start[i] + ' ' + i + (i<10?' ':'') + ' ';
+    //     for (var j = 0; j < end.length; j++) {
+    //         sub += module.exports.dp[i][j] + (module.exports.dp[i][j] < 10 ? ' ' : '') + ' ';
+    //     }
+    //     console.log(sub);
+    // }
+    do {
+        if (best[2] === SUB) {
+            if (module.exports.dp[si][ei] === module.exports.dp[best[0]][best[1]]){
+                result.push({type: EQL_NAME, value: start[si]});
+            } else {
+                result.push({type: SUB_NAME, value: start[si] + end[ei]});
+            }
+        } else if (best[2] === DEL) {
+            result.push({type: DEL_NAME, value: start[si]});
+        } else {
+            result.push({type: INS_NAME, value: end[ei]});
         }
-        return module.exports.dp[o[0]][o[1]] - module.exports.dp[p[0]][p[1]];
-    })[0];
-    var result = module.exports.reconstructSolution(start, mi[0], end, mi[1]);
-    if (mi[0] !== si && mi[1] !== ei) {
-        result.push({eq: start[mi[0]], del: '', ins: ''});
-    } else if (mi[0] !== si) {
-        result.push({eq: '', del: start[mi[0]], ins: ''});
-    } else {
-        result.push({eq: '', del: '', ins: end[mi[1]]});
-    }
+        si = best[0];
+        ei = best[1];
+        var options = [];
+        si + 1 < sl && options.push([si + 1, ei, DEL]);
+        ei + 1 < el && options.push([si, ei + 1, INS]);
+        si + 1 < sl && ei + 1 < el && options.push([si + 1, ei + 1, SUB]);
+        best = options.sort(function (o, p) {
+            if (module.exports.dp[o[0]][o[1]] === module.exports.dp[p[0]][p[1]]) {
+                return o[2] - p[2];
+            }
+            return module.exports.dp[o[0]][o[1]] - module.exports.dp[p[0]][p[1]];
+        })[0];
+    } while (si < sl - 1 && ei < el - 1);
     return result;
 };
 
 module.exports.calculateMatrix = function (start, end) {
     // Fill the dp with the initial values
     module.exports.dp = [];
-    for (var i = 0; i < start.length + 1; i++) {
+    for (var i = 0; i < start.length; i++) {
         var array = [];
-        for (var j = 0; j < end.length + 1; j++) {
+        for (var j = 0; j < end.length; j++) {
             array.push(-1);
         }
         module.exports.dp.push(array);
@@ -81,11 +98,11 @@ module.exports.calculateMatrix = function (start, end) {
 };
 
 function calculateLevenshtein(start, si, end, ei) {
-    if (si > start.length || ei > end.length) {
-        return 99999999;
-    }
-    if (si === start.length && end.length === ei) {
+    if (si === start.length && ei === end.length) {
         return 0;
+    }
+    if (si === start.length || ei === end.length) {
+        return MAX_VALUE;
     }
     if (module.exports.dp[si][ei] !== -1) {
         return module.exports.dp[si][ei];
