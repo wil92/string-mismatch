@@ -5,60 +5,95 @@
     <title>String Mismatch example</title>
 </head>
 <body>
-    <div style="display: flex;flex-direction: column;">
-        <textarea id="start"></textarea>
-        <textarea id="end"></textarea>
-        <div id="diffResult" style="margin-top: 10px;display: flex;flex-direction: row;"></div>
-        <div id="diffResultJSON" style="margin-top: 10px;"></div>
-    </div>
+<div style="margin-bottom: 5px">
+    <select onchange="changeAlgorithm(this)">
+        <option value="greedy">Greedy</option>
+        <option value="levenshtein">Levenshtein</option>
+    </select>
+    <label>
+        <input id="ignoreCase" type="checkbox" checked onchange="ignoreCaseChange(this)" value="ignore case">
+        Ignore Case
+    </label>
+</div>
 
-    <script type="application/javascript">
-        function error() {
-            var resultDiff = document.getElementById("diffResult");
-            resultDiff.innerHTML = '<span>For test the example, make a build: <code style="background-color: #333;color: #f7f7f7;padding: 2px;border-radius: 5px;">npm run build</code></span>';
-        }
-    </script>
-    <script src="../lib/string-mismatch.min.js" type="application/javascript" onerror="error()"></script>
-    <script type="application/javascript">
-        var startText = document.getElementById("start");
-        var endText = document.getElementById("end");
-        var resultDiffJSON = document.getElementById("diffResultJSON");
+<div style="display: flex;flex-direction: column;">
+    <textarea id="start"></textarea>
+    <textarea id="end"></textarea>
+    <div id="diffResult" style="margin-top: 10px;display: flex;flex-direction: row;"></div>
+    <div id="diffResultJSON" style="margin-top: 10px;"></div>
+</div>
+
+<script type="application/javascript">
+    function error() {
         var resultDiff = document.getElementById("diffResult");
+        resultDiff.innerHTML = '<span>For test the example, make a build: <code style="background-color: #333;color: #f7f7f7;padding: 2px;border-radius: 5px;">npm run build:prod</code></span>';
+    }
+</script>
+<script src="../lib/string-mismatch.min.js" type="application/javascript" onerror="error()"></script>
+<script src="../lib/levenshtein.min.js" type="application/javascript" onerror="error()"></script>
+<script type="application/javascript">
+    var startText = document.getElementById("start");
+    var endText = document.getElementById("end");
+    var resultDiffJSON = document.getElementById("diffResultJSON");
+    var resultDiff = document.getElementById("diffResult");
+    var ignoreCase = document.getElementById("ignoreCase");
 
-        startText.value = 'This is a test for see how work the library';
-        endText.value = 'This is a test for know how work the new library';
+    startText.value = 'This is a test for see how work the library';
+    endText.value = 'This is a test for know how work the new LibrarY';
 
-        startText.addEventListener('change', onChangeEvent);
-        startText.addEventListener('keyup', onChangeEvent);
-        endText.addEventListener('change', onChangeEvent);
-        endText.addEventListener('keyup', onChangeEvent);
+    startText.addEventListener('change', onChangeEvent);
+    startText.addEventListener('keyup', onChangeEvent);
+    endText.addEventListener('change', onChangeEvent);
+    endText.addEventListener('keyup', onChangeEvent);
 
+    calculateDiff(startText.value, endText.value);
+
+    function changeAlgorithm(algorithm) {
+        switch (algorithm.value) {
+            case 'greedy':
+                sm.use();
+                onChangeEvent();
+                break;
+            case 'levenshtein':
+                sm.use(levenshtein());
+                onChangeEvent();
+                break;
+        }
+        ignoreCaseChange(ignoreCase);
+    }
+
+    function ignoreCaseChange(value) {
+        sm.algorithm.options.ignoreCase = value.checked;
+        onChangeEvent();
+    }
+
+    function onChangeEvent() {
         calculateDiff(startText.value, endText.value);
+    }
 
-        function onChangeEvent() {
-            calculateDiff(startText.value, endText.value);
-        }
-
-        function calculateDiff(start, end) {
-            var diffs = sm.diff(start, end, 5);
-            resultDiffJSON.innerHTML = JSON.stringify(diffs, 3, '  ');
-            var result = '';
-            for (var i = 0; i < diffs.length; i++) {
-                if (diffs[i].mtc !== '') {
-                    result += '<span style="white-space: pre;">' + diffs[i].mtc + '</span>';
-                }
-                if (diffs[i].del !== '') {
-                    result += '<span style="color: #ff0000;white-space: pre;">' + diffs[i].del + '</span>';
-                }
-                if (diffs[i].ins !== '') {
-                    result += '<span style="color: #05bf2e;white-space: pre;">' + diffs[i].ins + '</span>';
-                }
-                if (diffs[i].sbs !== '') {
-                    result += '<span style="white-space: pre;">' + diffs[i].sbs + '</span>';
-                }
+    function calculateDiff(start, end) {
+        var diffs = sm.diff(start, end, 5);
+        resultDiffJSON.innerHTML = JSON.stringify(diffs, 3, '  ');
+        var result = '';
+        for (var i = 0; i < diffs.length; i++) {
+            switch (diffs[i].type) {
+                case 'eql':
+                    result += '<span style="white-space: pre;">' + diffs[i].value + '</span>';
+                    break;
+                case 'del':
+                    result += '<span style="background-color: #ff0000;white-space: pre;">' + diffs[i].value + '</span>';
+                    break;
+                case 'ins':
+                    result += '<span style="background-color: #05bf2e;white-space: pre;">' + diffs[i].value + '</span>';
+                    break;
+                case 'sub':
+                    result += '<span style="background-color: #ff0000;border: 1px solid #180abf;white-space: pre;">' + diffs[i].value[0] + '</span>';
+                    result += '<span style="background-color: #05bf2e;border: 1px solid #180abf;white-space: pre;">' + diffs[i].value[1] + '</span>';
+                    break;
             }
-            resultDiff.innerHTML = result;
         }
-    </script>
+        resultDiff.innerHTML = result;
+    }
+</script>
 </body>
 </html>
