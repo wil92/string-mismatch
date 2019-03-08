@@ -12,28 +12,8 @@ npm install --save string-mismatch
 
 ## Getting started
 
-### Web application example
-
-Import the library
-
-```html5
-<script src="lib/string-mismatch.js" type="application/javascript"></script>
-<!--Minified version-->
-<script src="lib/string-mismatch.min.js" type="application/javascript"></script>
-```
-
-Use the library
-
-```html5
-<script type="application/javascript">
-    var start = 'This is a test for see how work the library';
-    var end = 'This is a test for know how work the new library';
-    var diffs = sm.diff(start, end, 5);
-    console.log(diffs);
-</script>
-```
-
 ### Nodejs application example
+
 How to use the library and see the differences between two strings:
 
 ```es5
@@ -43,32 +23,18 @@ var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
 
 console.log(sm.diff(start, end, 5));
-/*
-result:
-[
-  {
-    mtc: 'This is a test for ',
-    del: 'see',
-    ins: 'know',
-    sbs: ' how work the '
-  }, {
-    mtc: '',
-    del: '',
-    ins: 'new ',
-    sbs: 'library'
-  }
-]
-*/
 ```
 
 The result is an object array with the mismatch result. Each object with the next structure:
 
 ```es5
 {
-  mtc: string, // Start of the sub-string
-  del: string, // Deleted sub-string from the start string
-  ins: string, // New sub-string added in the end string
-  sbs: string  // End of the sub-string
+  type: string, // type of sub-string:
+                //   'sub' -> substitution
+                //   'ins' -> insertion
+                //   'del' -> deletion
+                //   'eql' -> equal
+  value: string // value of the current sub-string
 }
 ```
 
@@ -80,19 +46,67 @@ var sm = require('string-mismatch');
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
 
-console.log(sm.diff(start, end, 5).reduce(function (text, value) {
-    return text + value.mtc + (value.del ? '(-' + value.del +')' : '') + (value.ins ? '(+' + value.ins + ')' : '') + value.sbs;
-}, ''));
+function showResult(diffs) {
+    return diffs.reduce(function (text, value) {
+        switch (value.type) {
+            case 'del':
+                return text + '(-' + value.value + ')';
+            case 'ins':
+                return text + '(+' + value.value + ')';
+            case 'sub':
+                return text + '(-+' + value.value + ')';
+            case 'eql':
+                return text + value.value;
+        }
+    }, '');
+}
+
+console.log(showResult(sm.diff(start, end)));
 /*
 result:
 This is a test for (-see)(+know) how work the (+new )library
 */
 ```
 
-This code can be see in the project examples. To run the examples use the next command:
+This code can be tested in the project's examples. To run the examples use the next command:
 
 ```
 npm start
+```
+
+
+### Web application example
+
+Import the library
+
+```html5
+<!--String mismatch library with greedy algorithm by default-->
+<script src="lib/string-mismatch.min.js" type="application/javascript"></script>
+<!--Levenshtein algorithm-->
+<script src="lib/levenshtein.min.js" type="application/javascript"></script>
+```
+
+Use the library (with greedy algorithm by default)
+
+```html5
+<script type="application/javascript">
+    var start = 'This is a test for see how work the library';
+    var end = 'This is a test for know how work the new library';
+    var diffs = sm.diff(start, end);
+    console.log(diffs);
+</script>
+```
+
+Example with the levenshtein algorithm
+
+```html5
+<script type="application/javascript">
+    var start = 'This is a test for see how work the library';
+    var end = 'This is a test for know how work the new library';
+    sm.use(levenshtein({ignoreSpaces: true}));
+    var diffs = sm.diff(start, end);
+    console.log(diffs);
+</script>
 ```
 
 ## Testing code
@@ -118,7 +132,7 @@ All contributions are welcome.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/wil92/string-mismatch/tags).
 
 ## Authors
 
