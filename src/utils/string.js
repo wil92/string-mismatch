@@ -3,6 +3,6 @@
  * @param text {string}
  * @return {string}
  */
-exports.eraseSpaces = function (text) {
+module.exports.eraseSpaces = function (text) {
     return text.replace(/\s\s+/g, " ").trim();
 };

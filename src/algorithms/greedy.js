@@ -2,13 +2,18 @@ var merge = require("lodash/merge");
 var toLower = require("lodash/toLower");
 var defaultFor = require("../utils/object").defaultFor;
 var vars = require("../utils/vars");
+var eraseSpaces = require('../utils/string');
 
 module.exports = function (options) {
-    module.exports.options = merge({precision: 5, ignoreCase: true}, options);
+    module.exports.options = merge({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     return module.exports;
 };
 
 module.exports.differences = function (start, end) {
+    if (defaultFor(module.exports.options['ignoreSpaces'], false)) {
+        start = eraseSpaces(start);
+        end = eraseSpaces(end);
+    }
     return module.exports.diff(start, end);
 };
 

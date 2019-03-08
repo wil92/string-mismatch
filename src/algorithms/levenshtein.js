@@ -1,5 +1,6 @@
 var merge = require("lodash/merge");
 var vars = require("../utils/vars");
+var defaultFor = require("../utils/object").defaultFor;
 
 var MAX_VALUE = 9999999999;
 var SUB = 0,
@@ -7,11 +8,15 @@ var SUB = 0,
     INS = 2;
 
 module.exports = function (options) {
-    module.exports.options = merge({ignoreCase: true}, options);
+    module.exports.options = merge({ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     return module.exports;
 };
 
 module.exports.differences = function (start, end) {
+    if (defaultFor(module.exports.options['ignoreSpaces'], false)) {
+        start = eraseSpaces(start);
+        end = eraseSpaces(end);
+    }
     module.exports.calculateMatrix(start, end);
     var result = [];
     var subResult = module.exports.reconstructSolution(start, end);

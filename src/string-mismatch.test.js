@@ -1,10 +1,14 @@
 const chai = require("chai");
+const spy = require('chai-spies');
 
 const sm = require("./string-mismatch");
 
+chai.use(spy);
 const expect = chai.expect;
+const noop = function () {
+};
 
-describe("string-mismatch tests", function() {
+describe("string-mismatch.js", function () {
     let greedy;
     let lev;
     beforeEach(function () {
@@ -12,24 +16,24 @@ describe("string-mismatch tests", function() {
         lev = require('./algorithms/levenshtein');
     });
 
-    it("check eraseSpace function", function(){
-        var text = "      This     is    a    test      for    see how     work the library   ",
-            expected = "This is a test for see how work the library";
-        // noinspection JSUnresolvedVariable
-        expect(sm.eraseSpaces(text)).to.equal(expected);
+    afterEach(function () {
+        chai.spy.restore(greedy);
+        chai.spy.restore(lev);
     });
 
-    it("check eraseSpace function empty string", function(){
-        var text = "",
-            expected = "";
-        // noinspection JSUnresolvedVariable
-        expect(sm.eraseSpaces(text)).to.equal(expected);
+    it('should return differences between two strings with greedy algorithm', function () {
+        var alg = greedy();
+        chai.spy.on(alg, 'differences', noop);
+        sm.use(alg);
+        expect(sm.diff('start', 'end'));
+        expect(alg.differences).to.have.been.called();
     });
 
-    it("check eraseSpace function only spaces", function(){
-        var text = "       ",
-            expected = "";
-        // noinspection JSUnresolvedVariable
-        expect(sm.eraseSpaces(text)).to.equal(expected);
+    it('should return differences between two strings with levenshtein algorithm', function () {
+        var alg = lev();
+        chai.spy.on(alg, 'differences', noop);
+        sm.use(alg);
+        expect(sm.diff('start', 'end'));
+        expect(alg.differences).to.have.been.called();
     });
 });
