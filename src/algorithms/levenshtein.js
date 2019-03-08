@@ -37,22 +37,6 @@ module.exports.reconstructSolution = function (start, end) {
     var result = [];
     var si = 0, sl = start.length,
         ei = 0, el = end.length;
-    // var sub = '     ';
-    // for (var i = 0; i < end.length; i++) {
-    //     sub += end[i] + '  ';
-    // }
-    // console.log(sub);sub='     ';
-    // for (var i = 0; i < end.length; i++) {
-    //     sub += i + (i< 10 ? ' ': '') + ' ';
-    // }
-    // console.log(sub);
-    // for (var i = 0; i < start.length; i++) {
-    //     sub = start[i] + ' ' + i + (i<10?' ':'') + ' ';
-    //     for (var j = 0; j < end.length; j++) {
-    //         sub += module.exports.dp[i][j] + (module.exports.dp[i][j] < 10 ? ' ' : '') + ' ';
-    //     }
-    //     console.log(sub);
-    // }
     while (si !== sl - 1 || ei !== el - 1) {
         var options = [];
         si + 1 < sl && options.push([si + 1, ei, DEL]);

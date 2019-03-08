@@ -37,7 +37,7 @@ describe("levenshtein.js", function () {
         expect(lev.calculateMatrix(start, end)).to.deep.equal(result);
     });
 
-    it('should calculate the string differences form 2', function () {
+    it('should reconstruct solution from the matrix of mismatch example 1', function () {
         var start = "my name is juan",
             end = "mi nombre es juan";
         lev.dp = lev.calculateMatrix(start, end);
@@ -51,7 +51,7 @@ describe("levenshtein.js", function () {
         ]);
     });
 
-    it('should calculate the string differences form 3', function () {
+    it('should reconstruct solution from the matrix of mismatch example 2', function () {
         var start = "my",
             end = "you";
         lev.dp = lev.calculateMatrix(start, end);
@@ -62,7 +62,7 @@ describe("levenshtein.js", function () {
         ]);
     });
 
-    it('should resume the string differences', function () {
+    it('should check difference between two strings', function () {
         var start = "moy",
             end = "you";
         expect(lev.differences(start, end)).to.deep.equal([
@@ -72,7 +72,7 @@ describe("levenshtein.js", function () {
         ]);
     });
 
-    it("check diffPercent with real data bug in production", function () {
+    it("should check differences with real data (bug in production)", function () {
         var start = "my name is juan",
             end = "mi nombre es juan";
         // noinspection JSUnresolvedVariable
@@ -81,5 +81,25 @@ describe("levenshtein.js", function () {
             {type: 'sub', value: 'ao'}, {type: 'eql', value: 'm'}, {type: 'ins', value: 'br'},
             {type: 'eql', value: 'e '}, {type: 'sub', value: 'ie'}, {type: 'eql', value: 's juan'}
         ]);
+    });
+
+    it("should check differences between two strings of one character", function () {
+        var start = "m",
+            end = "n";
+        // noinspection JSUnresolvedVariable
+        expect(lev.differences(start, end)).to.deep.equal([{type: 'sub', value: 'mn'}]);
+    });
+
+    it("should not find any difference between two string of one character", function () {
+        var start = "m",
+            end = "m";
+        // noinspection JSUnresolvedVariable
+        expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'm'}]);
+    });
+
+    it("should not find any difference between two string of one character", function () {
+        var start = "my name is john";
+        // noinspection JSUnresolvedVariable
+        expect(lev.differences(start, start)).to.deep.equal([{type: 'eql', value: 'my name is john'}]);
     });
 });
