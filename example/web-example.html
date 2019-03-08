@@ -10,6 +10,10 @@
         <option value="greedy">Greedy</option>
         <option value="levenshtein">Levenshtein</option>
     </select>
+    <label>
+        <input id="ignoreCase" type="checkbox" checked onchange="ignoreCaseChange(this)" value="ignore case">
+        Ignore Case
+    </label>
 </div>
 
 <div style="display: flex;flex-direction: column;">
@@ -32,9 +36,10 @@
     var endText = document.getElementById("end");
     var resultDiffJSON = document.getElementById("diffResultJSON");
     var resultDiff = document.getElementById("diffResult");
+    var ignoreCase = document.getElementById("ignoreCase");
 
     startText.value = 'This is a test for see how work the library';
-    endText.value = 'This is a test for know how work the new library';
+    endText.value = 'This is a test for know how work the new LibrarY';
 
     startText.addEventListener('change', onChangeEvent);
     startText.addEventListener('keyup', onChangeEvent);
@@ -54,6 +59,12 @@
                 onChangeEvent();
                 break;
         }
+        ignoreCaseChange(ignoreCase);
+    }
+
+    function ignoreCaseChange(value) {
+        sm.algorithm.options.ignoreCase = value.checked;
+        onChangeEvent();
     }
 
     function onChangeEvent() {
