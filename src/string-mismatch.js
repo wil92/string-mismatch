@@ -1,5 +1,3 @@
-var replace = require("lodash/replace");
-var trim = require("lodash/trim");
 var isNil = require("lodash/isNil");
 
 module.exports.use = function (algorithm) {
@@ -17,19 +15,10 @@ module.exports.use = function (algorithm) {
  *      sbs: last part of the section
  */
 module.exports.diff = function (start, end) {
-    module.exports.checkAlgorithm();
+    checkAlgorithm();
     return module.exports.algorithm.differences(start, end);
 };
 
-module.exports.checkAlgorithm = function () {
+function checkAlgorithm() {
     isNil(module.exports.algorithm) && module.exports.use();
-};
-
-/**
- * Erase the in-between, start and end spaces
- * @param text {string}
- * @return {string}
- */
-exports.eraseSpaces = function (text) {
-    return trim(replace(text, /\s\s+/g, " "));
-};
+}
