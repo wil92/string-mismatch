@@ -1,6 +1,7 @@
 var merge = require("lodash/merge");
 var vars = require("../utils/vars");
 var defaultFor = require("../utils/object").defaultFor;
+var eraseSpaces = require("../utils/string").eraseSpaces;
 
 var MAX_VALUE = 9999999999;
 var SUB = 0,

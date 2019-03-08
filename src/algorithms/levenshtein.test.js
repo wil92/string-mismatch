@@ -90,6 +90,14 @@ describe("levenshtein.js", function () {
         expect(lev.differences(start, end)).to.deep.equal([{type: 'sub', value: 'mn'}]);
     });
 
+    it("should check differences between two  equal strings ignoring the spaces", function () {
+        var start = "  m   ",
+            end = "m";
+        lev.options['ignoreSpaces'] = true;
+        // noinspection JSUnresolvedVariable
+        expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'm'}]);
+    });
+
     it("should not find any difference between two string of one character", function () {
         var start = "m",
             end = "m";
