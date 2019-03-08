@@ -1,7 +1,7 @@
 var defaultFor = require("../utils/object").defaultFor;
 var vars = require("../utils/vars");
-var eraseSpaces = require('../utils/string').eraseSpaces;
-var compareChar = require('../utils/string').compareChar;
+var eraseSpaces = require("../utils/string").eraseSpaces;
+var compareChar = require("../utils/string").compareChar;
 
 module.exports = function (options) {
     module.exports.options = Object.assign({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
@@ -9,7 +9,7 @@ module.exports = function (options) {
 };
 
 module.exports.differences = function (start, end) {
-    if (defaultFor(module.exports.options['ignoreSpaces'], false)) {
+    if (defaultFor(module.exports.options["ignoreSpaces"], false)) {
         start = eraseSpaces(start);
         end = eraseSpaces(end);
     }

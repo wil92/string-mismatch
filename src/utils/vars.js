@@ -1,6 +1,6 @@
 module.exports = {
-    SUB_NAME: 'sub',
-    DEL_NAME: 'del',
-    EQL_NAME: 'eql',
-    INS_NAME: 'ins'
+    SUB_NAME: "sub",
+    DEL_NAME: "del",
+    EQL_NAME: "eql",
+    INS_NAME: "ins"
 };

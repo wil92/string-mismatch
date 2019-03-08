@@ -6,16 +6,16 @@ describe("levenshtein.js", function () {
     let lev;
 
     beforeEach(function () {
-        lev = require('./levenshtein')();
+        lev = require("./levenshtein")();
     });
 
-    it('should calculate the matrix dp', function () {
+    it("should calculate the matrix dp", function () {
         var start = "my",
             end = "you";
         expect(lev.calculateMatrix(start, end)).to.deep.equal([[3, 2, 2], [3, 2, 1]]);
     });
 
-    it('should calculate the matrix dp (from bug)', function () {
+    it("should calculate the matrix dp (from bug)", function () {
         var start = "my name is juan",
             end = "mi nombre es juan";
         var result = [
@@ -37,38 +37,38 @@ describe("levenshtein.js", function () {
         expect(lev.calculateMatrix(start, end)).to.deep.equal(result);
     });
 
-    it('should reconstruct solution from the matrix of mismatch example 1', function () {
+    it("should reconstruct solution from the matrix of mismatch example 1", function () {
         var start = "my name is juan",
             end = "mi nombre es juan";
         lev.dp = lev.calculateMatrix(start, end);
         expect(lev.reconstructSolution(start, end)).to.deep.equal([
-            {type: 'eql', value: 'm'}, {type: 'sub', value: 'yi'}, {type: 'eql', value: ' '},
-            {type: 'eql', value: 'n'}, {type: 'sub', value: 'ao'}, {type: 'eql', value: 'm'},
-            {type: 'ins', value: 'b'}, {type: 'ins', value: 'r'}, {type: 'eql', value: 'e'},
-            {type: 'eql', value: ' '}, {type: 'sub', value: 'ie'}, {type: 'eql', value: 's'},
-            {type: 'eql', value: ' '}, {type: 'eql', value: 'j'}, {type: 'eql', value: 'u'},
-            {type: 'eql', value: 'a'}, {type: 'eql', value: 'n'}
+            {type: "eql", value: "m"}, {type: "sub", value: "yi"}, {type: "eql", value: " "},
+            {type: "eql", value: "n"}, {type: "sub", value: "ao"}, {type: "eql", value: "m"},
+            {type: "ins", value: "b"}, {type: "ins", value: "r"}, {type: "eql", value: "e"},
+            {type: "eql", value: " "}, {type: "sub", value: "ie"}, {type: "eql", value: "s"},
+            {type: "eql", value: " "}, {type: "eql", value: "j"}, {type: "eql", value: "u"},
+            {type: "eql", value: "a"}, {type: "eql", value: "n"}
         ]);
     });
 
-    it('should reconstruct solution from the matrix of mismatch example 2', function () {
+    it("should reconstruct solution from the matrix of mismatch example 2", function () {
         var start = "my",
             end = "you";
         lev.dp = lev.calculateMatrix(start, end);
         expect(lev.reconstructSolution(start, end)).to.deep.equal([
-            {type: 'sub', value: 'my'},
-            {type: 'ins', value: 'o'},
-            {type: 'sub', value: 'yu'}
+            {type: "sub", value: "my"},
+            {type: "ins", value: "o"},
+            {type: "sub", value: "yu"}
         ]);
     });
 
-    it('should check difference between two strings', function () {
+    it("should check difference between two strings", function () {
         var start = "moy",
             end = "you";
         expect(lev.differences(start, end)).to.deep.equal([
-            {type: 'sub', value: 'my'},
-            {type: 'eql', value: 'o'},
-            {type: 'sub', value: 'yu'}
+            {type: "sub", value: "my"},
+            {type: "eql", value: "o"},
+            {type: "sub", value: "yu"}
         ]);
     });
 
@@ -77,9 +77,9 @@ describe("levenshtein.js", function () {
             end = "mi nombre es juan";
         // noinspection JSUnresolvedVariable
         expect(lev.differences(start, end)).to.deep.equal([
-            {type: 'eql', value: 'm'}, {type: 'sub', value: 'yi'}, {type: 'eql', value: ' n'},
-            {type: 'sub', value: 'ao'}, {type: 'eql', value: 'm'}, {type: 'ins', value: 'br'},
-            {type: 'eql', value: 'e '}, {type: 'sub', value: 'ie'}, {type: 'eql', value: 's juan'}
+            {type: "eql", value: "m"}, {type: "sub", value: "yi"}, {type: "eql", value: " n"},
+            {type: "sub", value: "ao"}, {type: "eql", value: "m"}, {type: "ins", value: "br"},
+            {type: "eql", value: "e "}, {type: "sub", value: "ie"}, {type: "eql", value: "s juan"}
         ]);
     });
 
@@ -87,22 +87,22 @@ describe("levenshtein.js", function () {
         var start = "m",
             end = "n";
         // noinspection JSUnresolvedVariable
-        expect(lev.differences(start, end)).to.deep.equal([{type: 'sub', value: 'mn'}]);
+        expect(lev.differences(start, end)).to.deep.equal([{type: "sub", value: "mn"}]);
     });
 
     it("should check differences between two  equal strings ignoring the spaces", function () {
         var start = "  m   ",
             end = "m";
-        lev.options['ignoreSpaces'] = true;
+        lev.options["ignoreSpaces"] = true;
         // noinspection JSUnresolvedVariable
-        expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'm'}]);
+        expect(lev.differences(start, end)).to.deep.equal([{type: "eql", value: "m"}]);
     });
 
     it("should not find any difference between two string of one character", function () {
         var start = "m",
             end = "m";
         // noinspection JSUnresolvedVariable
-        expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'm'}]);
+        expect(lev.differences(start, end)).to.deep.equal([{type: "eql", value: "m"}]);
     });
 
     it("should not find any difference between two string if ignoreCase is true", function () {
@@ -110,7 +110,7 @@ describe("levenshtein.js", function () {
             end = "m";
         lev.options.ignoreCase = true;
         // noinspection JSUnresolvedVariable
-        expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'M'}]);
+        expect(lev.differences(start, end)).to.deep.equal([{type: "eql", value: "M"}]);
     });
 
     it("should find a mismatch with ignoreCase in false", function () {
@@ -118,12 +118,12 @@ describe("levenshtein.js", function () {
             end = "m";
         lev.options.ignoreCase = false;
         // noinspection JSUnresolvedVariable
-        expect(lev.differences(start, end)).to.deep.equal([{type: 'sub', value: 'Mm'}]);
+        expect(lev.differences(start, end)).to.deep.equal([{type: "sub", value: "Mm"}]);
     });
 
     it("should not find any difference between two string of one character", function () {
         var start = "my name is john";
         // noinspection JSUnresolvedVariable
-        expect(lev.differences(start, start)).to.deep.equal([{type: 'eql', value: 'my name is john'}]);
+        expect(lev.differences(start, start)).to.deep.equal([{type: "eql", value: "my name is john"}]);
     });
 });

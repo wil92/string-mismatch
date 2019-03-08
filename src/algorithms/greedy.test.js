@@ -6,7 +6,7 @@ describe("greedy.js", function () {
     let greedy;
 
     beforeEach(function () {
-        greedy = require('./greedy')();
+        greedy = require("./greedy")();
     });
 
     it("check getMatchingSubstring method for find matches", function () {
@@ -22,9 +22,9 @@ describe("greedy.js", function () {
             end = "This is a test for know how work the new library";
         // noinspection JSUnresolvedVariable
         expect(greedy.differences(start, end)).to.deep.equal([
-            {type: 'eql', value: 'This is a test for '}, {type: 'del', value: 'see'},
-            {type: 'ins', value: 'know'}, {type: 'eql', value: ' how work the '},
-            {type: 'ins', value: 'new '}, {type: 'eql', value: 'library'}
+            {type: "eql", value: "This is a test for "}, {type: "del", value: "see"},
+            {type: "ins", value: "know"}, {type: "eql", value: " how work the "},
+            {type: "ins", value: "new "}, {type: "eql", value: "library"}
         ]);
     });
 
@@ -33,9 +33,9 @@ describe("greedy.js", function () {
             end = "This is a test for know how work the new library";
         // noinspection JSUnresolvedVariable
         expect(greedy.differences(start, end)).to.deep.equal([
-            {type: 'eql', value: 'This is a test for '}, {type: 'del', value: 'see'},
-            {type: 'ins', value: 'know'}, {type: 'eql', value: ' how work the '},
-            {type: 'ins', value: 'new '}, {type: 'eql', value: 'library'}
+            {type: "eql", value: "This is a test for "}, {type: "del", value: "see"},
+            {type: "ins", value: "know"}, {type: "eql", value: " how work the "},
+            {type: "ins", value: "new "}, {type: "eql", value: "library"}
         ]);
     });
 });

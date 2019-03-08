@@ -1,7 +1,7 @@
 var vars = require("../utils/vars");
 var defaultFor = require("../utils/object").defaultFor;
 var eraseSpaces = require("../utils/string").eraseSpaces;
-var compareChar = require('../utils/string').compareChar;
+var compareChar = require("../utils/string").compareChar;
 
 var MAX_VALUE = 9999999999;
 var SUB = 0,
@@ -14,7 +14,7 @@ module.exports = function (options) {
 };
 
 module.exports.differences = function (start, end) {
-    if (defaultFor(module.exports.options['ignoreSpaces'], false)) {
+    if (defaultFor(module.exports.options["ignoreSpaces"], false)) {
         start = eraseSpaces(start);
         end = eraseSpaces(end);
     }
@@ -26,7 +26,7 @@ module.exports.differences = function (start, end) {
         for (var i = 1; i < subResult.length; i++) {
             if (subResult[i].type !== sub.type || sub.type === vars.SUB_NAME) {
                 result.push(sub);
-                sub = {type: subResult[i].type, value: ''};
+                sub = {type: subResult[i].type, value: ""};
             }
             sub.value += subResult[i].value;
         }
