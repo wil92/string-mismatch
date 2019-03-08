@@ -19,7 +19,6 @@ module.exports.differences = function (start, end) {
     module.exports.calculateMatrix(start, end);
     var result = [];
     var subResult = module.exports.reconstructSolution(start, end);
-    console.log('differences', subResult);
     if (subResult.length > 0) {
         var sub = {type: subResult[0].type, value: subResult[0].value};
         for (var i = 1; i < subResult.length; i++) {
@@ -38,7 +37,6 @@ module.exports.reconstructSolution = function (start, end) {
     var result = [];
     var si = 0, sl = start.length,
         ei = 0, el = end.length;
-    var best = [si, ei, SUB];
     // var sub = '     ';
     // for (var i = 0; i < end.length; i++) {
     //     sub += end[i] + '  ';
@@ -55,7 +53,17 @@ module.exports.reconstructSolution = function (start, end) {
     //     }
     //     console.log(sub);
     // }
-    do {
+    while (si !== sl - 1 || ei !== el - 1) {
+        var options = [];
+        si + 1 < sl && options.push([si + 1, ei, DEL]);
+        ei + 1 < el && options.push([si, ei + 1, INS]);
+        si + 1 < sl && ei + 1 < el && options.push([si + 1, ei + 1, SUB]);
+        var best = options.sort(function (o, p) {
+            if (module.exports.dp[o[0]][o[1]] === module.exports.dp[p[0]][p[1]]) {
+                return o[2] - p[2];
+            }
+            return module.exports.dp[o[0]][o[1]] - module.exports.dp[p[0]][p[1]];
+        })[0];
         if (best[2] === SUB) {
             if (module.exports.dp[si][ei] === module.exports.dp[best[0]][best[1]]){
                 result.push({type: EQL_NAME, value: start[si]});
@@ -69,17 +77,11 @@ module.exports.reconstructSolution = function (start, end) {
         }
         si = best[0];
         ei = best[1];
-        var options = [];
-        si + 1 < sl && options.push([si + 1, ei, DEL]);
-        ei + 1 < el && options.push([si, ei + 1, INS]);
-        si + 1 < sl && ei + 1 < el && options.push([si + 1, ei + 1, SUB]);
-        best = options.sort(function (o, p) {
-            if (module.exports.dp[o[0]][o[1]] === module.exports.dp[p[0]][p[1]]) {
-                return o[2] - p[2];
-            }
-            return module.exports.dp[o[0]][o[1]] - module.exports.dp[p[0]][p[1]];
-        })[0];
-    } while (si < sl - 1 && ei < el - 1);
+    }
+    result.push({
+        type: module.exports.dp[si][ei] === 1 ? SUB_NAME : EQL_NAME,
+        value: module.exports.dp[si][ei] === 1 ? start[si] + end[ei] : start[si]
+    });
     return result;
 };
 
