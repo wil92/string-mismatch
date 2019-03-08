@@ -18,7 +18,14 @@
     "url": "git+https://github.com/wil92/string-mismatch.git"
   },
   "keywords": [
-    "string"
+    "string",
+    "levenshtein",
+    "difference",
+    "mismatch",
+    "compare",
+    "match",
+    "similarity",
+    "string distance"
   ],
   "author": {
     "name": "wil92",
