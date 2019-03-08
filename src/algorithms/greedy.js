@@ -1,11 +1,10 @@
-var merge = require("lodash/merge");
-var toLower = require("lodash/toLower");
 var defaultFor = require("../utils/object").defaultFor;
 var vars = require("../utils/vars");
 var eraseSpaces = require('../utils/string').eraseSpaces;
+var compareChar = require('../utils/string').compareChar;
 
 module.exports = function (options) {
-    module.exports.options = merge({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
+    module.exports.options = Object.assign({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     return module.exports;
 };
 
@@ -58,7 +57,7 @@ module.exports.getChanges = function (start, end, m) {
         longer = isThisLonger ? start : end,
         shorter = isThisLonger ? end : start;
 
-    while (module.exports.ignoreCase(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
+    while (compareChar(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
     longer = longer.slice(bi);
     shorter = shorter.slice(bi);
 
@@ -106,7 +105,7 @@ module.exports.getMatchingSubstring = function (source, changed, rot, m) {
     while (i < slen) {
         var len = changed.length;
         var indexRot = (i + (rot < 0 ? len - Math.abs(rot) % len : rot)) % len;
-        if (module.exports.ignoreCase(changed[indexRot], source[i], ignoreCase)) {
+        if (compareChar(changed[indexRot], source[i], ignoreCase)) {
             if (match) {
                 o.sbs += source[i];
             } else {
@@ -120,18 +119,4 @@ module.exports.getMatchingSubstring = function (source, changed, rot, m) {
         ++i;
     }
     return o;
-};
-
-/**
- * Compare two text ignoring the lower or upper characters
- * @param text1 {string} first text to compare
- * @param text2 {string} second text to compare
- * @param ignoreCase {boolean} ignore upper or lower characters
- * @return {boolean}
- */
-module.exports.ignoreCase = function (text1, text2, ignoreCase) {
-    if (!ignoreCase) {
-        return text1 === text2;
-    }
-    return toLower(text1) === toLower(text2);
 };

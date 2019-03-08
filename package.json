@@ -4,8 +4,7 @@
   "description": "All mismatch between two strings",
   "main": "src/string-mismatch.js",
   "scripts": {
-    "bundle-report": "webpack-bundle-analyzer dist/stats.json -h localhost -p 8085",
-    "build": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --config ./webpack.config.js --json > dist/stats.json && npm run bundle-report",
+    "build": "node ./scripts/build && SM_ENV=development node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
     "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --mode=\"production\" --config ./webpack.config.js",
     "lint": "eslint -c .eslintrc src/**/*.js",
     "perf": "node ./scripts/performance-test",
@@ -31,9 +30,7 @@
     "url": "https://github.com/wil92/string-mismatch/issues"
   },
   "homepage": "https://github.com/wil92/string-mismatch#readme",
-  "dependencies": {
-    "lodash": "^4.17.5"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-spies": "^1.0.0",
