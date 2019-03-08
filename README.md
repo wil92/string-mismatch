@@ -118,10 +118,6 @@ Example with the levenshtein algorithm
 npm test
 ```
 
-## Deployment
-
-**not yet**
-
 ## Built With
 
 * [webpack](https://webpack.js.org/) - For build the project
