@@ -62,14 +62,6 @@
 
     function calculateDiff(start, end) {
         var diffs = sm.diff(start, end, 5);
-        for (var i = 0; i < sm.algorithm.dp.length; i++) {
-            var s = '';
-            for (var j = 0; j < sm.algorithm.dp[i].length; j++) {
-                s += sm.algorithm.dp[i][j] + (sm.algorithm.dp[i][j] < 10 ? " " : "") + " ";
-            }
-            console.log(s);
-        }
-        console.log('calculateDiff', sm.algorithm.reconstructSolution(start, start.length - 1, end, end.length - 1));
         resultDiffJSON.innerHTML = JSON.stringify(diffs, 3, '  ');
         var result = '';
         for (var i = 0; i < diffs.length; i++) {
