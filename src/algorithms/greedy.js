@@ -1,6 +1,7 @@
 var merge = require("lodash/merge");
 var toLower = require("lodash/toLower");
 var defaultFor = require("../utils/object").defaultFor;
+var vars = require("../utils/vars");
 
 module.exports = function (options) {
     module.exports.options = merge({precision: 5, ignoreCase: true}, options);
@@ -26,7 +27,10 @@ module.exports.diff = function (start, end) {
         nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),
         nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length),
         result = [];
-    result.push({mtc: changeData.mtc, del: changeData.del, ins: changeData.ins, sbs: changeData.sbs});
+    changeData.mtc && result.push({type: vars.EQL_NAME, value: changeData.mtc});
+    changeData.del && result.push({type: vars.DEL_NAME, value: changeData.del});
+    changeData.ins && result.push({type: vars.INS_NAME, value: changeData.ins});
+    changeData.sbs && result.push({type: vars.EQL_NAME, value: changeData.sbs});
 
     if (nextThis !== "" || nextS !== "") {
         result = result.concat(module.exports.diff(nextThis, nextS));
