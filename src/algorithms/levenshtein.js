@@ -1,14 +1,10 @@
 var merge = require("lodash/merge");
-var defaultFor = require('../utils/object').defaultFor;
+var vars = require("../utils/vars");
 
 var MAX_VALUE = 9999999999;
 var SUB = 0,
     DEL = 1,
     INS = 2;
-var SUB_NAME = 'sub',
-    DEL_NAME = 'del',
-    EQL_NAME = 'eql',
-    INS_NAME = 'ins';
 
 module.exports = function (options) {
     module.exports.options = merge({ignoreCase: true}, options);
@@ -22,7 +18,7 @@ module.exports.differences = function (start, end) {
     if (subResult.length > 0) {
         var sub = {type: subResult[0].type, value: subResult[0].value};
         for (var i = 1; i < subResult.length; i++) {
-            if (subResult[i].type !== sub.type || sub.type === SUB_NAME) {
+            if (subResult[i].type !== sub.type || sub.type === vars.SUB_NAME) {
                 result.push(sub);
                 sub = {type: subResult[i].type, value: ''};
             }
@@ -50,20 +46,20 @@ module.exports.reconstructSolution = function (start, end) {
         })[0];
         if (best[2] === SUB) {
             if (module.exports.dp[si][ei] === module.exports.dp[best[0]][best[1]]){
-                result.push({type: EQL_NAME, value: start[si]});
+                result.push({type: vars.EQL_NAME, value: start[si]});
             } else {
-                result.push({type: SUB_NAME, value: start[si] + end[ei]});
+                result.push({type: vars.SUB_NAME, value: start[si] + end[ei]});
             }
         } else if (best[2] === DEL) {
-            result.push({type: DEL_NAME, value: start[si]});
+            result.push({type: vars.DEL_NAME, value: start[si]});
         } else {
-            result.push({type: INS_NAME, value: end[ei]});
+            result.push({type: vars.INS_NAME, value: end[ei]});
         }
         si = best[0];
         ei = best[1];
     }
     result.push({
-        type: module.exports.dp[si][ei] === 1 ? SUB_NAME : EQL_NAME,
+        type: module.exports.dp[si][ei] === 1 ? vars.SUB_NAME : vars.EQL_NAME,
         value: module.exports.dp[si][ei] === 1 ? start[si] + end[ei] : start[si]
     });
     return result;

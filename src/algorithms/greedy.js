@@ -26,12 +26,7 @@ module.exports.diff = function (start, end) {
         nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),
         nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length),
         result = [];
-    result.push({
-        mtc: changeData.mtc,
-        del: changeData.del,
-        ins: changeData.ins,
-        sbs: changeData.sbs
-    });
+    result.push({mtc: changeData.mtc, del: changeData.del, ins: changeData.ins, sbs: changeData.sbs});
 
     if (nextThis !== "" || nextS !== "") {
         result = result.concat(module.exports.diff(nextThis, nextS));
