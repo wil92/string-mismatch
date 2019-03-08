@@ -30,9 +30,7 @@
     "url": "https://github.com/wil92/string-mismatch/issues"
   },
   "homepage": "https://github.com/wil92/string-mismatch#readme",
-  "dependencies": {
-    "lodash": "^4.17.5"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-spies": "^1.0.0",

@@ -1,4 +1,4 @@
-var isNil = require("lodash/isNil");
+var isNil = require("./utils/object").isNil;
 
 module.exports.use = function (algorithm) {
     module.exports.algorithm = algorithm || require('./algorithms/greedy')();

@@ -1,11 +1,9 @@
-var merge = require("lodash/merge");
-var toLower = require("lodash/toLower");
 var defaultFor = require("../utils/object").defaultFor;
 var vars = require("../utils/vars");
 var eraseSpaces = require('../utils/string').eraseSpaces;
 
 module.exports = function (options) {
-    module.exports.options = merge({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
+    module.exports.options = Object.assign({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     return module.exports;
 };
 
@@ -133,5 +131,5 @@ module.exports.ignoreCase = function (text1, text2, ignoreCase) {
     if (!ignoreCase) {
         return text1 === text2;
     }
-    return toLower(text1) === toLower(text2);
+    return text1.toLowerCase() === text2.toLowerCase();
 };
