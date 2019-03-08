@@ -12,27 +12,6 @@ npm install --save string-mismatch
 
 ## Getting started
 
-### Web application example
-
-Import the library
-
-```html5
-<script src="lib/string-mismatch.js" type="application/javascript"></script>
-<!--Minified version-->
-<script src="lib/string-mismatch.min.js" type="application/javascript"></script>
-```
-
-Use the library
-
-```html5
-<script type="application/javascript">
-    var start = 'This is a test for see how work the library';
-    var end = 'This is a test for know how work the new library';
-    var diffs = sm.diff(start, end, 5);
-    console.log(diffs);
-</script>
-```
-
 ### Nodejs application example
 How to use the library and see the differences between two strings:
 
@@ -93,6 +72,41 @@ This code can be see in the project examples. To run the examples use the next c
 
 ```
 npm start
+```
+
+
+### Web application example
+
+Import the library
+
+```html5
+<!--String mismatch library with greedy algorithm by default-->
+<script src="lib/string-mismatch.min.js" type="application/javascript"></script>
+<!--Levenshtein algorithm-->
+<script src="lib/levenshtein.min.js" type="application/javascript"></script>
+```
+
+Use the library (with greedy algorithm by default)
+
+```html5
+<script type="application/javascript">
+    var start = 'This is a test for see how work the library';
+    var end = 'This is a test for know how work the new library';
+    var diffs = sm.diff(start, end);
+    console.log(diffs);
+</script>
+```
+
+Example with the levenshtein algorithm
+
+```html5
+<script type="application/javascript">
+    var start = 'This is a test for see how work the library';
+    var end = 'This is a test for know how work the new library';
+    sm.use(levenshtein({ignoreSpaces: true}));
+    var diffs = sm.diff(start, end);
+    console.log(diffs);
+</script>
 ```
 
 ## Testing code
