@@ -105,6 +105,22 @@ describe("levenshtein.js", function () {
         expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'm'}]);
     });
 
+    it("should not find any difference between two string if ignoreCase is true", function () {
+        var start = "M",
+            end = "m";
+        lev.options.ignoreCase = true;
+        // noinspection JSUnresolvedVariable
+        expect(lev.differences(start, end)).to.deep.equal([{type: 'eql', value: 'M'}]);
+    });
+
+    it("should find a mismatch with ignoreCase in false", function () {
+        var start = "M",
+            end = "m";
+        lev.options.ignoreCase = false;
+        // noinspection JSUnresolvedVariable
+        expect(lev.differences(start, end)).to.deep.equal([{type: 'sub', value: 'Mm'}]);
+    });
+
     it("should not find any difference between two string of one character", function () {
         var start = "my name is john";
         // noinspection JSUnresolvedVariable

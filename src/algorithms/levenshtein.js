@@ -1,6 +1,7 @@
 var vars = require("../utils/vars");
 var defaultFor = require("../utils/object").defaultFor;
 var eraseSpaces = require("../utils/string").eraseSpaces;
+var compareChar = require('../utils/string').compareChar;
 
 var MAX_VALUE = 9999999999;
 var SUB = 0,
@@ -50,7 +51,7 @@ module.exports.reconstructSolution = function (start, end) {
             return module.exports.dp[o[0]][o[1]] - module.exports.dp[p[0]][p[1]];
         })[0];
         if (best[2] === SUB) {
-            if (module.exports.dp[si][ei] === module.exports.dp[best[0]][best[1]]){
+            if (module.exports.dp[si][ei] === module.exports.dp[best[0]][best[1]]) {
                 result.push({type: vars.EQL_NAME, value: start[si]});
             } else {
                 result.push({type: vars.SUB_NAME, value: start[si] + end[ei]});
@@ -97,6 +98,6 @@ function calculateLevenshtein(start, si, end, ei) {
     return module.exports.dp[si][ei] = Math.min(
         calculateLevenshtein(start, si + 1, end, ei) + 1,
         calculateLevenshtein(start, si, end, ei + 1) + 1,
-        calculateLevenshtein(start, si + 1, end, ei + 1) + (start[si] === end[ei] ? 0 : 1)
+        calculateLevenshtein(start, si + 1, end, ei + 1) + (compareChar(start[si], end[ei], module.exports.options.ignoreCase) ? 0 : 1)
     );
 }
