@@ -2,14 +2,8 @@ var fs = require("fs");
 var path = require("path");
 
 var projectLib = path.resolve(__dirname, "..", "lib");
-var projectDist = path.resolve(__dirname, "..", "dist");
 
 removeFiles(projectLib).then(function () {
-    if (fs.existsSync(projectDist)) {
-        return removeFiles(projectDist);
-    }
-    return fs.mkdir(projectDist);
-}).then(function () {
     console.info("Build: DONE");
 }).catch(function (err) {
     console.log("ERROR", err);
