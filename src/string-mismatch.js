@@ -1,5 +1,9 @@
 var isNil = require("./utils/object").isNil;
 
+/**
+ * Change the algorithm for calculate string differences or use greedy algorithm by default
+ * @param algorithm Algorithm instance to use
+ */
 module.exports.use = function (algorithm) {
     module.exports.algorithm = algorithm || require("./algorithms/greedy")();
 };
@@ -19,6 +23,9 @@ module.exports.diff = function (start, end) {
     return module.exports.algorithm.differences(start, end);
 };
 
+/**
+ * Check if there is some algorithm instance in the library and use greedy algorithm by default otherwise
+ */
 function checkAlgorithm() {
     isNil(module.exports.algorithm) && module.exports.use();
 }

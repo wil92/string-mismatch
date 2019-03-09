@@ -1,18 +1,29 @@
-var vars = require("../utils/vars");
 var defaultFor = require("../utils/object").defaultFor;
 var eraseSpaces = require("../utils/string").eraseSpaces;
 var compareChar = require("../utils/string").compareChar;
+var vars = require("../utils/vars");
 
 var MAX_VALUE = 9999999999;
 var SUB = 0,
     DEL = 1,
     INS = 2;
 
+/**
+ * Levenshtein algorithm constructor
+ * @constructor
+ * @param options {{ignoreCase: boolean, ignoreSpaces: boolean}}
+ */
 module.exports = function (options) {
     module.exports.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     return module.exports;
 };
 
+/**
+ * Calculate differences between start string and end string and return the transformations list
+ * @param start {string} start string
+ * @param end {string} end string
+ * @return {{type: string, value: string}[]} List of transformation
+ */
 module.exports.differences = function (start, end) {
     if (defaultFor(module.exports.options["ignoreSpaces"], false)) {
         start = eraseSpaces(start);
@@ -35,6 +46,12 @@ module.exports.differences = function (start, end) {
     return result;
 };
 
+/**
+ * Return the transformation for transform the start string to the end string
+ * @param start {string} start string
+ * @param end {string} end string
+ * @return {{type: string, value: string}[]} the reconstructed solution
+ */
 module.exports.reconstructSolution = function (start, end) {
     var result = [];
     var si = 0, sl = start.length,
@@ -71,6 +88,12 @@ module.exports.reconstructSolution = function (start, end) {
     return result;
 };
 
+/**
+ * Create and fill dp matrix before calculate Levenshtein distance algorithm
+ * @param start {string} start string
+ * @param end {string} end string
+ * @return {Array} resulting dp matrix
+ */
 module.exports.calculateMatrix = function (start, end) {
     // Fill the dp with the initial values
     module.exports.dp = [];
@@ -85,6 +108,14 @@ module.exports.calculateMatrix = function (start, end) {
     return module.exports.dp;
 };
 
+/**
+ * Calculate Levenshtein distance with a brute force approach with dynamic programing improvement
+ * @param start {string} start string
+ * @param si {number} start position in the recursion
+ * @param end {string} end string
+ * @param ei {number} end position in the recursion
+ * @return {number} Levenshtein distance between start and end strings
+ */
 function calculateLevenshtein(start, si, end, ei) {
     if (si === start.length && ei === end.length) {
         return 0;
