@@ -3,6 +3,7 @@ import {isNil} from "./utils/object";
 import Greedy from "./algorithms/greedy";
 
 /**
+ * core class of the library
  * @class sm
  */
 class sm {

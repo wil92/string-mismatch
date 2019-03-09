@@ -11,6 +11,10 @@ const DEL = 1;
 /** @desc Insertion action */
 const INS = 2;
 
+/**
+ * Levenshtein algorithm
+ * @class Levenshtein
+ */
 class Levenshtein {
     /**
      * Levenshtein algorithm constructor

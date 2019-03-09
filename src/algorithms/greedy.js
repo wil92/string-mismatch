@@ -2,6 +2,10 @@ import {defaultFor} from "../utils/object";
 import {compareChar, eraseSpaces} from "../utils/string";
 import vars from "../utils/vars";
 
+/**
+ * Greedy algorithm
+ * @class Greedy
+ */
 class Greedy {
     /**
      * Greedy algorithm constructor
