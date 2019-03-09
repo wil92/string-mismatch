@@ -1,13 +1,23 @@
 var defaultFor = require("../utils/object").defaultFor;
-var vars = require("../utils/vars");
 var eraseSpaces = require("../utils/string").eraseSpaces;
 var compareChar = require("../utils/string").compareChar;
+var vars = require("../utils/vars");
 
+/**
+ * Greedy algorithm constructor
+ * @param options {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}}
+ */
 module.exports = function (options) {
     module.exports.options = Object.assign({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     return module.exports;
 };
 
+/**
+ * Calculate differences between start string and end string and return the transformations list
+ * @param start {string} start string
+ * @param end {string} end string
+ * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformations
+ */
 module.exports.differences = function (start, end) {
     if (defaultFor(module.exports.options["ignoreSpaces"], false)) {
         start = eraseSpaces(start);
@@ -17,7 +27,7 @@ module.exports.differences = function (start, end) {
 };
 
 /**
- * return the list of changes in the original text
+ * Return the list of changes in the original text
  * @param start {string} start text
  * @param end {string} end text
  * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
@@ -43,16 +53,16 @@ module.exports.diff = function (start, end) {
 };
 
 /**
- * recursively find the posibles solutions for the differences between start and end texts
+ * Recursively find the possibles solutions for the differences between start and end texts
  * @param start {string} start text
  * @param end {string} end text
- * @param m {string} parameter no needed (is only for inside use)
+ * @param unchangedStr {string} parameter no needed (is only for inside use)
  * @returns {{fis: number, fil: number, sbs: string, mtc: string}}
  */
-module.exports.getChanges = function (start, end, m) {
-    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false);
-    var precision = defaultFor(module.exports.options.precision, 5);
-    var isThisLonger = start.length >= end.length,
+module.exports.getChanges = function (start, end, unchangedStr) {
+    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false),
+        precision = defaultFor(module.exports.options.precision, 5),
+        isThisLonger = start.length >= end.length,
         bi = 0,
         longer = isThisLonger ? start : end,
         shorter = isThisLonger ? end : start;
@@ -66,7 +76,7 @@ module.exports.getChanges = function (start, end, m) {
             fis: shorter.length,
             fil: len,
             sbs: "",
-            mtc: m + end.slice(0, bi)
+            mtc: unchangedStr + end.slice(0, bi)
         },
         sub = {sbs: ""};
 
@@ -89,34 +99,34 @@ module.exports.getChanges = function (start, end, m) {
 };
 
 /**
- * returns the first matching substring in-between the two strings
+ * Returns the first matching substring in-between the two strings
  * @param source {string} begin text
  * @param changed {string} end text
- * @param rot
- * @param m {string}
+ * @param rotation {number} rotation value in the changed string
+ * @param unchangedStr {string} Not changed sub-string value
  * @returns {{fis: number, mtc: string, sbs: string}}
  */
-module.exports.getMatchingSubstring = function (source, changed, rot, m) {
-    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false);
-    var i = 0,
-        slen = source.length,
+module.exports.getMatchingSubstring = function (source, changed, rotation, unchangedStr) {
+    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false),
+        index = 0,
+        sourceLength = source.length,
+        changedLength = changed.length,
         match = false,
-        o = {fis: slen, mtc: m, sbs: ""};
-    while (i < slen) {
-        var len = changed.length;
-        var indexRot = (i + (rot < 0 ? len - Math.abs(rot) % len : rot)) % len;
-        if (compareChar(changed[indexRot], source[i], ignoreCase)) {
+        subResult = {fis: sourceLength, mtc: unchangedStr, sbs: ""};
+    while (index < sourceLength) {
+        var indexRot = (index + (rotation < 0 ? changedLength - Math.abs(rotation) % changedLength : rotation)) % changedLength;
+        if (compareChar(changed[indexRot], source[index], ignoreCase)) {
             if (match) {
-                o.sbs += source[i];
+                subResult.sbs += source[index];
             } else {
                 match = true;
-                o.fis = i;
-                o.sbs = source[i];
+                subResult.fis = index;
+                subResult.sbs = source[index];
             }
         } else if (match) {
             break;
         }
-        ++i;
+        ++index;
     }
-    return o;
+    return subResult;
 };
