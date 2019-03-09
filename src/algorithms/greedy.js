@@ -1,6 +1,10 @@
+/** @ignore */
 var defaultFor = require("../utils/object").defaultFor;
+/** @ignore */
 var eraseSpaces = require("../utils/string").eraseSpaces;
+/** @ignore */
 var compareChar = require("../utils/string").compareChar;
+/** @ignore */
 var vars = require("../utils/vars");
 
 /**

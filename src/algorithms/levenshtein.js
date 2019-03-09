@@ -1,12 +1,20 @@
+/** @ignore */
 var defaultFor = require("../utils/object").defaultFor;
+/** @ignore */
 var eraseSpaces = require("../utils/string").eraseSpaces;
+/** @ignore */
 var compareChar = require("../utils/string").compareChar;
+/** @ignore */
 var vars = require("../utils/vars");
 
+/** @ignore */
 var MAX_VALUE = 9999999999;
-var SUB = 0,
-    DEL = 1,
-    INS = 2;
+/** @ignore */
+var SUB = 0;
+/** @ignore */
+var DEL = 1;
+/** @ignore */
+var INS = 2;
 
 /**
  * Levenshtein algorithm constructor
