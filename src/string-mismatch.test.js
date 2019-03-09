@@ -19,7 +19,7 @@ describe("string-mismatch.js", () => {
     beforeEach(function () {
         smi = new sm();
         greedy = new Greedy();
-        lev = Lev();
+        lev = new Lev();
     });
 
     afterEach(function () {

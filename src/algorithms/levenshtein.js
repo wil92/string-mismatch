@@ -1,5 +1,5 @@
-import {defaultFor} from "../utils/object";
-import {compareChar, eraseSpaces} from "../utils/string";
+import obj from "../utils/object";
+import str from "../utils/string";
 import vars from "../utils/vars";
 
 /** @ignore */
@@ -22,7 +22,7 @@ class Levenshtein {
      * @param options {{ignoreCase: boolean, ignoreSpaces: boolean}}
      */
     constructor (options = undefined) {
-        this.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
+        this.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, obj.defaultFor(options, {}));
     };
 
     /**
@@ -32,9 +32,9 @@ class Levenshtein {
      * @return {{type: string, value: string}[]} List of transformation
      */
     differences (start, end) {
-        if (defaultFor(this.options["ignoreSpaces"], false)) {
-            start = eraseSpaces(start);
-            end = eraseSpaces(end);
+        if (obj.defaultFor(this.options["ignoreSpaces"], false)) {
+            start = str.eraseSpaces(start);
+            end = str.eraseSpaces(end);
         }
         this.calculateMatrix(start, end);
         const result = [];
@@ -137,7 +137,7 @@ class Levenshtein {
         return this.dp[si][ei] = Math.min(
             this.calculateLevenshtein(start, si + 1, end, ei) + 1,
             this.calculateLevenshtein(start, si, end, ei + 1) + 1,
-            this.calculateLevenshtein(start, si + 1, end, ei + 1) + (compareChar(start[si], end[ei], this.options.ignoreCase) ? 0 : 1)
+            this.calculateLevenshtein(start, si + 1, end, ei + 1) + (str.compareChar(start[si], end[ei], this.options.ignoreCase) ? 0 : 1)
         );
     }
 }

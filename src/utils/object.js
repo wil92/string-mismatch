@@ -3,18 +3,18 @@
  * @param arg argument to check if is null
  * @param val default value
  */
-const defaultFor = (arg, val) => {
+function defaultFor (arg, val) {
     return typeof arg !== "undefined" ? arg : val;
-};
+}
 
 /**
  * Checks if `value` is `null` or `undefined`.
  * @param {*} value The value to check.
  * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
  */
-const isNil = (value) => {
+function isNil (value) {
     return value == null;
-};
+}
 
 export default {
     defaultFor,

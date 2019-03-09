@@ -1,5 +1,5 @@
-import {defaultFor} from "../utils/object";
-import {compareChar, eraseSpaces} from "../utils/string";
+import obj from "../utils/object";
+import str from "../utils/string";
 import vars from "../utils/vars";
 
 /**
@@ -16,7 +16,7 @@ class Greedy {
             precision: 5,
             ignoreCase: true,
             ignoreSpaces: false
-        }, defaultFor(options, {}));
+        }, obj.defaultFor(options, {}));
     };
 
     /**
@@ -26,9 +26,9 @@ class Greedy {
      * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformations
      */
     differences(start, end) {
-        if (defaultFor(this.options["ignoreSpaces"], false)) {
-            start = eraseSpaces(start);
-            end = eraseSpaces(end);
+        if (obj.defaultFor(this.options["ignoreSpaces"], false)) {
+            start = str.eraseSpaces(start);
+            end = str.eraseSpaces(end);
         }
         return this.diff(start, end);
     };
@@ -67,14 +67,14 @@ class Greedy {
      * @returns {{fis: number, fil: number, sbs: string, mtc: string}}
      */
     getChanges(start, end, unchangedStr) {
-        const ignoreCase = defaultFor(this.options.ignoreCase, false);
-        const precision = defaultFor(this.options.precision, 5);
+        const ignoreCase = obj.defaultFor(this.options.ignoreCase, false);
+        const precision = obj.defaultFor(this.options.precision, 5);
         const isThisLonger = start.length >= end.length;
         let bi = 0;
         let longer = isThisLonger ? start : end;
         let shorter = isThisLonger ? end : start;
 
-        while (compareChar(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
+        while (str.compareChar(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
         longer = longer.slice(bi);
         shorter = shorter.slice(bi);
 
@@ -114,7 +114,7 @@ class Greedy {
      * @returns {{fis: number, mtc: string, sbs: string}}
      */
     getMatchingSubstring(source, changed, rotation, unchangedStr) {
-        const ignoreCase = defaultFor(this.options.ignoreCase, false);
+        const ignoreCase = obj.defaultFor(this.options.ignoreCase, false);
         const sourceLength = source.length;
         const changedLength = changed.length;
         const subResult = {fis: sourceLength, mtc: unchangedStr, sbs: ""};
@@ -122,7 +122,7 @@ class Greedy {
         let match = false;
         while (index < sourceLength) {
             const indexRot = (index + (rotation < 0 ? changedLength - Math.abs(rotation) % changedLength : rotation)) % changedLength;
-            if (compareChar(changed[indexRot], source[index], ignoreCase)) {
+            if (str.compareChar(changed[indexRot], source[index], ignoreCase)) {
                 if (match) {
                     subResult.sbs += source[index];
                 } else {

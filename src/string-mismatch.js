@@ -1,5 +1,5 @@
 /** @ignore */
-import {isNil} from "./utils/object";
+import obj from "./utils/object";
 import Greedy from "./algorithms/greedy";
 
 /**
@@ -13,7 +13,7 @@ class sm {
      * @param algorithm algorithm to use, greedy algorithm is by default
      */
     constructor(algorithm = null) {
-        if (isNil(algorithm)) {
+        if (obj.isNil(algorithm)) {
             this.checkAlgorithm();
         }
     }
@@ -39,7 +39,7 @@ class sm {
      * @access private
      */
     checkAlgorithm() {
-        isNil(this.algorithm) && this.use();
+        obj.isNil(this.algorithm) && this.use();
     };
 
     /**
