@@ -1,6 +1,6 @@
-const chai = require("chai");
+import chai from "chai";
 
-const string = require("./string");
+import string from "./string";
 
 const expect = chai.expect;
 

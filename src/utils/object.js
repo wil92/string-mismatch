@@ -3,7 +3,7 @@
  * @param arg argument to check if is null
  * @param val default value
  */
-module.exports.defaultFor = function defaultFor(arg, val) {
+const defaultFor = (arg, val) => {
     return typeof arg !== "undefined" ? arg : val;
 };
 
@@ -12,6 +12,11 @@ module.exports.defaultFor = function defaultFor(arg, val) {
  * @param {*} value The value to check.
  * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
  */
-module.exports.isNil = function isNil(value) {
+const isNil = (value) => {
     return value == null;
+};
+
+export default {
+    defaultFor,
+    isNil
 };

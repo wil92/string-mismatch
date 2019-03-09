@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     SUB_NAME: "sub",
     DEL_NAME: "del",
     EQL_NAME: "eql",
