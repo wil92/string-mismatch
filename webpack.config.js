@@ -1,15 +1,40 @@
 var path = require("path");
 var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
-var env = process.env['SM_ENV'] || 'production';
+var env = process.env["SM_ENV"] || "production";
 
-var config = {
+var baseCofing = {
+    stats: true,
+    optimization: {
+        minimizer: [
+            new UglifyJSPlugin({
+                include: /\.min\.js$/
+            })
+        ]
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
+            }
+        ]
+    },
+    devtool: "source-map"
+};
+
+var config = Object.assign({}, baseCofing, {
     name: "string-mismatch",
     entry: {
         "string-mismatch.min": path.join(__dirname, "/src/string-mismatch.js")
     },
-    stats: true,
     output: {
         path: path.resolve(__dirname, "lib"),
         globalObject: "this",
@@ -18,24 +43,16 @@ var config = {
         libraryTarget: "umd",
         umdNamedDefine: true
     },
-    optimization: {
-        minimizer: [
-            new UglifyJSPlugin({
-                include: /\.min\.js$/
-            })
-        ]
-    },
-    plugins: env === 'development' ? [new BundleAnalyzerPlugin({
+    plugins: env === "development" ? [new BundleAnalyzerPlugin({
         analyzerPort: 0
     })] : []
-};
+});
 
-var configLevenshtein = {
+var configLevenshtein = Object.assign({}, baseCofing, {
     name: "levenshtein",
     entry: {
         "levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.js")
     },
-    stats: true,
     output: {
         path: path.resolve(__dirname, "lib"),
         globalObject: "this",
@@ -44,16 +61,9 @@ var configLevenshtein = {
         libraryTarget: "umd",
         umdNamedDefine: true
     },
-    optimization: {
-        minimizer: [
-            new UglifyJSPlugin({
-                include: /\.min\.js$/
-            })
-        ]
-    },
-    plugins: env === 'development' ? [new BundleAnalyzerPlugin({
+    plugins: env === "development" ? [new BundleAnalyzerPlugin({
         analyzerPort: 0
     })] : []
-};
+});
 
 module.exports = [config, configLevenshtein];
