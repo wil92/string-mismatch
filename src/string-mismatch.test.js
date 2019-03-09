@@ -36,4 +36,12 @@ describe("string-mismatch.js", function () {
         expect(sm.diff("start", "end"));
         expect(alg.differences).to.have.been.called();
     });
+
+    it("should use greedy algorithm by default if the parameters of the use() method are empty", function () {
+        var alg = greedy();
+        chai.spy.on(alg, "differences", noop);
+        sm.use();
+        sm.diff("start", "end");
+        expect(alg.differences).to.have.been.called();
+    });
 });
