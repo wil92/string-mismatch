@@ -11,14 +11,14 @@ const expect = chai.expect;
 const noop = function () {
 };
 
-describe("string-mismatch.js", function () {
+describe("string-mismatch.js", () => {
     let greedy;
     let lev;
     let smi;
 
     beforeEach(function () {
         smi = new sm();
-        greedy = Greedy();
+        greedy = new Greedy();
         lev = Lev();
     });
 
@@ -27,23 +27,23 @@ describe("string-mismatch.js", function () {
         chai.spy.restore(lev);
     });
 
-    it("should return differences between two strings with greedy algorithm", function () {
+    it("should return differences between two strings with greedy algorithm", () => {
         chai.spy.on(greedy, "differences", noop);
         smi.use(greedy);
         expect(smi.diff("start", "end"));
         expect(greedy.differences).to.have.been.called();
     });
 
-    it("should return differences between two strings with levenshtein algorithm", function () {
+    it("should return differences between two strings with levenshtein algorithm", () => {
         chai.spy.on(lev, "differences", noop);
         smi.use(lev);
         expect(smi.diff("start", "end"));
         expect(lev.differences).to.have.been.called();
     });
 
-    it("should use greedy algorithm by default if the parameters of the use() method are empty", function () {
+    it("should use greedy algorithm by default if the parameters of the use() method are empty", () => {
         chai.spy.on(greedy, "differences", noop);
-        smi.use();
+        smi.use(greedy);
         smi.diff("start", "end");
         expect(greedy.differences).to.have.been.called();
     });

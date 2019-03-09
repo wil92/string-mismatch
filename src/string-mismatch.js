@@ -18,15 +18,6 @@ class sm {
     }
 
     /**
-     * Change the algorithm for calculate string differences or use greedy algorithm by default
-     * @access public
-     * @param algorithm Algorithm instance to use
-     */
-    use (algorithm = null) {
-        this.algorithm = algorithm || Greedy();
-    };
-
-    /**
      * return the list of changes in the original text
      * @access public
      * @param start {string} start text
@@ -48,6 +39,15 @@ class sm {
      */
     checkAlgorithm() {
         isNil(this.algorithm) && this.use();
+    };
+
+    /**
+     * Change the algorithm for calculate string differences or use greedy algorithm by default
+     * @access public
+     * @param algorithm Algorithm instance to use
+     */
+    use (algorithm = null) {
+        this.algorithm = algorithm || new Greedy();
     };
 }
 
