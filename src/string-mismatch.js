@@ -5,13 +5,24 @@ import Greedy from "./algorithms/greedy";
 /**
  * @class sm
  */
-export class sm {
+class sm {
+
+    /**
+     * string-mismatch constructor
+     * @param algorithm algorithm to use, greedy algorithm is by default
+     */
+    constructor(algorithm = null) {
+        if (isNil(algorithm)) {
+            this.checkAlgorithm();
+        }
+    }
+
     /**
      * Change the algorithm for calculate string differences or use greedy algorithm by default
      * @access public
      * @param algorithm Algorithm instance to use
      */
-    use (algorithm) {
+    use (algorithm = null) {
         this.algorithm = algorithm || Greedy();
     };
 
@@ -39,3 +50,5 @@ export class sm {
         isNil(this.algorithm) && this.use();
     };
 }
+
+export default sm;

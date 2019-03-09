@@ -1,7 +1,10 @@
-const chai = require("chai");
-const spy = require("chai-spies");
+import chai from "chai";
+import spy from "chai-spies";
 
-const sm = require("./string-mismatch");
+import sm from "./string-mismatch";
+import Greedy from "./algorithms/greedy";
+import Lev from "./algorithms/levenshtein";
+
 
 chai.use(spy);
 const expect = chai.expect;
@@ -11,9 +14,12 @@ const noop = function () {
 describe("string-mismatch.js", function () {
     let greedy;
     let lev;
+    let smi;
+
     beforeEach(function () {
-        greedy = require("./algorithms/greedy");
-        lev = require("./algorithms/levenshtein");
+        smi = new sm();
+        greedy = Greedy();
+        lev = Lev();
     });
 
     afterEach(function () {
@@ -22,26 +28,23 @@ describe("string-mismatch.js", function () {
     });
 
     it("should return differences between two strings with greedy algorithm", function () {
-        var alg = greedy();
-        chai.spy.on(alg, "differences", noop);
-        sm.use(alg);
-        expect(sm.diff("start", "end"));
-        expect(alg.differences).to.have.been.called();
+        chai.spy.on(greedy, "differences", noop);
+        smi.use(greedy);
+        expect(smi.diff("start", "end"));
+        expect(greedy.differences).to.have.been.called();
     });
 
     it("should return differences between two strings with levenshtein algorithm", function () {
-        var alg = lev();
-        chai.spy.on(alg, "differences", noop);
-        sm.use(alg);
-        expect(sm.diff("start", "end"));
-        expect(alg.differences).to.have.been.called();
+        chai.spy.on(lev, "differences", noop);
+        smi.use(lev);
+        expect(smi.diff("start", "end"));
+        expect(lev.differences).to.have.been.called();
     });
 
     it("should use greedy algorithm by default if the parameters of the use() method are empty", function () {
-        var alg = greedy();
-        chai.spy.on(alg, "differences", noop);
-        sm.use();
-        sm.diff("start", "end");
-        expect(alg.differences).to.have.been.called();
+        chai.spy.on(greedy, "differences", noop);
+        smi.use();
+        smi.diff("start", "end");
+        expect(greedy.differences).to.have.been.called();
     });
 });

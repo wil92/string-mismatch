@@ -10,8 +10,8 @@
     "lint": "eslint -c .eslintrc src/**/*.js",
     "perf": "node ./scripts/performance-test",
     "start": "npm run build:prod && node ./example/mismatch",
-    "test": "mocha --ui bdd --recursive ./src",
-    "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --ui bdd --recursive ./src",
+    "test": "mocha --compilers js:@babel/register --ui bdd --recursive ./src",
+    "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --compilers js:@babel/register --ui bdd --recursive ./src",
     "pub": "npm run build && npm publish"
   },
   "repository": {
@@ -38,11 +38,15 @@
     "url": "https://github.com/wil92/string-mismatch/issues"
   },
   "homepage": "https://github.com/wil92/string-mismatch#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/node": "^7.2.2",
+    "@babel/register": "^7.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "babel-loader": "^8.0.5",
+    "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",
     "chai-spies": "^1.0.0",
     "esdoc": "^1.1.0",
