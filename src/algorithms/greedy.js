@@ -1,17 +1,19 @@
 import obj from "../utils/object";
 import str from "../utils/string";
 import vars from "../utils/vars";
+import AlgorithmBase from "./algorithm-base";
 
 /**
  * Greedy algorithm
  * @class Greedy
  */
-class Greedy {
+class Greedy extends AlgorithmBase {
     /**
      * Greedy algorithm constructor
      * @param options {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}}
      */
     constructor(options = undefined) {
+        super();
         this.options = Object.assign({
             precision: 5,
             ignoreCase: true,

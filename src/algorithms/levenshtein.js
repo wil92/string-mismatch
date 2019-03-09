@@ -1,6 +1,7 @@
 import obj from "../utils/object";
 import str from "../utils/string";
 import vars from "../utils/vars";
+import AlgorithmBase from "./algorithm-base";
 
 /** @ignore */
 const MAX_VALUE = 9999999999;
@@ -15,13 +16,14 @@ const INS = 2;
  * Levenshtein algorithm
  * @class Levenshtein
  */
-class Levenshtein {
+class Levenshtein extends AlgorithmBase {
     /**
      * Levenshtein algorithm constructor
      * @constructor
      * @param options {{ignoreCase: boolean, ignoreSpaces: boolean}}
      */
-    constructor (options = undefined) {
+    constructor(options = undefined) {
+        super();
         this.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, obj.defaultFor(options, {}));
     };
 
@@ -31,7 +33,7 @@ class Levenshtein {
      * @param end {string} end string
      * @return {{type: string, value: string}[]} List of transformation
      */
-    differences (start, end) {
+    differences(start, end) {
         if (obj.defaultFor(this.options["ignoreSpaces"], false)) {
             start = str.eraseSpaces(start);
             end = str.eraseSpaces(end);
@@ -59,7 +61,7 @@ class Levenshtein {
      * @param end {string} end string
      * @return {{type: string, value: string}[]} the reconstructed solution
      */
-    reconstructSolution (start, end) {
+    reconstructSolution(start, end) {
         const result = [];
         const sl = start.length;
         const el = end.length;
@@ -103,7 +105,7 @@ class Levenshtein {
      * @param end {string} end string
      * @return {Array} resulting dp matrix
      */
-    calculateMatrix (start, end) {
+    calculateMatrix(start, end) {
         this.dp = [];
         for (let i = 0; i < start.length; i++) {
             const array = [];
