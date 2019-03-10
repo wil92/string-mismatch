@@ -5,6 +5,7 @@ This library share functions for compare two strings and see the differences.
 [![Build Status](https://travis-ci.org/wil92/string-mismatch.png?branch=master)](https://travis-ci.org/wil92/string-mismatch)
 [![codecov.io](https://img.shields.io/codecov/c/github/wil92/string-mismatch/master.svg?style=flat-square)](http://codecov.io/github/wil92/string-mismatch?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/wil92/string-mismatch/issues)
+[![Inline docs](http://inch-ci.org/github/wil92/string-mismatch.svg?branch=master)](http://inch-ci.org/github/wil92/string-mismatch)
 
 
 ## Install
