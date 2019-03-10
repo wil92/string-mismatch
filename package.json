@@ -8,7 +8,7 @@
     "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --mode=\"production\" --config ./webpack.config.js",
     "esdoc": "esdoc",
     "lint": "eslint -c .eslintrc src/**/*.js",
-    "perf": "node ./scripts/performance-test",
+    "perf": "node ./node_modules/@babel/node/bin/babel-node ./scripts/performance-test",
     "start": "npm run build:prod && node ./example/mismatch",
     "test": "mocha --compilers js:@babel/register --ui bdd --recursive ./src",
     "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --compilers js:@babel/register --ui bdd --recursive ./src",

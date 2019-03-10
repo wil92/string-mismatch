@@ -77,7 +77,7 @@ export class Greedy extends AlgorithmBase {
         let longer = isThisLonger ? start : end;
         let shorter = isThisLonger ? end : start;
 
-        while (compareChar(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
+        while (bi < shorter.length && compareChar(shorter[bi], longer[bi], ignoreCase)) ++bi;
         longer = longer.slice(bi);
         shorter = shorter.slice(bi);
 
