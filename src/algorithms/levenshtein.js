@@ -24,6 +24,7 @@ export class Levenshtein extends AlgorithmBase {
      */
     constructor(options = undefined) {
         super();
+        /** @ignore */
         this.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     };
 
@@ -106,6 +107,7 @@ export class Levenshtein extends AlgorithmBase {
      * @return {Array} resulting dp matrix
      */
     calculateMatrix(start, end) {
+        /** @ignore */
         this.dp = [];
         for (let i = 0; i < start.length; i++) {
             const array = [];
@@ -144,6 +146,13 @@ export class Levenshtein extends AlgorithmBase {
     }
 }
 
+/**
+ * Function by default for create the algorithm instance
+ * @todo remove for version 2.0.0^
+ * @ignore
+ * @param options {{ignoreCase: boolean, ignoreSpaces: boolean}}
+ * @return {Levenshtein}
+ */
 export default (options = undefined) => {
     return new Levenshtein(options);
 };

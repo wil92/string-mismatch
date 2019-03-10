@@ -14,6 +14,7 @@ class Greedy extends AlgorithmBase {
      */
     constructor(options = undefined) {
         super();
+        /** @ignore */
         this.options = Object.assign({
             precision: 5,
             ignoreCase: true,

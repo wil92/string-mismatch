@@ -43,14 +43,20 @@ export class StringMismatch {
     };
 
     /**
-     * Change the algorithm for calculate string differences or use greedy algorithm by default
+     * Change the algorithm for calculate the string differences or use greedy algorithm by default
      * @access public
-     * @param algorithm Algorithm instance to use
+     * @param {AlgorithmBase} algorithm Algorithm instance to use
      */
-    use (algorithm = null) {
+    use(algorithm = null) {
+        /** @ignore */
         this.algorithm = algorithm || new Greedy();
     };
 }
 
+/**
+ * @ignore
+ * @type {StringMismatch}
+ */
 const sm = new StringMismatch();
+/** @ignore */
 export default sm;
