@@ -142,4 +142,11 @@ export class Greedy extends AlgorithmBase {
     };
 }
 
-export default Greedy;
+/**
+ * Function by default for create the algorithm instance
+ * @todo remove for version 2.0.0^
+ * @ignore
+ * @param {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}} options
+ * @return {Greedy}
+ */
+export default (options = undefined) => new Greedy(options);
