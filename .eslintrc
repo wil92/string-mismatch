@@ -8,6 +8,8 @@
   },
   "rules": {
     "semi": "error",
-    "quotes": "error"
+    "quotes": "error",
+    "arrow-body-style": "error",
+    "arrow-parens": "error"
   }
 }

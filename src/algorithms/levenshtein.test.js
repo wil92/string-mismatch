@@ -1,4 +1,5 @@
-const chai = require("chai");
+import chai from "chai";
+import {Levenshtein} from "./levenshtein";
 
 const expect = chai.expect;
 
@@ -6,7 +7,7 @@ describe("levenshtein.js", function () {
     let lev;
 
     beforeEach(function () {
-        lev = require("./levenshtein")();
+        lev = new Levenshtein();
     });
 
     it("should calculate the matrix dp", function () {
@@ -40,7 +41,7 @@ describe("levenshtein.js", function () {
     it("should reconstruct solution from the matrix of mismatch example 1", function () {
         var start = "my name is juan",
             end = "mi nombre es juan";
-        lev.dp = lev.calculateMatrix(start, end);
+        lev.calculateMatrix(start, end);
         expect(lev.reconstructSolution(start, end)).to.deep.equal([
             {type: "eql", value: "m"}, {type: "sub", value: "yi"}, {type: "eql", value: " "},
             {type: "eql", value: "n"}, {type: "sub", value: "ao"}, {type: "eql", value: "m"},

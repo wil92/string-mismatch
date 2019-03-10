@@ -1,15 +1,18 @@
 module.exports = function (wallaby) {
     return {
         files: [
-            'src/**/*.js',
-            { pattern: 'src/**/*.test.js', ignore: true }
+            "src/**/*.js",
+            { pattern: "src/**/*.test.js", ignore: true }
         ],
         tests: [
-            'src/**/*.test.js'
+            "src/**/*.test.js"
         ],
-        testFramework: 'mocha',
+        compilers: {
+            "src/**/*.js": wallaby.compilers.babel()
+        },
+        testFramework: "mocha",
         env: {
-            type: 'node'
+            type: "node"
         }
     };
 };
