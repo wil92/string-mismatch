@@ -3,9 +3,7 @@
  * @param text {string}
  * @return {string}
  */
-module.exports.eraseSpaces = function (text) {
-    return text.replace(/\s\s+/g, " ").trim();
-};
+const eraseSpaces = (text) => text.replace(/\s\s+/g, " ").trim();
 
 /**
  * Compare two text ignoring the lower or upper characters
@@ -14,9 +12,14 @@ module.exports.eraseSpaces = function (text) {
  * @param ignoreCase {boolean} ignore upper or lower characters
  * @return {boolean} the compare result
  */
-module.exports.compareChar = function (text1, text2, ignoreCase) {
+const compareChar = (text1, text2, ignoreCase) => {
     if (ignoreCase) {
         return text1.toLowerCase() === text2.toLowerCase();
     }
     return text1 === text2;
+};
+
+export {
+    eraseSpaces,
+    compareChar
 };

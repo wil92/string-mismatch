@@ -1,36 +1,40 @@
-var sm = require("../src/string-mismatch");
+import sm from "../src/string-mismatch";
+import {Levenshtein} from "../src/algorithms/levenshtein";
 
-var origin = "";
-var dest = "";
+let origin = "";
+let dest = "";
 
-for (var i = 0; i < 1000; i++) {
+for (let i = 0; i < 1000; i++) {
     origin += getRandomChar();
     dest += getRandomChar();
 }
 
-var result = performance(20);
-console.log('algorithm', 'greedy');
+console.log("Origin string length:", origin.length);
+console.log("Dest string length:", dest.length);
+console.log("");
+let result = performance(20);
+console.log("algorithm", "greedy");
 console.log("result", result);
-console.log('');
-sm.use(require("../src/algorithms/levenshtein")());
+console.log("");
+sm.use(new Levenshtein());
 result = performance(20);
-console.log('algorithm', 'levenshtein');
+console.log("algorithm", "levenshtein");
 console.log("result", result);
 
 function getRandomChar() {
-    var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-    var upperChars = "ABCDRFGHIJKLMNOPQRSTUVWXYZ";
-    var upper = Math.round(Math.random() * 2);
-    var index = Math.round(Math.random() * lowerChars.length);
+    const lowerChars = "abcdefghijklmnopqrstuvwxyz";
+    const upperChars = "ABCDRFGHIJKLMNOPQRSTUVWXYZ";
+    const upper = Math.floor(Math.random() * 2);
+    const index = Math.floor(Math.random() * lowerChars.length);
     return upper ? upperChars.charAt(index) : lowerChars.charAt(index);
 }
 
 function performance(iterations) {
-    var time = 0;
-    for (var i = 0; i < iterations; i++) {
-        var init = new Date();
+    let time = 0;
+    for (let i = 0; i < iterations; i++) {
+        const init = new Date();
         sm.diff(origin, dest);
-        var end = new Date();
+        const end = new Date();
         time += end.getTime() - init.getTime();
     }
     return time / iterations;

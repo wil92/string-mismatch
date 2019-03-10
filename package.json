@@ -2,23 +2,31 @@
   "name": "string-mismatch",
   "version": "1.0.0",
   "description": "All mismatch between two strings",
-  "main": "src/string-mismatch.js",
+  "main": "lib/string-mismatch.js",
   "scripts": {
     "build": "node ./scripts/build && SM_ENV=development node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
     "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --mode=\"production\" --config ./webpack.config.js",
+    "esdoc": "esdoc",
     "lint": "eslint -c .eslintrc src/**/*.js",
-    "perf": "node ./scripts/performance-test",
+    "perf": "node ./node_modules/@babel/node/bin/babel-node ./scripts/performance-test",
     "start": "npm run build:prod && node ./example/mismatch",
-    "test": "mocha --ui bdd --recursive ./src",
-    "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --ui bdd --recursive ./src",
-    "pub": "npm run build && npm publish"
+    "test": "mocha --compilers js:@babel/register --ui bdd --recursive ./src",
+    "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --compilers js:@babel/register --ui bdd --recursive ./src",
+    "pub": "npm run build:prod && npm publish"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wil92/string-mismatch.git"
   },
   "keywords": [
-    "string"
+    "string",
+    "levenshtein",
+    "difference",
+    "mismatch",
+    "compare",
+    "match",
+    "similarity",
+    "string distance"
   ],
   "author": {
     "name": "wil92",
@@ -32,8 +40,16 @@
   "homepage": "https://github.com/wil92/string-mismatch#readme",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",
     "chai-spies": "^1.0.0",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^5.15.0",
     "mocha": "^5.0.5",
     "nyc": "^13.3.0",

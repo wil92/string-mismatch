@@ -1,122 +1,152 @@
-var defaultFor = require("../utils/object").defaultFor;
-var vars = require("../utils/vars");
-var eraseSpaces = require('../utils/string').eraseSpaces;
-var compareChar = require('../utils/string').compareChar;
-
-module.exports = function (options) {
-    module.exports.options = Object.assign({precision: 5, ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
-    return module.exports;
-};
-
-module.exports.differences = function (start, end) {
-    if (defaultFor(module.exports.options['ignoreSpaces'], false)) {
-        start = eraseSpaces(start);
-        end = eraseSpaces(end);
-    }
-    return module.exports.diff(start, end);
-};
+import {defaultFor} from "../utils/object";
+import {compareChar, eraseSpaces} from "../utils/string";
+import vars from "../utils/vars";
+import AlgorithmBase from "./algorithm-base";
 
 /**
- * return the list of changes in the original text
- * @param start {string} start text
- * @param end {string} end text
- * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
- *      mtc: start part of the section
- *      del: erase part of the section
- *      ins: new part of the section
- *      sbs: last part of the section
+ * Greedy algorithm
+ * @class Greedy
  */
-module.exports.diff = function (start, end) {
-    var changeData = module.exports.getChanges(start, end, ""),
-        nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length),
-        nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length),
-        result = [];
-    changeData.mtc && result.push({type: vars.EQL_NAME, value: changeData.mtc});
-    changeData.del && result.push({type: vars.DEL_NAME, value: changeData.del});
-    changeData.ins && result.push({type: vars.INS_NAME, value: changeData.ins});
-    changeData.sbs && result.push({type: vars.EQL_NAME, value: changeData.sbs});
+export class Greedy extends AlgorithmBase {
+    /**
+     * Greedy algorithm constructor
+     * @param {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}} options
+     */
+    constructor(options = undefined) {
+        super();
+        /** @ignore */
+        this.options = Object.assign({
+            precision: 5,
+            ignoreCase: true,
+            ignoreSpaces: false
+        }, defaultFor(options, {}));
+    };
 
-    if (nextThis !== "" || nextS !== "") {
-        result = result.concat(module.exports.diff(nextThis, nextS));
-    }
-    return result;
-};
+    /**
+     * Calculate differences between start string and end string and return the transformations list
+     * @param {string} start start string
+     * @param {string} end end string
+     * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformations
+     */
+    differences(start, end) {
+        if (defaultFor(this.options["ignoreSpaces"], false)) {
+            start = eraseSpaces(start);
+            end = eraseSpaces(end);
+        }
+        return this.diff(start, end);
+    };
 
-/**
- * recursively find the posibles solutions for the differences between start and end texts
- * @param start {string} start text
- * @param end {string} end text
- * @param m {string} parameter no needed (is only for inside use)
- * @returns {{fis: number, fil: number, sbs: string, mtc: string}}
- */
-module.exports.getChanges = function (start, end, m) {
-    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false);
-    var precision = defaultFor(module.exports.options.precision, 5);
-    var isThisLonger = start.length >= end.length,
-        bi = 0,
-        longer = isThisLonger ? start : end,
-        shorter = isThisLonger ? end : start;
+    /**
+     * Return the list of changes in the original text
+     * @param {string} start start text
+     * @param {string} end end text
+     * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
+     *      mtc: start part of the section
+     *      del: erase part of the section
+     *      ins: new part of the section
+     *      sbs: last part of the section
+     */
+    diff(start, end) {
+        const changeData = this.getChanges(start, end, "");
+        const nextS = end.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length);
+        const nextThis = start.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length);
+        let result = [];
+        changeData.mtc && result.push({type: vars.EQL_NAME, value: changeData.mtc});
+        changeData.del && result.push({type: vars.DEL_NAME, value: changeData.del});
+        changeData.ins && result.push({type: vars.INS_NAME, value: changeData.ins});
+        changeData.sbs && result.push({type: vars.EQL_NAME, value: changeData.sbs});
 
-    while (compareChar(shorter[bi], longer[bi], ignoreCase) && bi < shorter.length) ++bi;
-    longer = longer.slice(bi);
-    shorter = shorter.slice(bi);
+        if (nextThis !== "" || nextS !== "") {
+            result = result.concat(this.diff(nextThis, nextS));
+        }
+        return result;
+    };
 
-    var len = longer.length,
-        cd = {
+    /**
+     * Recursively find the possibles solutions for the differences between start and end texts
+     * @param {string} start start text
+     * @param {string} end end text
+     * @param {string} unchangedStr parameter no needed (is only for inside use)
+     * @returns {{fis: number, fil: number, sbs: string, mtc: string}}
+     */
+    getChanges(start, end, unchangedStr) {
+        const ignoreCase = defaultFor(this.options.ignoreCase, false);
+        const precision = defaultFor(this.options.precision, 5);
+        const isThisLonger = start.length >= end.length;
+        let bi = 0;
+        let longer = isThisLonger ? start : end;
+        let shorter = isThisLonger ? end : start;
+
+        while (bi < shorter.length && compareChar(shorter[bi], longer[bi], ignoreCase)) ++bi;
+        longer = longer.slice(bi);
+        shorter = shorter.slice(bi);
+
+        const len = longer.length;
+        let sub = {sbs: ""};
+        let cd = {
             fis: shorter.length,
             fil: len,
             sbs: "",
-            mtc: m + end.slice(0, bi)
-        },
-        sub = {sbs: ""};
+            mtc: unchangedStr + end.slice(0, bi)
+        };
 
-    if (shorter !== "") {
-        for (var rc = 0; rc < len && sub.sbs.length < precision; rc++) {
-            sub = module.exports.getMatchingSubstring(shorter, longer, rc, cd.mtc);
-            sub.fil = rc < len - sub.fis ? sub.fis + rc
-                : sub.fis - len + rc;
-            sub.sbs.length > cd.sbs.length && (cd = sub);
+        if (shorter !== "") {
+            for (let rc = 0; rc < len && sub.sbs.length < precision; rc++) {
+                sub = this.getMatchingSubstring(shorter, longer, rc, cd.mtc);
+                sub.fil = rc < len - sub.fis ? sub.fis + rc
+                    : sub.fis - len + rc;
+                sub.sbs.length > cd.sbs.length && (cd = sub);
+            }
         }
-    }
-    cd.del = isThisLonger ? longer.slice(0, cd.fil) : shorter.slice(0, cd.fis);
-    cd.ins = isThisLonger ? shorter.slice(0, cd.fis) : longer.slice(0, cd.fil);
+        cd.del = isThisLonger ? longer.slice(0, cd.fil) : shorter.slice(0, cd.fis);
+        cd.ins = isThisLonger ? shorter.slice(0, cd.fis) : longer.slice(0, cd.fil);
 
-    if (cd.del.indexOf(" ") === -1 || cd.ins.indexOf(" ") === -1 || cd.del === "" || cd.ins === "" || cd.sbs === "") {
-        return cd;
-    } else {
-        return module.exports.getChanges(cd.del, cd.ins, cd.mtc);
-    }
-};
+        if (cd.del.indexOf(" ") === -1 || cd.ins.indexOf(" ") === -1 || cd.del === "" || cd.ins === "" || cd.sbs === "") {
+            return cd;
+        } else {
+            return this.getChanges(cd.del, cd.ins, cd.mtc);
+        }
+    };
+
+    /**
+     * Returns the first matching substring in-between the two strings
+     * @param {string} source begin text
+     * @param {string} changed end text
+     * @param {number} rotation rotation value in the changed string
+     * @param {string} unchangedStr Not changed sub-string value
+     * @returns {{fis: number, mtc: string, sbs: string}}
+     */
+    getMatchingSubstring(source, changed, rotation, unchangedStr) {
+        const ignoreCase = defaultFor(this.options.ignoreCase, false);
+        const sourceLength = source.length;
+        const changedLength = changed.length;
+        const subResult = {fis: sourceLength, mtc: unchangedStr, sbs: ""};
+        let index = 0;
+        let match = false;
+        while (index < sourceLength) {
+            const indexRot = (index + (rotation < 0 ? changedLength - Math.abs(rotation) % changedLength : rotation)) % changedLength;
+            if (compareChar(changed[indexRot], source[index], ignoreCase)) {
+                if (match) {
+                    subResult.sbs += source[index];
+                } else {
+                    match = true;
+                    subResult.fis = index;
+                    subResult.sbs = source[index];
+                }
+            } else if (match) {
+                break;
+            }
+            ++index;
+        }
+        return subResult;
+    };
+}
 
 /**
- * returns the first matching substring in-between the two strings
- * @param source {string} begin text
- * @param changed {string} end text
- * @param rot
- * @param m {string}
- * @returns {{fis: number, mtc: string, sbs: string}}
+ * Function by default for create the algorithm instance
+ * @todo remove for version 2.0.0^
+ * @ignore
+ * @param {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}} options
+ * @return {Greedy}
  */
-module.exports.getMatchingSubstring = function (source, changed, rot, m) {
-    var ignoreCase = defaultFor(module.exports.options.ignoreCase, false);
-    var i = 0,
-        slen = source.length,
-        match = false,
-        o = {fis: slen, mtc: m, sbs: ""};
-    while (i < slen) {
-        var len = changed.length;
-        var indexRot = (i + (rot < 0 ? len - Math.abs(rot) % len : rot)) % len;
-        if (compareChar(changed[indexRot], source[i], ignoreCase)) {
-            if (match) {
-                o.sbs += source[i];
-            } else {
-                match = true;
-                o.fis = i;
-                o.sbs = source[i];
-            }
-        } else if (match) {
-            break;
-        }
-        ++i;
-    }
-    return o;
-};
+export default (options = undefined) => new Greedy(options);
