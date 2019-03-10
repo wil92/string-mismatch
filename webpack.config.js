@@ -33,26 +33,26 @@ var baseConfig = {
         libraryExport: "default",
         umdNamedDefine: true
     },
-    plugins: env === "development" ? [new BundleAnalyzerPlugin({
-        analyzerPort: 0
-    })] : []
 };
 
 var configsModules = [
     {
         name: "string-mismatch",
         entry: {"string-mismatch.min": path.join(__dirname, "/src/string-mismatch.js")},
-        output: {library: "sm"}
+        output: {library: "sm"},
+        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     },
     {
         name: "levenshtein",
         entry: {"levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.js")},
-        output: {library: "levenshtein"}
+        output: {library: "levenshtein"},
+        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     },
     {
         name: "greedy",
         entry: {"greedy.min": path.join(__dirname, "/src/algorithms/greedy.js")},
-        output: {library: "greedy"}
+        output: {library: "greedy"},
+        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     }
 ];
 
@@ -61,7 +61,8 @@ var configs = configsModules.map(function (config) {
     return Object.assign({}, baseConfig, {
         name: config.name,
         entry: config.entry,
-        output: Object.assign({}, baseConfig.output, config.output)
+        output: Object.assign({}, baseConfig.output, config.output),
+        plugins: config.plugins
     });
 });
 
