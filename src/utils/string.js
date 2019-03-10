@@ -3,9 +3,7 @@
  * @param text {string}
  * @return {string}
  */
-const eraseSpaces = (text) => {
-    return text.replace(/\s\s+/g, " ").trim();
-};
+const eraseSpaces = (text) => text.replace(/\s\s+/g, " ").trim();
 
 /**
  * Compare two text ignoring the lower or upper characters
