@@ -6,6 +6,9 @@ scripts
 src/**/*.test.js
 .eslintrc
 .travis.yml
+.babelrc
+.esdoc.json
+wallaby.json.js
 
 # documentation
 docs

@@ -12,7 +12,7 @@
     "start": "npm run build:prod && node ./example/mismatch",
     "test": "mocha --compilers js:@babel/register --ui bdd --recursive ./src",
     "test:cov": "node node_modules/nyc/bin/nyc --reporter=lcov mocha --compilers js:@babel/register --ui bdd --recursive ./src",
-    "pub": "npm run build && npm publish"
+    "pub": "npm run build:prod && npm publish"
   },
   "repository": {
     "type": "git",
