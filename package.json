@@ -2,7 +2,7 @@
   "name": "string-mismatch",
   "version": "1.0.0",
   "description": "All mismatch between two strings",
-  "main": "src/string-mismatch.js",
+  "main": "lib/string-mismatch.js",
   "scripts": {
     "build": "node ./scripts/build && SM_ENV=development node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
     "build:prod": "node ./scripts/build && node ./node_modules/webpack/bin/webpack --mode=\"production\" --config ./webpack.config.js",
