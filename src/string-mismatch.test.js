@@ -2,7 +2,7 @@ import chai from "chai";
 import spy from "chai-spies";
 
 import {StringMismatch} from "./string-mismatch";
-import Greedy from "./algorithms/greedy";
+import {Greedy} from "./algorithms/greedy";
 import Lev from "./algorithms/levenshtein";
 
 

@@ -7,10 +7,10 @@ import AlgorithmBase from "./algorithm-base";
  * Greedy algorithm
  * @class Greedy
  */
-class Greedy extends AlgorithmBase {
+export class Greedy extends AlgorithmBase {
     /**
      * Greedy algorithm constructor
-     * @param options {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}}
+     * @param {{precision: number, ignoreCase: boolean, ignoreSpaces: boolean}} options
      */
     constructor(options = undefined) {
         super();
@@ -24,8 +24,8 @@ class Greedy extends AlgorithmBase {
 
     /**
      * Calculate differences between start string and end string and return the transformations list
-     * @param start {string} start string
-     * @param end {string} end string
+     * @param {string} start start string
+     * @param {string} end end string
      * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformations
      */
     differences(start, end) {
@@ -38,8 +38,8 @@ class Greedy extends AlgorithmBase {
 
     /**
      * Return the list of changes in the original text
-     * @param start {string} start text
-     * @param end {string} end text
+     * @param {string} start start text
+     * @param {string} end end text
      * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
      *      mtc: start part of the section
      *      del: erase part of the section
@@ -64,9 +64,9 @@ class Greedy extends AlgorithmBase {
 
     /**
      * Recursively find the possibles solutions for the differences between start and end texts
-     * @param start {string} start text
-     * @param end {string} end text
-     * @param unchangedStr {string} parameter no needed (is only for inside use)
+     * @param {string} start start text
+     * @param {string} end end text
+     * @param {string} unchangedStr parameter no needed (is only for inside use)
      * @returns {{fis: number, fil: number, sbs: string, mtc: string}}
      */
     getChanges(start, end, unchangedStr) {
@@ -110,10 +110,10 @@ class Greedy extends AlgorithmBase {
 
     /**
      * Returns the first matching substring in-between the two strings
-     * @param source {string} begin text
-     * @param changed {string} end text
-     * @param rotation {number} rotation value in the changed string
-     * @param unchangedStr {string} Not changed sub-string value
+     * @param {string} source begin text
+     * @param {string} changed end text
+     * @param {number} rotation rotation value in the changed string
+     * @param {string} unchangedStr Not changed sub-string value
      * @returns {{fis: number, mtc: string, sbs: string}}
      */
     getMatchingSubstring(source, changed, rotation, unchangedStr) {

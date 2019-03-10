@@ -1,6 +1,6 @@
 /** @ignore */
 import {isNil} from "./utils/object";
-import Greedy from "./algorithms/greedy";
+import {Greedy} from "./algorithms/greedy";
 
 /**
  * core class of the library
@@ -10,7 +10,7 @@ export class StringMismatch {
 
     /**
      * string-mismatch constructor
-     * @param algorithm algorithm to use, greedy algorithm is by default
+     * @param {AlgorithmBase} algorithm algorithm to use, greedy algorithm is by default
      */
     constructor(algorithm = null) {
         if (isNil(algorithm)) {
@@ -21,8 +21,8 @@ export class StringMismatch {
     /**
      * return the list of changes in the original text
      * @access public
-     * @param start {string} start text
-     * @param end {string} end text
+     * @param {string} start start text
+     * @param {string} end end text
      * @return {{mtc: string, del: string, ins: string, sbs: string}[]}
      *      mtc: start part of the section
      *      del: erase part of the section

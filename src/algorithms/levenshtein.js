@@ -13,14 +13,15 @@ const DEL = 1;
 const INS = 2;
 
 /**
- * Levenshtein algorithm
+ * Levenshtein algorithm.
+ * @see https://en.wikipedia.org/wiki/Levenshtein_distance
  * @class Levenshtein
  */
 export class Levenshtein extends AlgorithmBase {
     /**
      * Levenshtein algorithm constructor
      * @constructor
-     * @param options {{ignoreCase: boolean, ignoreSpaces: boolean}}
+     * @param {{ignoreCase: boolean, ignoreSpaces: boolean}} options
      */
     constructor(options = undefined) {
         super();
@@ -30,8 +31,8 @@ export class Levenshtein extends AlgorithmBase {
 
     /**
      * Calculate differences between start string and end string and return the transformations list
-     * @param start {string} start string
-     * @param end {string} end string
+     * @param {string} start start string
+     * @param {string} end end string
      * @return {{type: string, value: string}[]} List of transformation
      */
     differences(start, end) {
@@ -58,8 +59,8 @@ export class Levenshtein extends AlgorithmBase {
 
     /**
      * Return the transformation for transform the start string to the end string
-     * @param start {string} start string
-     * @param end {string} end string
+     * @param {string} start start string
+     * @param {string} end end string
      * @return {{type: string, value: string}[]} the reconstructed solution
      */
     reconstructSolution(start, end) {
@@ -102,8 +103,8 @@ export class Levenshtein extends AlgorithmBase {
 
     /**
      * Create and fill dp matrix before calculate Levenshtein distance algorithm
-     * @param start {string} start string
-     * @param end {string} end string
+     * @param {string} start start string
+     * @param {string} end end string
      * @return {Array} resulting dp matrix
      */
     calculateMatrix(start, end) {
@@ -122,10 +123,10 @@ export class Levenshtein extends AlgorithmBase {
 
     /**
      * Calculate Levenshtein distance with a brute force approach with dynamic programing improvement
-     * @param start {string} start string
-     * @param si {number} start position in the recursion
-     * @param end {string} end string
-     * @param ei {number} end position in the recursion
+     * @param {string} start start string
+     * @param {number} si start position in the recursion
+     * @param {string} end end string
+     * @param {number} ei end position in the recursion
      * @return {number} Levenshtein distance between start and end strings
      */
     calculateLevenshtein(start, si, end, ei) {
@@ -150,9 +151,7 @@ export class Levenshtein extends AlgorithmBase {
  * Function by default for create the algorithm instance
  * @todo remove for version 2.0.0^
  * @ignore
- * @param options {{ignoreCase: boolean, ignoreSpaces: boolean}}
+ * @param {{ignoreCase: boolean, ignoreSpaces: boolean}} options
  * @return {Levenshtein}
  */
-export default (options = undefined) => {
-    return new Levenshtein(options);
-};
+export default (options = undefined) => new Levenshtein(options);
