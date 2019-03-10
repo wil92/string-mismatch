@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedFunction
-var sm = require("../lib/string-mismatch.min");
-var lev = require("../lib/levenshtein.min");
+var sm = require("../lib/string-mismatch");
+var lev = require("../lib/levenshtein");
 
 function showResult(diffs) {
     return diffs.reduce(function (text, value) {

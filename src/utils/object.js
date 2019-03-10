@@ -16,7 +16,7 @@ function isNil (value) {
     return value == null;
 }
 
-export default {
+export {
     defaultFor,
     isNil
 };

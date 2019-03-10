@@ -38,13 +38,12 @@
     "url": "https://github.com/wil92/string-mismatch/issues"
   },
   "homepage": "https://github.com/wil92/string-mismatch#readme",
-  "dependencies": {
-    "@babel/node": "^7.2.2",
-    "@babel/register": "^7.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.1.2",

@@ -21,7 +21,7 @@ const compareChar = (text1, text2, ignoreCase) => {
     return text1 === text2;
 };
 
-export default {
+export {
     eraseSpaces,
     compareChar
 };

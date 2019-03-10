@@ -1,5 +1,5 @@
-import obj from "../utils/object";
-import str from "../utils/string";
+import {defaultFor} from "../utils/object";
+import {eraseSpaces, compareChar} from "../utils/string";
 import vars from "../utils/vars";
 import AlgorithmBase from "./algorithm-base";
 
@@ -16,7 +16,7 @@ const INS = 2;
  * Levenshtein algorithm
  * @class Levenshtein
  */
-class Levenshtein extends AlgorithmBase {
+export class Levenshtein extends AlgorithmBase {
     /**
      * Levenshtein algorithm constructor
      * @constructor
@@ -24,7 +24,7 @@ class Levenshtein extends AlgorithmBase {
      */
     constructor(options = undefined) {
         super();
-        this.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, obj.defaultFor(options, {}));
+        this.options = Object.assign({ignoreCase: true, ignoreSpaces: false}, defaultFor(options, {}));
     };
 
     /**
@@ -34,9 +34,9 @@ class Levenshtein extends AlgorithmBase {
      * @return {{type: string, value: string}[]} List of transformation
      */
     differences(start, end) {
-        if (obj.defaultFor(this.options["ignoreSpaces"], false)) {
-            start = str.eraseSpaces(start);
-            end = str.eraseSpaces(end);
+        if (defaultFor(this.options["ignoreSpaces"], false)) {
+            start = eraseSpaces(start);
+            end = eraseSpaces(end);
         }
         this.calculateMatrix(start, end);
         const result = [];
@@ -139,9 +139,11 @@ class Levenshtein extends AlgorithmBase {
         return this.dp[si][ei] = Math.min(
             this.calculateLevenshtein(start, si + 1, end, ei) + 1,
             this.calculateLevenshtein(start, si, end, ei + 1) + 1,
-            this.calculateLevenshtein(start, si + 1, end, ei + 1) + (str.compareChar(start[si], end[ei], this.options.ignoreCase) ? 0 : 1)
+            this.calculateLevenshtein(start, si + 1, end, ei + 1) + (compareChar(start[si], end[ei], this.options.ignoreCase) ? 0 : 1)
         );
     }
 }
 
-export default Levenshtein;
+export default (options = undefined) => {
+    return new Levenshtein(options);
+};

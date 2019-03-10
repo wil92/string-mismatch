@@ -17,13 +17,8 @@ var baseCofing = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        // presets: ["@babel/preset-env"]
-                    }
-                }
+                exclude: /node_modules/,
+                use: "babel-loader"
             }
         ]
     },
@@ -41,6 +36,7 @@ var config = Object.assign({}, baseCofing, {
         filename: "[name].js",
         library: "sm",
         libraryTarget: "umd",
+        libraryExport: "default",
         umdNamedDefine: true
     },
     plugins: env === "development" ? [new BundleAnalyzerPlugin({
@@ -59,6 +55,7 @@ var configLevenshtein = Object.assign({}, baseCofing, {
         filename: "[name].js",
         library: "levenshtein",
         libraryTarget: "umd",
+        libraryExport: "default",
         umdNamedDefine: true
     },
     plugins: env === "development" ? [new BundleAnalyzerPlugin({
@@ -66,4 +63,16 @@ var configLevenshtein = Object.assign({}, baseCofing, {
     })] : []
 });
 
-module.exports = [config, configLevenshtein];
+var configs = [config, configLevenshtein];
+var notMinify = configs.map(function (config) {
+    var entry = {}, key = Object.keys(config.entry)[0];
+    entry[key.replace(".min", "")] = config.entry[key];
+    return Object.assign({}, config, {
+        entry: entry,
+        optimization: {minimize: false},
+        plugins: []
+    });
+});
+configs = notMinify.concat(configs);
+
+module.exports = configs;

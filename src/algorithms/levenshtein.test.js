@@ -1,5 +1,5 @@
 import chai from "chai";
-import Levenshtein from "./levenshtein";
+import {Levenshtein} from "./levenshtein";
 
 const expect = chai.expect;
 

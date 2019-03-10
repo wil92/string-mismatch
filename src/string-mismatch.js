@@ -1,19 +1,19 @@
 /** @ignore */
-import obj from "./utils/object";
+import {isNil} from "./utils/object";
 import Greedy from "./algorithms/greedy";
 
 /**
  * core class of the library
  * @class sm
  */
-class sm {
+export class StringMismatch {
 
     /**
      * string-mismatch constructor
      * @param algorithm algorithm to use, greedy algorithm is by default
      */
     constructor(algorithm = null) {
-        if (obj.isNil(algorithm)) {
+        if (isNil(algorithm)) {
             this.checkAlgorithm();
         }
     }
@@ -39,7 +39,7 @@ class sm {
      * @access private
      */
     checkAlgorithm() {
-        obj.isNil(this.algorithm) && this.use();
+        isNil(this.algorithm) && this.use();
     };
 
     /**
@@ -52,4 +52,5 @@ class sm {
     };
 }
 
+const sm = new StringMismatch();
 export default sm;
