@@ -1,12 +1,31 @@
 # string-mismatch
 
-This library share functions for compare two strings and see the differences.
-
 [![Build Status](https://travis-ci.org/wil92/string-mismatch.png?branch=master)](https://travis-ci.org/wil92/string-mismatch)
 [![codecov.io](https://img.shields.io/codecov/c/github/wil92/string-mismatch/master.svg?style=flat-square)](http://codecov.io/github/wil92/string-mismatch?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/wil92/string-mismatch/issues)
 [![Inline docs](http://inch-ci.org/github/wil92/string-mismatch.svg?branch=master)](http://inch-ci.org/github/wil92/string-mismatch)
 
+Algorithms for compare strings. Currently the list of available algorithms are:
+
+||Greedy|[Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance)|
+|-|-|-|
+|**complexity**|O(n*k) (**k** precision)|O(n^2)|
+|**good**|Fast algorithm|Always the optimal solution|
+|**bad**|The solution is not the optimal|Complexity is O(n^2)|
+|||Use n^2 memory|
+|**action**|*insertion*|*insertion*|
+||*deletion*|*deletion*|
+|||*substitution*|
+
+Why use string-mismatch:
+
+- Ease to install and start using it
+- Modular library (use only what you want to use).
+- Support for browser and node applications.
+- Compatible with es5
+- Not external dependencies.
+- Completly documented.
+- Coverage over 95%.
 
 ## Install
 
