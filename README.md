@@ -35,6 +35,10 @@ npm install --save string-mismatch
 
 ## Getting started
 
+### API documentation
+
+Clone the project and run the command `npm run esdoc`. Also you can check the examples and see how to use the library.
+
 ### Nodejs application example
 
 How to use the library and see the differences between two strings:
