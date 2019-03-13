@@ -15,4 +15,14 @@ export default class AlgorithmBase {
     differences(start, end) {
         throw new Error("This method is not defined");
     }
+
+    /**
+     * Calculate the string distance between start and end strings.
+     * This method should be override in the new algorithm class
+     * @param start {string} start start string
+     * @param end {string} end end string
+     */
+    distance(start, end) {
+        throw new Error("This method is not defined");
+    }
 }
