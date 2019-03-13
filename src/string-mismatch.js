@@ -35,6 +35,17 @@ export class StringMismatch {
     };
 
     /**
+     * return the distance from the start string to the end string with the operation available for the current algorithm.
+     * @access public
+     * @param {string} start start text
+     * @param {string} end end text
+     * @return {number} string distance
+     */
+    dist(start, end) {
+        return 0;
+    }
+
+    /**
      * Check if there is some algorithm instance in the library and use greedy algorithm by default otherwise
      * @access private
      */
