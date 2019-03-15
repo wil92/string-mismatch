@@ -29,6 +29,13 @@ describe("levenshtein.js", function () {
         expect(lev.calculateLevenshtein).to.have.been.called();
     });
 
+    it("should return the string distance", function () {
+        chai.spy.on(lev, "calculateMatrix", noop);
+        lev.dp = [[5]];
+        expect(lev.distance("start", "end")).to.deep.equal(5);
+        expect(lev.calculateMatrix).to.have.been.called();
+    });
+
     it("should reconstruct solution from the matrix of mismatch example 2", function () {
         const start = "my",
             end = "you";
