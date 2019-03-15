@@ -27,11 +27,20 @@ describe("string-mismatch.js", () => {
             sm.use(greedy);
         });
 
-        it("should return differences between two strings with greedy algorithm", () => {
+        afterEach(function () {
+            chai.spy.restore(lev);
+        });
+
+        it("should call differences() method", () => {
             chai.spy.on(greedy, "differences", noop);
             expect(sm.diff("start", "end"));
             expect(greedy.differences).to.have.been.called();
-            chai.spy.restore(lev);
+        });
+
+        it("should call distance() method", () => {
+            chai.spy.on(greedy, "distance", noop);
+            expect(sm.dist("start", "end"));
+            expect(greedy.distance).to.have.been.called();
         });
     });
 
@@ -40,11 +49,26 @@ describe("string-mismatch.js", () => {
             sm.use(lev);
         });
 
-        it("should return differences between two strings with levenshtein algorithm", () => {
+        afterEach(function () {
+            chai.spy.restore(lev);
+        });
+
+        it("should call the differences() method", () => {
             chai.spy.on(lev, "differences", noop);
             expect(sm.diff("start", "end"));
             expect(lev.differences).to.have.been.called();
-            chai.spy.restore(lev);
+        });
+
+        it("should call the distance() method", function () {
+            chai.spy.on(lev, "distance", noop);
+            expect(sm.dist("start", "end"));
+            expect(lev.distance).to.have.been.called();
+        });
+    });
+
+    describe("levenshtein integration tests", function () {
+        before(function () {
+            sm.use(lev);
         });
 
         it("should check defferences with real data", function () {
