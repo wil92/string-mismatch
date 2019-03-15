@@ -31,6 +31,7 @@ export class Levenshtein extends AlgorithmBase {
 
     /**
      * Calculate differences between start string and end string and return the transformations list
+     * @override
      * @param {string} start start string
      * @param {string} end end string
      * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformation
@@ -41,20 +42,8 @@ export class Levenshtein extends AlgorithmBase {
             end = eraseSpaces(end);
         }
         this.calculateMatrix(start, end);
-        const result = [];
-        const subResult = this.reconstructSolution(start, end);
-        if (subResult.length > 0) {
-            let sub = {type: subResult[0].type, value: subResult[0].value};
-            for (let i = 1; i < subResult.length; i++) {
-                if (subResult[i].type !== sub.type || sub.type === vars.SUB_NAME) {
-                    result.push(sub);
-                    sub = {type: subResult[i].type, value: ""};
-                }
-                sub.value += subResult[i].value;
-            }
-            result.push(sub);
-        }
-        return result;
+        const subSolution = this.reconstructSolution(start, end);
+        return this.joinSolution(subSolution);
     };
 
     /**
@@ -72,6 +61,28 @@ export class Levenshtein extends AlgorithmBase {
         }
         this.calculateMatrix(start, end);
         return this.dp[0][0];
+    }
+
+    // noinspection JSMethodCanBeStatic
+    /**
+     * Join values for the solution
+     * @param {{mtc: string, del: string, ins: string, sbs: string}[]} subSolution sub-solution
+     * @returns {{mtc: string, del: string, ins: string, sbs: string}[]} optimal solution
+     */
+    joinSolution(subSolution) {
+        const result = [];
+        if (subSolution && subSolution.length > 0) {
+            let sub = {type: subSolution[0].type, value: subSolution[0].value};
+            for (let i = 1; i < subSolution.length; i++) {
+                if (subSolution[i].type !== sub.type || sub.type === vars.SUB_NAME) {
+                    result.push(sub);
+                    sub = {type: subSolution[i].type, value: ""};
+                }
+                sub.value += subSolution[i].value;
+            }
+            result.push(sub);
+        }
+        return result;
     }
 
     /**
