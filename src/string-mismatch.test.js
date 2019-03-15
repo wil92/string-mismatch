@@ -66,6 +66,44 @@ describe("string-mismatch.js", () => {
         });
     });
 
+    describe("greedy integration tests", function () {
+        before(function () {
+            sm.use(greedy);
+        });
+
+        it("should check differences between two strings", () => {
+            const start = "This is a test for see how work the library",
+                end = "This is a test for know how work the new library";
+            expect(sm.diff(start, end)).to.deep.equal([
+                {type: "eql", value: "This is a test for "}, {type: "del", value: "see"},
+                {type: "ins", value: "know"}, {type: "eql", value: " how work the "},
+                {type: "ins", value: "new "}, {type: "eql", value: "library"}
+            ]);
+        });
+
+        it("should check differences between two strings ignoring the spaces", () => {
+            const start = "   This is a test   for see how work the library   ",
+                end = "    This is a test for know how work the new library      ";
+            greedy.options.ignoreSpaces = true;
+            expect(sm.diff(start, end)).to.deep.equal([
+                {type: "eql", value: "This is a test for "}, {type: "del", value: "see"},
+                {type: "ins", value: "know"}, {type: "eql", value: " how work the "},
+                {type: "ins", value: "new "}, {type: "eql", value: "library"}
+            ]);
+        });
+
+        it("should return the differences between two strings with ignore case as true", () => {
+            const start = "This is a test for see how work the library",
+                end = "this is a test for know how work the new library";
+            greedy.options.ignoreCase = true;
+            expect(sm.diff(start, end)).to.deep.equal([
+                {type: "eql", value: "this is a test for "}, {type: "del", value: "see"},
+                {type: "ins", value: "know"}, {type: "eql", value: " how work the "},
+                {type: "ins", value: "new "}, {type: "eql", value: "library"}
+            ]);
+        });
+    });
+
     describe("levenshtein integration tests", function () {
         before(function () {
             sm.use(lev);
