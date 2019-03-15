@@ -2,12 +2,9 @@ import chai from "chai";
 import spy from "chai-spies";
 
 import Greedy from "./greedy";
-import {compareChar} from "../utils/string";
 
 chai.use(spy);
 const expect = chai.expect;
-const noop = function () {
-};
 
 describe("greedy.js", () => {
     let greedy;
@@ -27,5 +24,10 @@ describe("greedy.js", () => {
         chai.spy.on(greedy, "diff", () => [{type: "del", value: "see"}]);
         expect(greedy.differences("start", "end")).to.deep.equal([{type: "del", value: "see"}]);
         expect(greedy.diff).to.have.been.called();
+    });
+
+    it("should check the distance method", function () {
+        chai.spy.on(greedy, "diff", () => [{type: "ins", value: "my"}, {type: "ins", value: "o"}, {type: "del", value: "yu"}]);
+        expect(greedy.distance("start", "end")).to.deep.equal(5);
     });
 });

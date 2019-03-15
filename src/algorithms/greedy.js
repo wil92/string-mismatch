@@ -50,7 +50,8 @@ export class Greedy extends AlgorithmBase {
         const diffs = this.diff(start, end);
         let result = 0;
         for (let i = 0; i < diffs.length; i++) {
-            result += diffs[i] && diffs[i].del && diffs[i].del.length || 0;
+            result += diffs[i] && diffs[i].type === vars.DEL_NAME && diffs[i].value.length || 0;
+            result += diffs[i] && diffs[i].type === vars.INS_NAME && diffs[i].value.length || 0;
         }
         return result;
     }
