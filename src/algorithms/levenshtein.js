@@ -33,7 +33,7 @@ export class Levenshtein extends AlgorithmBase {
      * Calculate differences between start string and end string and return the transformations list
      * @param {string} start start string
      * @param {string} end end string
-     * @return {{type: string, value: string}[]} List of transformation
+     * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformation
      */
     differences(start, end) {
         if (defaultFor(this.options["ignoreSpaces"], false)) {
@@ -56,6 +56,23 @@ export class Levenshtein extends AlgorithmBase {
         }
         return result;
     };
+
+    /**
+     * Calculate the string distance between start and end strings.
+     * This method should be override in the new algorithm class
+     * @override
+     * @param {string} start start string
+     * @param {string} end end string
+     * @return {number} return string distance
+     */
+    distance(start, end) {
+        if (defaultFor(this.options["ignoreSpaces"], false)) {
+            start = eraseSpaces(start);
+            end = eraseSpaces(end);
+        }
+        this.calculateMatrix(start, end);
+        return this.dp[0][0];
+    }
 
     /**
      * Return the transformation for transform the start string to the end string

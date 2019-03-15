@@ -42,7 +42,7 @@ export class StringMismatch {
      * @return {number} string distance
      */
     dist(start, end) {
-        return 0;
+        return this.algorithm.distance(start, end);
     }
 
     /**
