@@ -13,7 +13,9 @@ Algorithms for compare strings. Currently the list of available algorithms are:
 |**good**|Fast algorithm|Always the optimal solution|
 |**bad**|The solution is not the optimal|Complexity is O(n^2)|
 |||Use n^2 memory|
-|**action**|*insertion*|*insertion*|
+|**methods**|*difference*|*difference*|
+||*distance*|*distance*|
+|**operations for transform the string**|*insertion*|*insertion*|
 ||*deletion*|*deletion*|
 |||*substitution*|
 
