@@ -37,6 +37,26 @@ export class Greedy extends AlgorithmBase {
     };
 
     /**
+     * Calculate the string distance between start and end strings.
+     * @param {string} start start string
+     * @param {string} end end string
+     * @return {number} return string distance
+     */
+    distance(start, end) {
+        if (defaultFor(this.options["ignoreSpaces"], false)) {
+            start = eraseSpaces(start);
+            end = eraseSpaces(end);
+        }
+        const diffs = this.diff(start, end);
+        let result = 0;
+        for (let i = 0; i < diffs.length; i++) {
+            result += diffs[i] && diffs[i].type === vars.DEL_NAME && diffs[i].value.length || 0;
+            result += diffs[i] && diffs[i].type === vars.INS_NAME && diffs[i].value.length || 0;
+        }
+        return result;
+    }
+
+    /**
      * Return the list of changes in the original text
      * @param {string} start start text
      * @param {string} end end text

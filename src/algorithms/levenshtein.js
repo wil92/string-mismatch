@@ -31,9 +31,10 @@ export class Levenshtein extends AlgorithmBase {
 
     /**
      * Calculate differences between start string and end string and return the transformations list
+     * @override
      * @param {string} start start string
      * @param {string} end end string
-     * @return {{type: string, value: string}[]} List of transformation
+     * @return {{mtc: string, del: string, ins: string, sbs: string}[]} List of transformation
      */
     differences(start, end) {
         if (defaultFor(this.options["ignoreSpaces"], false)) {
@@ -41,21 +42,48 @@ export class Levenshtein extends AlgorithmBase {
             end = eraseSpaces(end);
         }
         this.calculateMatrix(start, end);
+        const subSolution = this.reconstructSolution(start, end);
+        return this.joinSolution(subSolution);
+    };
+
+    /**
+     * Calculate the string distance between start and end strings.
+     * This method should be override in the new algorithm class
+     * @override
+     * @param {string} start start string
+     * @param {string} end end string
+     * @return {number} return string distance
+     */
+    distance(start, end) {
+        if (defaultFor(this.options["ignoreSpaces"], false)) {
+            start = eraseSpaces(start);
+            end = eraseSpaces(end);
+        }
+        this.calculateMatrix(start, end);
+        return this.dp[0][0];
+    }
+
+    // noinspection JSMethodCanBeStatic
+    /**
+     * Join values for the solution
+     * @param {{mtc: string, del: string, ins: string, sbs: string}[]} subSolution sub-solution
+     * @returns {{mtc: string, del: string, ins: string, sbs: string}[]} optimal solution
+     */
+    joinSolution(subSolution) {
         const result = [];
-        const subResult = this.reconstructSolution(start, end);
-        if (subResult.length > 0) {
-            let sub = {type: subResult[0].type, value: subResult[0].value};
-            for (let i = 1; i < subResult.length; i++) {
-                if (subResult[i].type !== sub.type || sub.type === vars.SUB_NAME) {
+        if (subSolution && subSolution.length > 0) {
+            let sub = {type: subSolution[0].type, value: subSolution[0].value};
+            for (let i = 1; i < subSolution.length; i++) {
+                if (subSolution[i].type !== sub.type || sub.type === vars.SUB_NAME) {
                     result.push(sub);
-                    sub = {type: subResult[i].type, value: ""};
+                    sub = {type: subSolution[i].type, value: ""};
                 }
-                sub.value += subResult[i].value;
+                sub.value += subSolution[i].value;
             }
             result.push(sub);
         }
         return result;
-    };
+    }
 
     /**
      * Return the transformation for transform the start string to the end string

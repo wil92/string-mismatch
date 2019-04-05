@@ -7,15 +7,17 @@
 
 Algorithms for compare strings. Currently the list of available algorithms are:
 
-||Greedy|[Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance)|
-|-|-|-|
-|**complexity**|O(n*k) (**k** precision)|O(n^2)|
-|**good**|Fast algorithm|Always the optimal solution|
-|**bad**|The solution is not the optimal|Complexity is O(n^2)|
-|||Use n^2 memory|
-|**action**|*insertion*|*insertion*|
-||*deletion*|*deletion*|
-|||*substitution*|
+|                                       |Greedy                         |[Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance)|
+|---------------------------------------|-------------------------------|-----------------------------------------------------------------|
+|**complexity**                         |O(n*k) (**k** precision)       |O(n^2)                                                           |
+|**good**                               |Fast algorithm                 |Always the optimal solution                                      |
+|**bad**                                |The solution is not the optimal|Complexity is O(n^2)                                             |
+|                                       |                               |Use n^2 memory                                                   |
+|**methods**                            |*difference*                   |*difference*                                                     |
+|                                       |*distance*                     |*distance*                                                       |
+|**operations for transform the string**|*insertion*                    |*insertion*                                                      |
+|                                       |*deletion*                     |*deletion*                                                       |
+|                                       |                               |*substitution*                                                   |
 
 Why use string-mismatch:
 
