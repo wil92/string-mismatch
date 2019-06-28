@@ -7,17 +7,17 @@
 
 Algorithms for compare strings. Currently the list of available algorithms are:
 
-|                                       |Greedy                         |[Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance)|
-|---------------------------------------|-------------------------------|-----------------------------------------------------------------|
-|**complexity**                         |O(n*k) (**k** precision)       |O(n^2)                                                           |
-|**good**                               |Fast algorithm                 |Always the optimal solution                                      |
-|**bad**                                |The solution is not the optimal|Complexity is O(n^2)                                             |
-|                                       |                               |Use n^2 memory                                                   |
-|**methods**                            |*difference*                   |*difference*                                                     |
-|                                       |*distance*                     |*distance*                                                       |
-|**operations for transform the string**|*insertion*                    |*insertion*                                                      |
-|                                       |*deletion*                     |*deletion*                                                       |
-|                                       |                               |*substitution*                                                   |
+|                                       |Greedy                         |[Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance)|[Dice Coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)|
+|---------------------------------------|-------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------|
+|**complexity**                         |O(n*k) (**k** precision)       |O(n^2)                                                           |O(nlog n)                                                                               |
+|**good**                               |Fast algorithm                 |Always the optimal solution                                      |Base in probabilities and really fast algorithm                                         |
+|**bad**                                |The solution is not the optimal|Complexity is O(n^2)                                             |Impossible to see the differences between the strings                                   |
+|                                       |                               |Use n^2 memory                                                   |                                                                                        |
+|**methods**                            |*difference*                   |*difference*                                                     |*distance*                                                                              |
+|                                       |*distance*                     |*distance*                                                       |                                                                                        |
+|**operations for transform the string**|*insertion*                    |*insertion*                                                      |*not apply*                                                                             |
+|                                       |*deletion*                     |*deletion*                                                       |                                                                                        |
+|                                       |                               |*substitution*                                                   |                                                                                        |
 
 Why use string-mismatch:
 
@@ -26,7 +26,7 @@ Why use string-mismatch:
 - Support for browser and node applications.
 - Compatible with es5
 - Not external dependencies.
-- Completly documented.
+- Completely documented.
 - Coverage over 95%.
 
 ## Install
