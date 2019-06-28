@@ -22,4 +22,9 @@ describe("dice-coefficient.js", function () {
     it("should return the string distance", function () {
         expect(dice.diceCoefficientAlgorithm("sten", "end")).equal(0.4);
     });
+
+    it("should return the string distance ignoring spaces", function () {
+        dice.options["ignoreSpaces"] = true;
+        expect(dice.distance("sten ", " end")).equal(0.4);
+    });
 });
