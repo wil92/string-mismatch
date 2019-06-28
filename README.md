@@ -18,6 +18,7 @@ Algorithms for compare strings. Currently the list of available algorithms are:
 |**operations for transform the string**|*insertion*                    |*insertion*                                                      |*not apply*                                                                             |
 |                                       |*deletion*                     |*deletion*                                                       |                                                                                        |
 |                                       |                               |*substitution*                                                   |                                                                                        |
+|**Class name**                         |`Greedy`                       |`Levenshtein`                                                    |`DiceCoefficient`                                                                                      |
 
 Why use string-mismatch:
 
