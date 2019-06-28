@@ -53,6 +53,12 @@ var configsModules = [
         entry: {"greedy.min": path.join(__dirname, "/src/algorithms/greedy.js")},
         output: {library: "greedy"},
         plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
+    },
+    {
+        name: "dice-coefficient",
+        entry: {"dice-coefficient.min": path.join(__dirname, "/src/algorithms/dice-coefficient.js")},
+        output: {library: "dice-coefficient"},
+        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     }
 ];
 
