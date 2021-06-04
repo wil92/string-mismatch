@@ -1,5 +1,6 @@
-import sm from "../src/string-mismatch";
 import {Levenshtein} from "../src/algorithms/levenshtein";
+import {AlgorithmBase} from "../src/algorithms/algorithm";
+import {Greedy} from "../src/algorithms/greedy";
 
 let origin = "";
 let dest = "";
@@ -9,14 +10,17 @@ for (let i = 0; i < 1000; i++) {
     dest += getRandomChar();
 }
 
+let algorithm: AlgorithmBase;
+
 console.log("Origin string length:", origin.length);
 console.log("Dest string length:", dest.length);
 console.log("");
+algorithm = new Greedy();
 let result = performance(20);
 console.log("algorithm", "greedy");
 console.log("result", result);
 console.log("");
-sm.use(new Levenshtein());
+algorithm = new Levenshtein();
 result = performance(20);
 console.log("algorithm", "levenshtein");
 console.log("result", result);
@@ -29,11 +33,11 @@ function getRandomChar() {
     return upper ? upperChars.charAt(index) : lowerChars.charAt(index);
 }
 
-function performance(iterations) {
+function performance(iterations: number) {
     let time = 0;
     for (let i = 0; i < iterations; i++) {
         const init = new Date();
-        sm.diff(origin, dest);
+        algorithm.differences(origin, dest);
         const end = new Date();
         time += end.getTime() - init.getTime();
     }

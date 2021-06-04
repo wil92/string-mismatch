@@ -1,8 +1,5 @@
 var path = require("path");
-
 var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-
-var env = process.env["SM_ENV"] || "production";
 
 var baseConfig = {
     // bundling mode
