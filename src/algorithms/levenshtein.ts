@@ -16,7 +16,7 @@ const INS = 2;
  */
 export class Levenshtein implements AlgorithmBase {
 
-    dp: number[][];
+    dp: number[][] = [];
 
     constructor(private options: AlgorithmOptions = {ignoreCase: true, ignoreSpaces: false} as AlgorithmOptions) {
     }

@@ -38,17 +38,17 @@
     "url": "https://github.com/wil92/string-mismatch/issues"
   },
   "homepage": "https://github.com/wil92/string-mismatch#readme",
-  "dependencies": {
-    "ts-loader": "^9.2.2",
-    "typescript": "^4.3.2",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.170",
     "jest": "^27.0.4",
     "lodash": "^4.17.21",
-    "ts-jest": "^27.0.2"
+    "ts-jest": "^27.0.2",
+    "ts-loader": "^9.2.2",
+    "typescript": "^4.3.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
   }
 }

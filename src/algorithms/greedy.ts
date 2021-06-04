@@ -29,7 +29,7 @@ export class Greedy implements AlgorithmBase {
     /**
      * Calculate the string distance between start and end strings.
      */
-    public distance(start, end): number {
+    public distance(start: string, end: string): number {
         if (this.options.ignoreSpaces) {
             start = eraseSpaces(start);
             end = eraseSpaces(end);

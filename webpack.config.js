@@ -1,12 +1,13 @@
 var path = require("path");
 
 var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
-var BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 var env = process.env["SM_ENV"] || "production";
 
 var baseConfig = {
-    stats: true,
+    // bundling mode
+    mode: 'production',
+
     optimization: {
         minimizer: [
             new UglifyJSPlugin({
@@ -14,12 +15,18 @@ var baseConfig = {
             })
         ]
     },
+
+    // file resolutions
+    resolve: {
+        extensions: ['.ts', '.js'],
+        fallback: {}
+    },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                // test: /\.tsx?/,
                 exclude: /node_modules/,
-                use: "babel-loader"
+                use: 'ts-loader',
             }
         ]
     },
@@ -37,28 +44,19 @@ var baseConfig = {
 
 var configsModules = [
     {
-        name: "string-mismatch",
-        entry: {"string-mismatch.min": path.join(__dirname, "/src/string-mismatch.js")},
-        output: {library: "sm"},
-        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
-    },
-    {
         name: "levenshtein",
-        entry: {"levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.js")},
+        entry: {"levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.ts")},
         output: {library: "levenshtein"},
-        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     },
     {
         name: "greedy",
-        entry: {"greedy.min": path.join(__dirname, "/src/algorithms/greedy.js")},
+        entry: {"greedy.min": path.join(__dirname, "/src/algorithms/greedy.ts")},
         output: {library: "greedy"},
-        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     },
     {
         name: "dice-coefficient",
-        entry: {"dice-coefficient.min": path.join(__dirname, "/src/algorithms/dice-coefficient.js")},
+        entry: {"dice-coefficient.min": path.join(__dirname, "/src/algorithms/dice-coefficient.ts")},
         output: {library: "dice-coefficient"},
-        plugins: env === "development" ? [new BundleAnalyzerPlugin({analyzerPort: 0})] : []
     }
 ];
 
