@@ -21,14 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache project node-modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            lib
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -50,12 +42,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache project node-modules
-        uses: actions/cache@v2
-        with:
-          path: 'node_modules'
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -64,6 +50,7 @@ jobs:
       - name: Install codecov dependency
         run: npm install -g codecov
 
+      - run: npm ci
       - run: npm run test:cov
       - run: codecov
         env:
