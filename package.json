@@ -6,8 +6,8 @@
     "build": "node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
     "perf": "ts-node ./scripts/performance-test",
     "start": "node ./example/mismatch",
-    "test": "jest",
-    "test:cov": "jest --coverage",
+    "test": "node_modules/.bin/jest",
+    "test:cov": "node_modules/.bin/jest --coverage",
     "pub": "npm run build:prod && npm publish"
   },
   "repository": {
