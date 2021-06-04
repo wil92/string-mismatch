@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.org/wil92/string-mismatch.png?branch=master)](https://travis-ci.org/wil92/string-mismatch)
 [![codecov.io](https://img.shields.io/codecov/c/github/wil92/string-mismatch/master.svg?style=flat-square)](http://codecov.io/github/wil92/string-mismatch?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/wil92/string-mismatch/issues)
-[![Inline docs](http://inch-ci.org/github/wil92/string-mismatch.svg?branch=master)](http://inch-ci.org/github/wil92/string-mismatch)
 
 Algorithms for compare strings. Currently the list of available algorithms are:
 
@@ -38,21 +37,18 @@ npm install --save string-mismatch
 
 ## Getting started
 
-### API documentation
-
-Clone the project and run the command `npm run esdoc`. Also you can check the examples and see how to use the library.
-
-### Nodejs application example
+    ### Nodejs application example
 
 How to use the library and see the differences between two strings:
 
 ```es5
-var sm = require('string-mismatch');
+const greedy = require("string-mismatch/lib/greedy");
+const greedyInstance = new greedy();
 
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
 
-console.log(sm.diff(start, end, 5));
+console.log(greedyInstance.differences(start, end));
 ```
 
 The result is an object array with the mismatch result. Each object with the next structure:
@@ -71,7 +67,8 @@ The result is an object array with the mismatch result. Each object with the nex
 The resulting string can be concatenated like the next example:
 
 ```es5
-var sm = require('string-mismatch');
+const greedy = require("string-mismatch/lib/greedy");
+const greedyInstance = new greedy();
 
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
@@ -91,7 +88,7 @@ function showResult(diffs) {
     }, '');
 }
 
-console.log(showResult(sm.diff(start, end)));
+console.log(showResult(greedyInstance.differences(start, end)));
 /*
 result:
 This is a test for (-see)(+know) how work the (+new )library
@@ -110,8 +107,8 @@ npm start
 Import the library
 
 ```html5
-<!--String mismatch library with greedy algorithm by default-->
-<script src="lib/string-mismatch.min.js" type="application/javascript"></script>
+<!--Greedy algorithm-->
+<script src="lib/greedy.min.js" type="application/javascript"></script>
 <!--Levenshtein algorithm-->
 <script src="lib/levenshtein.min.js" type="application/javascript"></script>
 ```
@@ -133,8 +130,8 @@ Example with the levenshtein algorithm
 <script type="application/javascript">
     var start = 'This is a test for see how work the library';
     var end = 'This is a test for know how work the new library';
-    sm.use(levenshtein({ignoreSpaces: true}));
-    var diffs = sm.diff(start, end);
+    var alg = new greedy(options);
+    var diffs = alg.differences(start, end);
     console.log(diffs);
 </script>
 ```
@@ -149,8 +146,7 @@ npm test
 
 * [webpack](https://webpack.js.org/) - For build the project
 * [npm](https://www.npmjs.com/) - Dependency Management
-* [mocha](https://mochajs.org/) - The test frameword used
-* [chai](https://mochajs.org/) - BDD / TDD assertion library
+* [jest](https://jestjs.io/) - Jest framework for test
 
 ## Contributing
 
