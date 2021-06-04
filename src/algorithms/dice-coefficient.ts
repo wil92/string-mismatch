@@ -7,7 +7,7 @@ import {Operation} from "../utils/operation";
  * DiceCoefficient algorithm.
  * @see https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
  */
-export class DiceCoefficient implements AlgorithmBase {
+export default class DiceCoefficient implements AlgorithmBase {
 
     constructor(private options: AlgorithmOptions = {ignoreSpaces: false, ignoreCase: true} as AlgorithmOptions) {}
 

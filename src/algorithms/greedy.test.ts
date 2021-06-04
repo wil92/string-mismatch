@@ -1,4 +1,4 @@
-import {Greedy} from "./greedy";
+import Greedy from "./greedy";
 import {Operation} from "../utils/operation";
 
 describe("Greedy", () => {

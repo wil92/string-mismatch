@@ -17,7 +17,7 @@ interface SubOperations {
 /**
  * Greedy algorithm
  */
-export class Greedy implements AlgorithmBase {
+export default class Greedy implements AlgorithmBase {
 
     constructor(private options: AlgorithmOptions = {
         ignoreSpaces: false,

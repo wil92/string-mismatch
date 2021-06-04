@@ -1,4 +1,4 @@
-import {DiceCoefficient} from "./dice-coefficient";
+import DiceCoefficient from "./dice-coefficient";
 import {AlgorithmOptions} from "../utils/algorithm-options";
 
 describe("DiceCoefficient", function () {

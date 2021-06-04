@@ -1,6 +1,6 @@
-import {Levenshtein} from "../src/algorithms/levenshtein";
+import Levenshtein from "../src/algorithms/levenshtein";
 import {AlgorithmBase} from "../src/algorithms/algorithm";
-import {Greedy} from "../src/algorithms/greedy";
+import Greedy from "../src/algorithms/greedy";
 
 let origin = "";
 let dest = "";

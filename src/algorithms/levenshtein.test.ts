@@ -1,4 +1,4 @@
-import {Levenshtein} from "./levenshtein";
+import Levenshtein from "./levenshtein";
 import {Operation} from "../utils/operation";
 
 describe("Levenshtein", function () {

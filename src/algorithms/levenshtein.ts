@@ -14,7 +14,7 @@ const INS = 2;
  * Levenshtein algorithm.
  * @see https://en.wikipedia.org/wiki/Levenshtein_distance
  */
-export class Levenshtein implements AlgorithmBase {
+export default class Levenshtein implements AlgorithmBase {
 
     dp: number[][] = [];
 

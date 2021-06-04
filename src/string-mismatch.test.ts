@@ -1,5 +1,5 @@
-import {Greedy} from "./algorithms/greedy";
-import {Levenshtein} from "./algorithms/levenshtein";
+import Greedy from "./algorithms/greedy";
+import Levenshtein from "./algorithms/levenshtein";
 
 describe("string-mismatch.js", () => {
     let greedy: Greedy;
