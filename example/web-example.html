@@ -65,9 +65,9 @@
     function createAlgorithm(type, options) {
         switch (type) {
             case 'greedy':
-                return new greedy(options);
+                return new Greedy(options);
             case 'levenshtein':
-                return new levenshtein(options);
+                return new Levenshtein(options);
         }
     }
 

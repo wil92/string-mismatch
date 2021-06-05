@@ -43,17 +43,17 @@ var configsModules = [
     {
         name: "levenshtein",
         entry: {"levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.ts")},
-        output: {library: "levenshtein"},
+        output: {library: "Levenshtein"},
     },
     {
         name: "greedy",
         entry: {"greedy.min": path.join(__dirname, "/src/algorithms/greedy.ts")},
-        output: {library: "greedy"},
+        output: {library: "Greedy"},
     },
     {
         name: "dice-coefficient",
         entry: {"dice-coefficient.min": path.join(__dirname, "/src/algorithms/dice-coefficient.ts")},
-        output: {library: "dice-coefficient"},
+        output: {library: "DiceCoefficient"},
     }
 ];
 

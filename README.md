@@ -42,8 +42,8 @@ npm install --save string-mismatch
 How to use the library and see the differences between two strings:
 
 ```es5
-const greedy = require("string-mismatch/lib/greedy");
-const greedyInstance = new greedy();
+const sm = require("string-mismatch");
+const greedyInstance = new sm.Greedy();
 
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
@@ -67,8 +67,8 @@ The result is an object array with the mismatch result. Each object with the nex
 The resulting string can be concatenated like the next example:
 
 ```es5
-const greedy = require("string-mismatch/lib/greedy");
-const greedyInstance = new greedy();
+const sm = require("string-mismatch");
+const greedyInstance = new sm.Greedy();
 
 var start = 'This is a test for see how work the library',
     end   = 'This is a test for know how work the new library';
@@ -113,24 +113,25 @@ Import the library
 <script src="lib/levenshtein.min.js" type="application/javascript"></script>
 ```
 
-Use the library (with greedy algorithm by default)
+Example with greedy algorithm:
 
 ```html5
 <script type="application/javascript">
     var start = 'This is a test for see how work the library';
     var end = 'This is a test for know how work the new library';
-    var diffs = sm.diff(start, end);
+    var alg = new Greedy(options);
+    var diffs = alg.differences(start, end);
     console.log(diffs);
 </script>
 ```
 
-Example with the levenshtein algorithm
+Example with the levenshtein algorithm:
 
 ```html5
 <script type="application/javascript">
     var start = 'This is a test for see how work the library';
     var end = 'This is a test for know how work the new library';
-    var alg = new greedy(options);
+    var alg = new Levenshtein(options);
     var diffs = alg.differences(start, end);
     console.log(diffs);
 </script>

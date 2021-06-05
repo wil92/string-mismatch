@@ -1,5 +1,6 @@
-const lev = require("../lib/levenshtein");
-const greedy = require("../lib/greedy.min");
+const sm = require("../");
+const lev = sm.Levenshtein;
+const greedy = sm.Greedy;
 
 function showResult(diffs) {
     return diffs.reduce(function (text, value) {

@@ -1,7 +1,8 @@
 {
   "name": "string-mismatch",
-  "version": "2.0.2",
+  "version": "2.1.1",
   "description": "All mismatch between two strings",
+  "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
     "perf": "ts-node ./scripts/performance-test",
