@@ -16,6 +16,8 @@ interface Position {
 
 /**
  * Levenshtein algorithm.
+ * The Levenshtein algorithm is a method for finding the minimum number of operations needed to transform a string into another string.
+ * The allowed operations are insertion, deletion, and substitution.
  * @see https://en.wikipedia.org/wiki/Levenshtein_distance
  */
 export default class Levenshtein implements AlgorithmBase {
@@ -28,6 +30,9 @@ export default class Levenshtein implements AlgorithmBase {
 
     /**
      * Calculate differences between start string and end string and return the transformations list
+     * @param startText The initial string.
+     * @param endText The resulting string.
+     * @returns The list of operations to transform the start string into the end string.
      */
     differences(startText: string, endText: string): Operation[] {
         if (this.options.ignoreSpaces) {
@@ -65,8 +70,10 @@ export default class Levenshtein implements AlgorithmBase {
     };
 
     /**
-     * Calculate the string distance between start and end strings.
-     * This method should be override in the new algorithm class
+     * Utilize the Levenshtein algorithm to compute the distance between the start and end strings.
+     * @param startText The initial string.
+     * @param endText The resulting string.
+     * @returns The Levenshtein distance between the two strings.
      */
     distance(startText: string, endText: string): number {
         if (this.options.ignoreSpaces) {
@@ -78,7 +85,9 @@ export default class Levenshtein implements AlgorithmBase {
     }
 
     /**
-     * Join values for the solution
+     * Compact the solution to merge the operations that can be done in a single step.
+     * @param subSolution The list of operations to compact.
+     * @returns The compacted list of operations.
      */
     compactSolution(subSolution: Operation[]): Operation[] {
         const result = [];
@@ -97,7 +106,11 @@ export default class Levenshtein implements AlgorithmBase {
     }
 
     /**
-     * Create and fill dp matrix before calculate Levenshtein distance algorithm
+     * Calculate the matrix with the Levenshtein distance between the start and end strings.
+     * @param start The initial string.
+     * @param end The resulting string.
+     * @param calculatePath Whether to calculate the path or not.
+     * @returns The matrix with the distances and the path.
      */
     calculateMatrix(start: string, end: string, calculatePath: boolean = false): {
         dp: number[][],
@@ -116,7 +129,11 @@ export default class Levenshtein implements AlgorithmBase {
     };
 
     /**
-     * Calculate Levenshtein distance with a brute force approach with dynamic programing improvement
+     * Calculate the Levenshtein distance between the start and end strings.
+     * @param start The initial string.
+     * @param end The resulting string.
+     * @param dp The matrix to store the distances.
+     * @param path The matrix to store the path.
      */
     calculateLevenshtein(start: string, end: string, dp: number[][], path: Position[][] | undefined = undefined): void {
         for (let i = 0; i <= start.length; i++) {
