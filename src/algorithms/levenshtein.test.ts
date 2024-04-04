@@ -87,4 +87,9 @@ const testCases: { start: string, end: string, distance: number }[] = [
     {start: "abc", end: "def", distance: 3},
     {start: "ab", end: "ba", distance: 2},
     {start: "workat", end: "word", distance: 3},
+    {
+        start: "wmzIGWrCOCRAj LAuceRz fDarCnmRWggMbjcWidvc kSSIDZBBxWmCfOhAjfn tUttTsLkeMvnCPKnnyKbKj ovpKxMRcVyROIc",
+        end: "qnlqMVsWdCqDcaXVIpaQuMzwOah xxHKPTNfJwFSWBPNPc JnvUuyBMYlVdvuSLveRnGJ R cqUujCDbYDqaedPhNDVxA YGFsej",
+        distance: 92
+    },
 ];

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
-    "perf": "ts-node ./scripts/performance-test",
+    "performance": "ts-node ./scripts/performance-test",
     "start": "node ./example/mismatch",
     "test": "node_modules/.bin/jest",
     "test:cov": "node_modules/.bin/jest --coverage",
