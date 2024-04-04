@@ -145,8 +145,8 @@ export default class Levenshtein implements AlgorithmBase {
         for (let i = 1; i <= start.length; i++) {
             for (let j = 1; j <= end.length; j++) {
                 const best = [
-                    {v: dp[i - 1][j] + 1, i: i - 1, j: j},
-                    {v: dp[i][j - 1] + 1, i: i, j: j - 1},
+                    {v: dp[i - 1][j] + 1, i: i - 1, j},
+                    {v: dp[i][j - 1] + 1, i, j: j - 1},
                     {
                         v: dp[i - 1][j - 1] + (compareChar(start[i - 1], end[j - 1], this.options.ignoreCase) ? 0 : 1),
                         i: i - 1,
