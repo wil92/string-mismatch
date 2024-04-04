@@ -12,18 +12,22 @@ for (let i = 0; i < 1000; i++) {
 
 let algorithm: AlgorithmBase;
 
+const iterations = 20;
+
 console.log("Origin string length:", origin.length);
 console.log("Dest string length:", dest.length);
 console.log("");
 algorithm = new Greedy();
-let result = performance(20);
-console.log("algorithm", "greedy");
-console.log("result", result);
+let result = performance(iterations);
+console.log("algorithm:", "greedy");
+console.log(`result: ${result}ms`);
+console.log("distance:", algorithm.distance(origin, dest));
 console.log("");
 algorithm = new Levenshtein();
-result = performance(20);
-console.log("algorithm", "levenshtein");
-console.log("result", result);
+result = performance(iterations);
+console.log("algorithm:", "levenshtein");
+console.log(`result: ${result}ms`);
+console.log("distance:", algorithm.distance(origin, dest));
 
 function getRandomChar() {
     const lowerChars = "abcdefghijklmnopqrstuvwxyz";
