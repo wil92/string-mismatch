@@ -1,5 +1,6 @@
 import Levenshtein from "./levenshtein";
 import {Operation} from "../utils/operation";
+import {OperationType} from "../utils/operation-type";
 
 describe("Levenshtein", function () {
     let lev: Levenshtein;
@@ -8,47 +9,82 @@ describe("Levenshtein", function () {
         lev = new Levenshtein();
     });
 
-    it("should calculate the matrix dp", function () {
-        const start = "my",
-            end = "you";
-        expect(lev.calculateMatrix(start, end)).toEqual([[3, 2, 2], [3, 2, 1]]);
+    it("should validate battery of test cases (distance)", function () {
+        testCases.forEach(test => {
+            expect(lev.distance(test.start, test.end)).toEqual(test.distance);
+        });
     });
 
-    it("should calculate the matrix dp (from bug)", function () {
-        jest.spyOn(lev, "calculateLevenshtein").mockImplementation();
-        const start = "a",
-            end = "b";
-        expect(lev.calculateMatrix(start, end)).toEqual([[-1]]);
-        expect(lev.calculateLevenshtein).toHaveBeenCalled()
-    });
-
-    it("should return the string distance", function () {
-        jest.spyOn(lev, "calculateMatrix").mockImplementation();
-        lev.dp = [[5]];
-        expect(lev.distance("start", "end")).toEqual(5);
-        expect(lev.calculateMatrix).toHaveBeenCalled();
-    });
-
-    it("should reconstruct solution from the matrix of mismatch example 2", function () {
-        const start = "my",
-            end = "you";
-        lev.dp = [[3, 2, 2], [3, 2, 1]];
-        expect(lev.reconstructSolution(start, end)).toEqual([
-            {type: "sub", value: "my"},
-            {type: "ins", value: "o"},
-            {type: "sub", value: "yu"}
-        ]);
-    });
-
-    it("should check difference between two strings", function () {
-        jest.spyOn(lev, "calculateMatrix").mockImplementation();
-        jest.spyOn(lev, "reconstructSolution").mockImplementation();
-        jest.spyOn(lev, "joinSolution").mockReturnValue([{type: "sub", value: "my"} as Operation]);
-        const start = "moy",
-            end = "you";
-        expect(lev.differences(start, end)).toEqual([{type: "sub", value: "my"}]);
-        expect(lev.calculateMatrix).toHaveBeenCalled();
-        expect(lev.reconstructSolution).toHaveBeenCalled();
-        expect(lev.joinSolution).toHaveBeenCalled();
+    it("should validate battery of test cases (difference)", function () {
+        testCases.forEach(test => {
+            // console.log(test.start, test.end);
+            const operations = lev.differences(test.start, test.end);
+            // console.log(showResult(operations));
+            const result = applyOperation(test.start, test.end, operations);
+            expect(result).toEqual(test.end);
+        });
     });
 });
+
+
+function showResult(diffs: Operation[]) {
+    return diffs.reduce((text: string, value: Operation): string => {
+        switch (value.type) {
+            case "del":
+                return `${text}(-${value.value})`;
+            case "ins":
+                return `${text}(+${value.value})`;
+            case "sub":
+                return `${text}(-${value.previousValue}+${value.value})`;
+            case "eql":
+                return text + value.value;
+        }
+        return '';
+    }, "");
+}
+
+function applyOperation(start: string, end: string, operations: Operation[]): string {
+    let result = '';
+    let startIt = 0;
+    let endIt = 0;
+    for (let op of operations) {
+        switch (op.type) {
+            case OperationType.EQL_NAME:
+                expect(start.substring(startIt, startIt + op.value.length)).toEqual(op.value);
+                expect(end.substring(endIt, endIt + op.value.length)).toEqual(op.value);
+                result += op.value;
+                startIt += op.value.length;
+                endIt += op.value.length;
+                break;
+            case OperationType.DEL_NAME:
+                expect(start.substring(startIt, startIt + op.value.length)).toEqual(op.value);
+                startIt += op.value.length;
+                break;
+            case OperationType.INS_NAME:
+                expect(end.substring(endIt, endIt + op.value.length)).toEqual(op.value);
+                result += op.value;
+                endIt += op.value.length;
+                break;
+            case OperationType.SUB_NAME:
+                expect(start.substring(startIt, startIt + (op.previousValue || '').length)).toEqual(op.previousValue);
+                expect(end.substring(endIt, endIt + op.value.length)).toEqual(op.value);
+                result += op.value;
+                startIt += op.value.length;
+                endIt += op.value.length;
+                break;
+        }
+    }
+    return result;
+}
+
+const testCases: { start: string, end: string, distance: number }[] = [
+    {start: "my", end: "you", distance: 3},
+    {start: "a", end: "b", distance: 1},
+    {start: "1234", end: "1233", distance: 1},
+    {start: "kitten", end: "mittens", distance: 2},
+    {start: "hello", end: "seldom", distance: 3},
+    {start: "workattech", end: "workattech", distance: 0},
+    {start: "abc", end: "def", distance: 3},
+    {start: "ab", end: "ba", distance: 2},
+    {start: "workat", end: "word", distance: 3},
+];

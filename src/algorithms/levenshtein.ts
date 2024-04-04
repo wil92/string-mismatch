@@ -5,20 +5,25 @@ import {OperationType} from "../utils/operation-type";
 import {compareChar} from "../utils/compare-char";
 import {Operation} from "../utils/operation";
 
-const MAX_VALUE = Number.MAX_VALUE;
-const SUB = 0;
-const DEL = 1;
-const INS = 2;
+export interface LevenshteinOptions extends AlgorithmOptions {
+    enableSubstitution: boolean;
+}
+
+interface Position {
+    i: number;
+    j: number;
+}
 
 /**
  * Levenshtein algorithm.
  * @see https://en.wikipedia.org/wiki/Levenshtein_distance
  */
 export default class Levenshtein implements AlgorithmBase {
-
-    dp: number[][] = [];
-
-    constructor(private options: AlgorithmOptions = {ignoreCase: true, ignoreSpaces: false} as AlgorithmOptions) {
+    constructor(private options: LevenshteinOptions = {
+        ignoreCase: true,
+        ignoreSpaces: false,
+        enableSubstitution: true
+    } as LevenshteinOptions) {
     }
 
     /**
@@ -29,9 +34,34 @@ export default class Levenshtein implements AlgorithmBase {
             startText = eraseSpaces(startText);
             endText = eraseSpaces(endText);
         }
-        this.calculateMatrix(startText, endText);
-        const subSolution = this.reconstructSolution(startText, endText);
-        return this.joinSolution(subSolution);
+        const {path} = this.calculateMatrix(startText, endText, true);
+        const solution: Operation[] = [];
+
+        const q = [{i: startText.length, j: endText.length}];
+        while (q.length > 0) {
+            const p = q.shift();
+            if (!p || p.i === 0 && p.j === 0) {
+                break;
+            }
+            const move = path && path[p.i][p.j] || {i: 0, j: 0} as Position;
+            move.i = move.i - p.i;
+            move.j = move.j - p.j;
+
+            if (move.i !== 0 && move.j !== 0) {
+                solution.push({
+                    type: startText[p.i - 1] === endText[p.j - 1] ? OperationType.EQL_NAME : OperationType.SUB_NAME,
+                    value: endText[p.j - 1],
+                    previousValue: startText[p.i - 1]
+                } as Operation);
+            } else if (move.i !== 0) {
+                solution.push({type: OperationType.DEL_NAME, value: startText[p.i - 1]} as Operation);
+            } else {
+                solution.push({type: OperationType.INS_NAME, value: endText[p.j - 1]} as Operation);
+            }
+            q.push({i: move.i + p.i, j: move.j + p.j});
+        }
+
+        return this.compactSolution(solution.reverse());
     };
 
     /**
@@ -43,21 +73,21 @@ export default class Levenshtein implements AlgorithmBase {
             startText = eraseSpaces(startText);
             endText = eraseSpaces(endText);
         }
-        this.calculateMatrix(startText, endText);
-        return this.dp[0][0];
+        const dp: number[][] = this.calculateMatrix(startText, endText).dp;
+        return dp[startText.length][endText.length];
     }
 
     /**
      * Join values for the solution
      */
-    joinSolution(subSolution: Operation[]): Operation[] {
+    compactSolution(subSolution: Operation[]): Operation[] {
         const result = [];
         if (subSolution && subSolution.length > 0) {
-            let sub = {type: subSolution[0].type, value: subSolution[0].value};
+            let sub = {...subSolution[0]};
             for (let i = 1; i < subSolution.length; i++) {
-                if (subSolution[i].type !== sub.type || sub.type === OperationType.SUB_NAME) {
+                if (subSolution[i].type !== sub.type) {
                     result.push(sub);
-                    sub = {type: subSolution[i].type, value: ""} as Operation;
+                    sub = {...subSolution[i], value: ""} as Operation;
                 }
                 sub.value += subSolution[i].value;
             }
@@ -67,79 +97,50 @@ export default class Levenshtein implements AlgorithmBase {
     }
 
     /**
-     * Return the transformation for transform the start string to the end string
-     */
-    reconstructSolution(startText: string, endText: string): Operation[] {
-        const result = [];
-        const sl = startText.length;
-        const el = endText.length;
-        let si = 0;
-        let ei = 0;
-        while (si !== sl - 1 || ei !== el - 1) {
-            const options = [];
-            si + 1 < sl && options.push([si + 1, ei, DEL]);
-            ei + 1 < el && options.push([si, ei + 1, INS]);
-            si + 1 < sl && ei + 1 < el && options.push([si + 1, ei + 1, SUB]);
-            const best = options.sort((o, p) => {
-                if (this.dp[o[0]][o[1]] === this.dp[p[0]][p[1]]) {
-                    return o[2] - p[2];
-                }
-                return this.dp[o[0]][o[1]] - this.dp[p[0]][p[1]];
-            })[0];
-            if (best[2] === SUB) {
-                if (this.dp[si][ei] === this.dp[best[0]][best[1]]) {
-                    result.push({type: OperationType.EQL_NAME, value: startText[si]} as Operation);
-                } else {
-                    result.push({type: OperationType.SUB_NAME, value: startText[si] + endText[ei]} as Operation);
-                }
-            } else if (best[2] === DEL) {
-                result.push({type: OperationType.DEL_NAME, value: startText[si]} as Operation);
-            } else {
-                result.push({type: OperationType.INS_NAME, value: endText[ei]} as Operation);
-            }
-            si = best[0];
-            ei = best[1];
-        }
-        result.push({
-            type: this.dp[si][ei] === 1 ? OperationType.SUB_NAME : OperationType.EQL_NAME,
-            value: this.dp[si][ei] === 1 ? startText[si] + endText[ei] : startText[si]
-        } as Operation);
-        return result;
-    };
-
-    /**
      * Create and fill dp matrix before calculate Levenshtein distance algorithm
      */
-    calculateMatrix(start: string, end: string): number[][] {
-        this.dp = [];
-        for (let i = 0; i < start.length; i++) {
-            const array = [];
-            for (let j = 0; j < end.length; j++) {
-                array.push(-1);
+    calculateMatrix(start: string, end: string, calculatePath: boolean = false): {
+        dp: number[][],
+        path?: Position[][]
+    } {
+        const dp: number[][] = [];
+        const path: Position[][] | undefined = calculatePath ? [] : undefined;
+        for (let i: number = 0; i < start.length + 1; i++) {
+            dp.push(new Array(end.length + 1).fill(0));
+            if (path) {
+                path.push(new Array(end.length + 1).fill({i: 0, j: 0} as Position));
             }
-            this.dp.push(array);
         }
-        this.calculateLevenshtein(start, 0, end, 0);
-        return this.dp;
+        this.calculateLevenshtein(start, end, dp, path);
+        return {dp, path};
     };
 
     /**
      * Calculate Levenshtein distance with a brute force approach with dynamic programing improvement
      */
-    calculateLevenshtein(start: string, si: number, end: string, ei: number): number {
-        if (si === start.length && ei === end.length) {
-            return 0;
+    calculateLevenshtein(start: string, end: string, dp: number[][], path: Position[][] | undefined = undefined): void {
+        for (let i = 0; i <= start.length; i++) {
+            dp[i][0] = i;
         }
-        if (si === start.length || ei === end.length) {
-            return MAX_VALUE;
+        for (let i = 0; i <= end.length; i++) {
+            dp[0][i] = i;
         }
-        if (this.dp[si][ei] !== -1) {
-            return this.dp[si][ei];
+        for (let i = 1; i <= start.length; i++) {
+            for (let j = 1; j <= end.length; j++) {
+                const best = [
+                    {v: dp[i - 1][j] + 1, i: i - 1, j: j},
+                    {v: dp[i][j - 1] + 1, i: i, j: j - 1},
+                    {
+                        v: dp[i - 1][j - 1] + (compareChar(start[i - 1], end[j - 1], this.options.ignoreCase) ? 0 : 1),
+                        i: i - 1,
+                        j: j - 1
+                    }]
+                    .sort((a: any, b: any) => a.v - b.v)[0];
+                dp[i][j] = best.v;
+                if (path) {
+                    path[i][j] = best;
+                }
+            }
         }
-        return this.dp[si][ei] = Math.min(
-            this.calculateLevenshtein(start, si + 1, end, ei) + 1,
-            this.calculateLevenshtein(start, si, end, ei + 1) + 1,
-            this.calculateLevenshtein(start, si + 1, end, ei + 1) + (compareChar(start[si], end[ei], this.options.ignoreCase) ? 0 : 1)
-        );
     }
 }
