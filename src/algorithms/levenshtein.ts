@@ -21,7 +21,7 @@ interface Position {
  * @see https://en.wikipedia.org/wiki/Levenshtein_distance
  */
 export default class Levenshtein implements AlgorithmBase {
-    constructor(private options: LevenshteinOptions = {
+    constructor(public options: LevenshteinOptions = {
         ignoreCase: true,
         ignoreSpaces: false,
         enableSubstitution: true

@@ -1,6 +1,7 @@
 import Levenshtein from "./levenshtein";
 import {Operation} from "../utils/operation";
 import {OperationType} from "../utils/operation-type";
+import {compareChar} from "../utils/compare-char";
 
 describe("Levenshtein", function () {
     let lev: Levenshtein;
@@ -20,14 +21,13 @@ describe("Levenshtein", function () {
             // console.log(test.start, test.end);
             const operations = lev.differences(test.start, test.end);
             // console.log(showResult(operations));
-            const result = applyOperation(test.start, test.end, operations);
+            const result = applyOperation(test.start, test.end, operations, lev.options.ignoreCase);
             expect(result).toEqual(test.end);
         });
     });
 });
 
-
-function showResult(diffs: Operation[]) {
+export function showResult(diffs: Operation[]) {
     return diffs.reduce((text: string, value: Operation): string => {
         switch (value.type) {
             case "del":
@@ -43,31 +43,31 @@ function showResult(diffs: Operation[]) {
     }, "");
 }
 
-function applyOperation(start: string, end: string, operations: Operation[]): string {
+export function applyOperation(start: string, end: string, operations: Operation[], ignoreCase: boolean): string {
     let result = '';
     let startIt = 0;
     let endIt = 0;
     for (let op of operations) {
         switch (op.type) {
             case OperationType.EQL_NAME:
-                expect(start.substring(startIt, startIt + op.value.length)).toEqual(op.value);
-                expect(end.substring(endIt, endIt + op.value.length)).toEqual(op.value);
+                expect(compareChar(start.substring(startIt, startIt + op.value.length), op.value, ignoreCase)).toBeTruthy();
+                expect(compareChar(end.substring(endIt, endIt + op.value.length), op.value, ignoreCase)).toBeTruthy();
                 result += op.value;
                 startIt += op.value.length;
                 endIt += op.value.length;
                 break;
             case OperationType.DEL_NAME:
-                expect(start.substring(startIt, startIt + op.value.length)).toEqual(op.value);
+                expect(compareChar(start.substring(startIt, startIt + op.value.length), op.value, ignoreCase)).toBeTruthy();
                 startIt += op.value.length;
                 break;
             case OperationType.INS_NAME:
-                expect(end.substring(endIt, endIt + op.value.length)).toEqual(op.value);
+                expect(compareChar(end.substring(endIt, endIt + op.value.length), op.value, ignoreCase)).toBeTruthy();
                 result += op.value;
                 endIt += op.value.length;
                 break;
             case OperationType.SUB_NAME:
-                expect(start.substring(startIt, startIt + (op.previousValue || '').length)).toEqual(op.previousValue);
-                expect(end.substring(endIt, endIt + op.value.length)).toEqual(op.value);
+                expect(compareChar(start.substring(startIt, startIt + (op.previousValue || '').length), op.previousValue || '', ignoreCase)).toBeTruthy();
+                expect(compareChar(end.substring(endIt, endIt + op.value.length), op.value, ignoreCase)).toBeTruthy();
                 result += op.value;
                 startIt += op.value.length;
                 endIt += op.value.length;
@@ -77,7 +77,7 @@ function applyOperation(start: string, end: string, operations: Operation[]): st
     return result;
 }
 
-const testCases: { start: string, end: string, distance: number }[] = [
+export const testCases: { start: string, end: string, distance: number }[] = [
     {start: "my", end: "you", distance: 3},
     {start: "a", end: "b", distance: 1},
     {start: "1234", end: "1233", distance: 1},
