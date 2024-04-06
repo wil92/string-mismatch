@@ -15,6 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/wil92/string-mismatch.git"
   },
+  "donate": "https://www.paypal.com/donate?hosted_button_id=66HG7ANLYHYZ4",
   "keywords": [
     "string",
     "levenshtein",
