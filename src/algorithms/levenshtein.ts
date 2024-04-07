@@ -97,12 +97,12 @@ export default class Levenshtein implements AlgorithmBase {
                 if (subSolution[i].type !== sub.type) {
                     this.insertSubOperation(result, sub);
                     sub = {...subSolution[i], value: ''} as Operation;
-                    if (subSolution[i].type === OperationType.SUB_NAME) {
+                    if (subSolution[i].type === OperationType.SUB_NAME || subSolution[i].type === OperationType.EQL_NAME) {
                         sub.previousValue = '';
                     }
                 }
                 sub.value += subSolution[i].value;
-                if (subSolution[i].previousValue && sub.previousValue) {
+                if (subSolution[i].previousValue !== undefined && sub.previousValue !== undefined) {
                     sub.previousValue += subSolution[i].previousValue;
                 }
             }

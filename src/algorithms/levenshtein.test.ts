@@ -2,6 +2,7 @@ import Levenshtein from "./levenshtein";
 import {OperationType} from "../utils/operation-type";
 
 import testCases from '../../test-utils/test-examples.json';
+import {compareChar} from "../utils/compare-char";
 
 describe("Levenshtein", function () {
     let lev: Levenshtein;
@@ -19,6 +20,16 @@ describe("Levenshtein", function () {
     it("should validate battery of test cases (ignoreCase=true) (difference)", function () {
         testCases.forEach(test => {
             const operations = lev.differences(test.start, test.end);
+            for (let op of operations) {
+                if (op.type === OperationType.SUB_NAME || op.type === OperationType.EQL_NAME) {
+                    expect(op.previousValue).toBeTruthy();
+                }
+                if (op.type === OperationType.SUB_NAME && op.previousValue) {
+                    expect(op.value.length).toEqual(op.previousValue.length);
+                } else if (op.type === OperationType.EQL_NAME && op.previousValue) {
+                    expect(compareChar(op.value, op.previousValue, lev.options.ignoreCase)).toBeTruthy();
+                }
+            }
             const result = applyOperations(test.start, test.end, operations, lev.options.ignoreCase);
             expect(result).toEqual(test.end);
         });
