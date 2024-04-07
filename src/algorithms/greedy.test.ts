@@ -1,7 +1,7 @@
 import Greedy from "./greedy";
 import {Operation} from "../utils/operation";
-import {applyOperation, showResult, testCases} from "./levenshtein.test";
 import {compareChar} from "../utils/compare-char";
+import testCases from '../../test-utils/test-examples.json';
 
 describe("Greedy", () => {
     let greedy: Greedy;
@@ -22,18 +22,16 @@ describe("Greedy", () => {
     it("should validate battery of test cases (ignoreCase=true) (difference)", function () {
         testCases.forEach(test => {
             const operations = greedy.differences(test.start, test.end);
-            const result = applyOperation(test.start, test.end, operations, greedy.options.ignoreCase);
+            const result = applyOperations(test.start, test.end, operations, greedy.options.ignoreCase);
             expect(compareChar(result, test.end, greedy.options.ignoreCase));
         });
     });
 
     it("should validate battery of test cases (ignoreCase=false) (difference)", function () {
         testCases.forEach(test => {
-            // console.log(test.start, test.end);
             greedy.options.ignoreCase = false;
             const operations = greedy.differences(test.start, test.end);
-            // console.log(showResult(operations));
-            const result = applyOperation(test.start, test.end, operations, greedy.options.ignoreCase);
+            const result = applyOperations(test.start, test.end, operations, greedy.options.ignoreCase);
             expect(compareChar(result, test.end, greedy.options.ignoreCase));
         });
     });

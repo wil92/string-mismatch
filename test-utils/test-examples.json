@@ -1,0 +1,57 @@
+[
+  {
+    "start": "my",
+    "end": "you",
+    "distance": 3
+  },
+  {
+    "start": "a",
+    "end": "b",
+    "distance": 1
+  },
+  {
+    "start": "1234",
+    "end": "1233",
+    "distance": 1
+  },
+  {
+    "start": "kitten",
+    "end": "mittens",
+    "distance": 2
+  },
+  {
+    "start": "hello",
+    "end": "seldom",
+    "distance": 3
+  },
+  {
+    "start": "workattech",
+    "end": "workattech",
+    "distance": 0
+  },
+  {
+    "start": "abc",
+    "end": "def",
+    "distance": 3
+  },
+  {
+    "start": "ab",
+    "end": "ba",
+    "distance": 2
+  },
+  {
+    "start": "workat",
+    "end": "word",
+    "distance": 3
+  },
+  {
+    "start": "wmzIGWrCO",
+    "end": "qnlqMVsWd",
+    "distance": 9
+  },
+  {
+    "start": "wmzIGWrCOCRAj LAuceRz fDarCnmRWggMbjcWidvc kSSIDZBBxWmCfOhAjfn tUttTsLkeMvnCPKnnyKbKj ovpKxMRcVyROIc",
+    "end": "qnlqMVsWdCqDcaXVIpaQuMzwOah xxHKPTNfJwFSWBPNPc JnvUuyBMYlVdvuSLveRnGJ R cqUujCDbYDqaedPhNDVxA YGFsej",
+    "distance": 92
+  }
+]
