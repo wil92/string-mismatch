@@ -48,13 +48,13 @@ export default class Levenshtein implements AlgorithmBase {
             if (!p || p.i === 0 && p.j === 0) {
                 break;
             }
-            const move = path && path[p.i][p.j] || {i: 0, j: 0} as Position;
+            const move = path && {...path[p.i][p.j]} || {i: 0, j: 0} as Position;
             move.i = move.i - p.i;
             move.j = move.j - p.j;
 
             if (move.i !== 0 && move.j !== 0) {
                 solution.push({
-                    type: startText[p.i - 1] === endText[p.j - 1] ? OperationType.EQL_NAME : OperationType.SUB_NAME,
+                    type: compareChar(startText[p.i - 1], endText[p.j - 1], this.options.ignoreCase) ? OperationType.EQL_NAME : OperationType.SUB_NAME,
                     value: endText[p.j - 1],
                     previousValue: startText[p.i - 1]
                 } as Operation);
@@ -90,19 +90,38 @@ export default class Levenshtein implements AlgorithmBase {
      * @returns The compacted list of operations.
      */
     compactSolution(subSolution: Operation[]): Operation[] {
-        const result = [];
+        const result: Operation[] = [];
         if (subSolution && subSolution.length > 0) {
             let sub = {...subSolution[0]};
             for (let i = 1; i < subSolution.length; i++) {
                 if (subSolution[i].type !== sub.type) {
-                    result.push(sub);
-                    sub = {...subSolution[i], value: ""} as Operation;
+                    this.insertSubOperation(result, sub);
+                    sub = {...subSolution[i], value: ''} as Operation;
+                    if (subSolution[i].type === OperationType.SUB_NAME) {
+                        sub.previousValue = '';
+                    }
                 }
                 sub.value += subSolution[i].value;
+                if (subSolution[i].previousValue && sub.previousValue) {
+                    sub.previousValue += subSolution[i].previousValue;
+                }
             }
-            result.push(sub);
+            this.insertSubOperation(result, sub);
         }
         return result;
+    }
+
+    insertSubOperation(result: Operation[], sub: Operation): void {
+        if (this.options.enableSubstitution || sub.type != OperationType.SUB_NAME) {
+            result.push(sub);
+        } else {
+            result.push({
+                type: OperationType.DEL_NAME,
+                value: sub.previousValue,
+                previousValue: undefined
+            } as Operation);
+            result.push({type: OperationType.INS_NAME, value: sub.value, previousValue: undefined} as Operation);
+        }
     }
 
     /**
@@ -138,9 +157,15 @@ export default class Levenshtein implements AlgorithmBase {
     calculateLevenshtein(start: string, end: string, dp: number[][], path: Position[][] | undefined = undefined): void {
         for (let i = 0; i <= start.length; i++) {
             dp[i][0] = i;
+            if (path && i > 0) {
+                path[i][0] = {i: i - 1, j: 0} as Position;
+            }
         }
         for (let i = 0; i <= end.length; i++) {
             dp[0][i] = i;
+            if (path && i > 0) {
+                path[0][i] = {i: 0, j: i - 1} as Position;
+            }
         }
         for (let i = 1; i <= start.length; i++) {
             for (let j = 1; j <= end.length; j++) {
@@ -148,7 +173,7 @@ export default class Levenshtein implements AlgorithmBase {
                     {v: dp[i - 1][j] + 1, i: i - 1, j},
                     {v: dp[i][j - 1] + 1, i, j: j - 1},
                     {
-                        v: dp[i - 1][j - 1] + (compareChar(start[i - 1], end[j - 1], this.options.ignoreCase) ? 0 : 1),
+                        v: dp[i - 1][j - 1] + (compareChar(start[i - 1], end[j - 1], this.options.ignoreCase) ? 0 : this.options.enableSubstitution ? 1 : 2),
                         i: i - 1,
                         j: j - 1
                     }]
