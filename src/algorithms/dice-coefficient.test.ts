@@ -10,6 +10,11 @@ describe("DiceCoefficient", function () {
         expect(algorithm.diceCoefficientAlgorithm).toBeCalled();
     });
 
+    it("should validate the wiki example", function () {
+        const algorithm = new DiceCoefficient();
+        expect(algorithm.distance("night", "nacht")).toEqual(0.25);
+    });
+
     it("should return the string distance", function () {
         const algorithm = new DiceCoefficient();
         expect(algorithm.diceCoefficientAlgorithm("sten", "end")).toEqual(0.4);

@@ -1,5 +1,8 @@
 import Levenshtein from "./levenshtein";
-import {Operation} from "../utils/operation";
+import {OperationType} from "../utils/operation-type";
+
+import testCases from '../../test-utils/test-examples.json';
+import {compareChar} from "../utils/compare-char";
 
 describe("Levenshtein", function () {
     let lev: Levenshtein;
@@ -8,47 +11,49 @@ describe("Levenshtein", function () {
         lev = new Levenshtein();
     });
 
-    it("should calculate the matrix dp", function () {
-        const start = "my",
-            end = "you";
-        expect(lev.calculateMatrix(start, end)).toEqual([[3, 2, 2], [3, 2, 1]]);
+    it("should validate battery of test cases (distance)", function () {
+        testCases.forEach(test => {
+            expect(lev.distance(test.start, test.end)).toEqual(test.distance);
+        });
     });
 
-    it("should calculate the matrix dp (from bug)", function () {
-        jest.spyOn(lev, "calculateLevenshtein").mockImplementation();
-        const start = "a",
-            end = "b";
-        expect(lev.calculateMatrix(start, end)).toEqual([[-1]]);
-        expect(lev.calculateLevenshtein).toHaveBeenCalled()
+    it("should validate battery of test cases (ignoreCase=true) (difference)", function () {
+        testCases.forEach(test => {
+            const operations = lev.differences(test.start, test.end);
+            for (let op of operations) {
+                if (op.type === OperationType.SUB_NAME || op.type === OperationType.EQL_NAME) {
+                    expect(op.previousValue).toBeTruthy();
+                }
+                if (op.type === OperationType.SUB_NAME && op.previousValue) {
+                    expect(op.value.length).toEqual(op.previousValue.length);
+                } else if (op.type === OperationType.EQL_NAME && op.previousValue) {
+                    expect(compareChar(op.value, op.previousValue, lev.options.ignoreCase)).toBeTruthy();
+                }
+            }
+            const result = applyOperations(test.start, test.end, operations, lev.options.ignoreCase);
+            expect(result).toEqual(test.end);
+        });
     });
 
-    it("should return the string distance", function () {
-        jest.spyOn(lev, "calculateMatrix").mockImplementation();
-        lev.dp = [[5]];
-        expect(lev.distance("start", "end")).toEqual(5);
-        expect(lev.calculateMatrix).toHaveBeenCalled();
+    it("should validate battery of test cases (ignoreCase=false) (difference)", function () {
+        testCases.forEach(test => {
+            lev.options.ignoreCase = false;
+            const operations = lev.differences(test.start, test.end);
+            const result = applyOperations(test.start, test.end, operations, lev.options.ignoreCase);
+            expect(result).toEqual(test.end);
+        });
     });
 
-    it("should reconstruct solution from the matrix of mismatch example 2", function () {
-        const start = "my",
-            end = "you";
-        lev.dp = [[3, 2, 2], [3, 2, 1]];
-        expect(lev.reconstructSolution(start, end)).toEqual([
-            {type: "sub", value: "my"},
-            {type: "ins", value: "o"},
-            {type: "sub", value: "yu"}
-        ]);
-    });
-
-    it("should check difference between two strings", function () {
-        jest.spyOn(lev, "calculateMatrix").mockImplementation();
-        jest.spyOn(lev, "reconstructSolution").mockImplementation();
-        jest.spyOn(lev, "joinSolution").mockReturnValue([{type: "sub", value: "my"} as Operation]);
-        const start = "moy",
-            end = "you";
-        expect(lev.differences(start, end)).toEqual([{type: "sub", value: "my"}]);
-        expect(lev.calculateMatrix).toHaveBeenCalled();
-        expect(lev.reconstructSolution).toHaveBeenCalled();
-        expect(lev.joinSolution).toHaveBeenCalled();
+    it("should validate battery of test cases (ignoreCase=true) (enableSubstitution=false) (difference)", function () {
+        testCases.forEach(test => {
+            lev.options.enableSubstitution = false;
+            lev.options.ignoreCase = true;
+            const operations = lev.differences(test.start, test.end);
+            for (let op of operations) {
+                expect(op.type).not.toEqual(OperationType.SUB_NAME);
+            }
+            const result = applyOperations(test.start, test.end, operations, lev.options.ignoreCase);
+            expect(result).toEqual(test.end);
+        });
     });
 });

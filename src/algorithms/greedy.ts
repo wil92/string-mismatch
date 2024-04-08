@@ -14,12 +14,16 @@ interface SubOperations {
     ins: string;
 }
 
+export interface GreedyAlgorithmOptions extends AlgorithmOptions {
+    precision?: number;
+}
+
 /**
  * Greedy algorithm
  */
 export default class Greedy implements AlgorithmBase {
 
-    constructor(private options: AlgorithmOptions = {
+    constructor(public options: GreedyAlgorithmOptions = {
         ignoreSpaces: false,
         ignoreCase: true,
         precision: 5
@@ -27,7 +31,10 @@ export default class Greedy implements AlgorithmBase {
     }
 
     /**
-     * Calculate the string distance between start and end strings.
+     * Calculate the distance between two strings.
+     * @param start The initial string.
+     * @param end The resulting string.
+     * @returns The number of operations needed to transform the start string into the end string.
      */
     public distance(start: string, end: string): number {
         if (this.options.ignoreSpaces) {
@@ -45,6 +52,9 @@ export default class Greedy implements AlgorithmBase {
 
     /**
      * Calculate differences between start string and end string and return the transformations list
+     * @param startText The initial string.
+     * @param endText The resulting string.
+     * @returns The list of operations to transform the start string into the end string.
      */
     public differences(startText: string, endText: string): Operation[] {
         if (this.options.ignoreSpaces) {
@@ -55,20 +65,24 @@ export default class Greedy implements AlgorithmBase {
         const changeData = this.getChanges(startText, endText, "");
         const nextS = endText.slice(changeData.mtc.length + changeData.ins.length + changeData.sbs.length);
         const nextThis = startText.slice(changeData.mtc.length + changeData.del.length + changeData.sbs.length);
-        let result = [];
+        let result: Operation[] = [];
         changeData.mtc && result.push({type: OperationType.EQL_NAME, value: changeData.mtc});
         changeData.del && result.push({type: OperationType.DEL_NAME, value: changeData.del});
         changeData.ins && result.push({type: OperationType.INS_NAME, value: changeData.ins});
         changeData.sbs && result.push({type: OperationType.EQL_NAME, value: changeData.sbs});
 
         if (nextThis !== "" || nextS !== "") {
-            result = result.concat(this.differences(nextThis, nextS));
+            result = [...result, ...this.differences(nextThis, nextS)];
         }
         return result;
     };
 
     /**
      * Recursively find the possibles solutions for the differences between start and end texts
+     * @param start The initial string.
+     * @param end The resulting string.
+     * @param unchangedStr The string that is unchanged between the two strings.
+     * @returns The list of operations to transform the start string into the end string.
      */
     private getChanges(start: string, end: string, unchangedStr: string): SubOperations {
         const ignoreCase = Boolean(this.options.ignoreCase);
@@ -92,11 +106,13 @@ export default class Greedy implements AlgorithmBase {
         } as SubOperations;
 
         if (shorter !== "") {
-            for (let rc = 0; rc < len && sub.sbs.length < precision; rc++) {
-                const sub = this.getMatchingSubstring(shorter, longer, rc, cd.mtc);
-                sub.fil = rc < len - sub.fis ? sub.fis + rc
-                    : sub.fis - len + rc;
-                sub.sbs.length > cd.sbs.length && (cd = sub);
+            for (let rotationCount = 0; rotationCount < len && sub.sbs.length < precision; rotationCount++) {
+                sub = this.getMatchingSubstring(shorter, longer, rotationCount);
+                if (sub.sbs.length > cd.sbs.length) {
+                    sub.mtc = cd.mtc;
+                    sub.fil = rotationCount < len - sub.fis ? sub.fis + rotationCount : sub.fis - len + rotationCount;
+                    cd = sub;
+                }
             }
         }
         cd.del = isThisLonger ? longer.slice(0, cd.fil) : shorter.slice(0, cd.fis);
@@ -110,26 +126,30 @@ export default class Greedy implements AlgorithmBase {
     };
 
     /**
-     * Returns the first matching substring in-between the two strings
+     * Find the first matching substring between two strings
+     * @param shorter The initial string.
+     * @param longer The resulting string.
+     * @param rotation The rotation value.
+     * @returns The first matching substring between the two strings.
      */
-    getMatchingSubstring(source: string, changed: string, rotation: number, unchangedStr: string): SubOperations {
+    getMatchingSubstring(shorter: string, longer: string, rotation: number): SubOperations {
         const ignoreCase = Boolean(this.options.ignoreCase);
-        const sourceLength = source.length;
-        const changedLength = changed.length;
-        const subResult = {fis: sourceLength, mtc: unchangedStr, sbs: ""} as SubOperations;
+        const shorterLength = shorter.length;
+        const longerLength = longer.length;
+        const subResult = {fis: shorterLength, sbs: ""} as SubOperations;
         let index = 0;
-        let match = false;
-        while (index < sourceLength) {
-            const indexRot = (index + (rotation < 0 ? changedLength - Math.abs(rotation) % changedLength : rotation)) % changedLength;
-            if (compareChar(changed[indexRot], source[index], ignoreCase)) {
-                if (match) {
-                    subResult.sbs += source[index];
+        let matchOnce = false;
+        while (index < shorterLength && (index + rotation) < longerLength) {
+            const indexRot = index + rotation;
+            if (compareChar(longer[indexRot], shorter[index], ignoreCase)) {
+                if (matchOnce) {
+                    subResult.sbs += shorter[index];
                 } else {
-                    match = true;
+                    matchOnce = true;
                     subResult.fis = index;
-                    subResult.sbs = source[index];
+                    subResult.sbs = shorter[index];
                 }
-            } else if (match) {
+            } else if (matchOnce) {
                 break;
             }
             ++index;

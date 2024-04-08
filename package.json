@@ -1,20 +1,21 @@
 {
   "name": "string-mismatch",
-  "version": "2.1.1",
+  "version": "3.0.0-snapshot",
   "description": "All mismatch between two strings",
   "main": "index.js",
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
-    "perf": "ts-node ./scripts/performance-test",
+    "build": "webpack --config ./webpack.config.js",
+    "performance": "ts-node ./scripts/performance-test",
     "start": "node ./example/mismatch",
-    "test": "node_modules/.bin/jest",
-    "test:cov": "node_modules/.bin/jest --coverage",
-    "pub": "npm run build:prod && npm publish"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "pub": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wil92/string-mismatch.git"
   },
+  "donate": "https://www.paypal.com/donate?hosted_button_id=66HG7ANLYHYZ4",
   "keywords": [
     "string",
     "levenshtein",
@@ -35,18 +36,19 @@
     "url": "https://github.com/wil92/string-mismatch/issues"
   },
   "homepage": "https://github.com/wil92/string-mismatch#readme",
-  "dependencies": {},
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@types/lodash": "^4.14.170",
-    "jest": "^27.0.4",
-    "lodash": "^4.17.21",
-    "ts-jest": "^27.0.2",
-    "ts-loader": "^9.2.2",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.2",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0"
+    "@types/jest": "26.0.23",
+    "@types/lodash": "4.14.170",
+    "jest": "27.0.4",
+    "lodash": "4.17.21",
+    "ts-jest": "27.0.2",
+    "ts-loader": "9.2.2",
+    "ts-node": "10.0.0",
+    "typescript": "4.3.2",
+    "webpack": "^5.91.0",
+    "webpack-cli": "4.7.0"
   }
 }

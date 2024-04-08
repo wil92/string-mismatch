@@ -1,17 +1,8 @@
-var path = require("path");
-var UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const path = require("path");
 
-var baseConfig = {
+const baseConfig = {
     // bundling mode
     mode: 'production',
-
-    optimization: {
-        minimizer: [
-            new UglifyJSPlugin({
-                include: /\.min\.js$/
-            })
-        ]
-    },
 
     // file resolutions
     resolve: {
@@ -39,7 +30,7 @@ var baseConfig = {
     },
 };
 
-var configsModules = [
+const configsModules = [
     {
         name: "levenshtein",
         entry: {"levenshtein.min": path.join(__dirname, "/src/algorithms/levenshtein.ts")},
@@ -58,7 +49,7 @@ var configsModules = [
 ];
 
 
-var configs = configsModules.map(function (config) {
+const configs = configsModules.map(function (config) {
     return Object.assign({}, baseConfig, {
         name: config.name,
         entry: config.entry,
@@ -67,8 +58,8 @@ var configs = configsModules.map(function (config) {
     });
 });
 
-var notMinify = configs.map(function (config) {
-    var entry = {}, key = Object.keys(config.entry)[0];
+const notMinify = configs.map(function (config) {
+    const entry = {}, key = Object.keys(config.entry)[0];
     entry[key.replace(".min", "")] = config.entry[key];
     return Object.assign({}, config, {
         entry: entry,

@@ -5,6 +5,7 @@ import {Operation} from "../utils/operation";
 
 /**
  * DiceCoefficient algorithm.
+ * The DiceCoefficient algorithm is a method for finding the similarity between two strings.
  * @see https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
  */
 export default class DiceCoefficient implements AlgorithmBase {
@@ -12,14 +13,20 @@ export default class DiceCoefficient implements AlgorithmBase {
     constructor(private options: AlgorithmOptions = {ignoreSpaces: false, ignoreCase: true} as AlgorithmOptions) {}
 
     /**
-     * Calculate differences between startText and endText strings and return the list of transformations.
+     * The method is not supported for this algorithm.
+     * @param startText The initial string.
+     * @param endText The resulting string.
+     * @returns an exception because this algorithm doesn't have support for the method.
      */
     public differences(startText: string, endText: string): Operation[] {
         throw new Error('This algorithm didn\'t have implementation for the differences method')
     }
 
     /**
-     * Calculate the distance between startText and endText strings.
+     * Calculate the similarity between two strings.
+     * @param startText The initial string.
+     * @param endText The resulting string.
+     * @returns a number between 0 and 1 that represents the similarity between two strings.
      */
     public distance(startText: string, endText: string): number {
         if (this.options.ignoreSpaces) {
@@ -29,9 +36,11 @@ export default class DiceCoefficient implements AlgorithmBase {
         return this.diceCoefficientAlgorithm(startText, endText);
     }
 
-    // noinspection JSMethodCanBeStatic
     /**
-     * Dice-Coefficient algorithm
+     * Calculate the similarity between two strings.
+     * @param startText The initial string.
+     * @param endText The resulting string.
+     * @returns a number between 0 and 1 that represents the similarity between two strings.
      */
     diceCoefficientAlgorithm(startText: string, endText: string): number {
         const startSet = new Set();
