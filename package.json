@@ -4,12 +4,12 @@
   "description": "All mismatch between two strings",
   "main": "index.js",
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.config.js",
     "performance": "ts-node ./scripts/performance-test",
     "start": "node ./example/mismatch",
-    "test": "node_modules/.bin/jest",
-    "test:cov": "node_modules/.bin/jest --coverage",
-    "pub": "npm run build:prod && npm publish"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "pub": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
