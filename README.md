@@ -1,10 +1,10 @@
-# string-mismatch
+# string-mismatch library
 
 [![Build Status](https://travis-ci.org/wil92/string-mismatch.png?branch=master)](https://travis-ci.org/wil92/string-mismatch)
 [![codecov.io](https://img.shields.io/codecov/c/github/wil92/string-mismatch/master.svg?style=flat-square)](http://codecov.io/github/wil92/string-mismatch?branch=master)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/wil92/string-mismatch/issues)
 
-Algorithms for compare strings. Currently the list of available algorithms are:
+The library contain the next string comparison algorithms:
 
 |                                       |Greedy                         |[Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance)|[Dice Coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient)|
 |---------------------------------------|-------------------------------|-----------------------------------------------------------------|----------------------------------------------------------------------------------------|
@@ -37,7 +37,7 @@ npm install --save string-mismatch
 
 ## Getting started
 
-    ### Nodejs application example
+### Nodejs application example
 
 How to use the library and see the differences between two strings:
 
@@ -160,6 +160,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 ## Authors
 
 * **Guillermo González** - *Initial work* - [wil92](https://github.com/wil92)
+
+## [CHANGELOG](./CHANGELOG.md)
 
 ## License
 

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.1
+
+- Update README.md file.
+
 ## v3.0.0
 
 - Fixed: Bug with greedy algorithm, in the rotation of strings.
