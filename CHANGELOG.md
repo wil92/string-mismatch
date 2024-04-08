@@ -6,3 +6,7 @@
 - Added: New tests to cover edge cases.
 - Added: Utils functions tests coverage.
 - Added: Donation info to the package.json file.
+- Updated: Levenshtein distance algorithm to be more efficient (remove recursive implementation).
+- Fixed: Issue with Levenshtein distance algorithm.
+- Update: performance tests implementation.
+- Update: Web example code.
