@@ -9,6 +9,10 @@ src/**/*.test.js
 .babelrc
 .esdoc.json
 wallaby.json.js
+.github
+src
+test-utils
+tsconfig*.json
 
 # documentation
 docs
