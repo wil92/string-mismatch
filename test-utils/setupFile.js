@@ -5,7 +5,7 @@ function compareChar(char1, char2, ignoreCase) {
     return char1 === char2;
 }
 
-global.applyOperations = function(start, end, operations, ignoreCase) {
+global.applyOperations = function (start, end, operations, ignoreCase) {
     let result = '';
     let startIt = 0;
     let endIt = 0;
@@ -30,6 +30,7 @@ global.applyOperations = function(start, end, operations, ignoreCase) {
             case "sub":
                 expect(compareChar(start.substring(startIt, startIt + (op.previousValue || '').length), op.previousValue || '', ignoreCase)).toBeTruthy();
                 expect(compareChar(end.substring(endIt, endIt + op.value.length), op.value, ignoreCase)).toBeTruthy();
+                expect(op.previousValue.length).toEqual(op.value.length);
                 result += op.value;
                 startIt += op.value.length;
                 endIt += op.value.length;
@@ -39,7 +40,7 @@ global.applyOperations = function(start, end, operations, ignoreCase) {
     return result;
 };
 
-global.showResult = function(diffs) {
+global.showResult = function (diffs) {
     return diffs.reduce((text, value) => {
         switch (value.type) {
             case "del":
