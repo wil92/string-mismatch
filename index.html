@@ -1,0 +1,174 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>string-mismatch</title><meta name="description" content="Documentation for string-mismatch"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">string-mismatch</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h2>string-mismatch</h2></div><div class="tsd-panel tsd-typography"><a id="md:string-mismatch-library" class="tsd-anchor"></a><h1><a href="#md:string-mismatch-library">string-mismatch library</a></h1><p><a href="https://travis-ci.org/wil92/string-mismatch"><img src="https://travis-ci.org/wil92/string-mismatch.png?branch=master" alt="Build Status"></a>
+<a href="http://codecov.io/github/wil92/string-mismatch?branch=master"><img src="https://img.shields.io/codecov/c/github/wil92/string-mismatch/master.svg?style=flat-square" alt="codecov.io"></a>
+<a href="https://github.com/wil92/string-mismatch/issues"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="contributions welcome"></a></p>
+<p>The library contain the next string comparison algorithms:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Greedy</th>
+<th><a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein</a></th>
+<th><a href="https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Dice Coefficient</a></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Complexity</strong></td>
+<td>O(n*k) (<strong>k</strong> precision)</td>
+<td>O(n^2)</td>
+<td>O(nlog n)</td>
+</tr>
+<tr>
+<td><strong>Good</strong></td>
+<td>Fast algorithm</td>
+<td>Always the optimal solution</td>
+<td>Is based in probabilities and is a really fast algorithm</td>
+</tr>
+<tr>
+<td><strong>Bad</strong></td>
+<td>The solution is not the optimal</td>
+<td>Complexity is O(n^2)</td>
+<td>Impossible to see the differences between the strings</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Use n^2 memory</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Methods</strong></td>
+<td><em>difference</em></td>
+<td><em>difference</em></td>
+<td><em>distance</em></td>
+</tr>
+<tr>
+<td></td>
+<td><em>distance</em></td>
+<td><em>distance</em></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Operations for transform the string</strong></td>
+<td><em>insertion</em></td>
+<td><em>insertion</em></td>
+<td><em>not apply</em></td>
+</tr>
+<tr>
+<td></td>
+<td><em>deletion</em></td>
+<td><em>deletion</em></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><em>substitution</em></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Class name</strong></td>
+<td><code>Greedy</code></td>
+<td><code>Levenshtein</code></td>
+<td><code>DiceCoefficient</code></td>
+</tr>
+</tbody></table>
+<p>Why use string-mismatch:</p>
+<ul>
+<li>Ease to install and start using it</li>
+<li>Modular library (use only what you want to use).</li>
+<li>Support for browser and node applications.</li>
+<li>Compatible with es5</li>
+<li>Not external dependencies.</li>
+<li>Completely documented.</li>
+<li>Coverage over 95%.</li>
+</ul>
+<a id="md:install" class="tsd-anchor"></a><h2><a href="#md:install">Install</a></h2><pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> --</span><span class="hl-0">save</span><span class="hl-1"> </span><span class="hl-0">string</span><span class="hl-1">-</span><span class="hl-0">mismatch</span>
+</code><button>Copy</button></pre>
+<a id="md:getting-started" class="tsd-anchor"></a><h2><a href="#md:getting-started">Getting started</a></h2><a id="md:nodejs-application-example" class="tsd-anchor"></a><h3><a href="#md:nodejs-application-example">Nodejs application example</a></h3><p>How to use the library and see the differences between two strings:</p>
+<pre><code class="language-es5">const sm = require(&quot;string-mismatch&quot;);
+const greedyInstance = new sm.Greedy();
+
+var start = &#39;This is a test for see how work the library&#39;,
+    end   = &#39;This is a test for know how work the new library&#39;;
+
+console.log(greedyInstance.differences(start, end));
+</code><button>Copy</button></pre>
+<p>The result is an object array with the mismatch result. Each object with the next structure:</p>
+<pre><code class="language-es5">{
+  type: string, // type of sub-string:
+                //   &#39;sub&#39; -&gt; substitution
+                //   &#39;ins&#39; -&gt; insertion
+                //   &#39;del&#39; -&gt; deletion
+                //   &#39;eql&#39; -&gt; equal
+  value: string // value of the current sub-string
+}
+</code><button>Copy</button></pre>
+<p>The resulting string can be concatenated like the next example:</p>
+<pre><code class="language-es5">const sm = require(&quot;string-mismatch&quot;);
+const greedyInstance = new sm.Greedy();
+
+var start = &#39;This is a test for see how work the library&#39;,
+    end   = &#39;This is a test for know how work the new library&#39;;
+
+function showResult(diffs) {
+    return diffs.reduce(function (text, value) {
+        switch (value.type) {
+            case &#39;del&#39;:
+                return text + &#39;(-&#39; + value.value + &#39;)&#39;;
+            case &#39;ins&#39;:
+                return text + &#39;(+&#39; + value.value + &#39;)&#39;;
+            case &#39;sub&#39;:
+                return text + &#39;(-+&#39; + value.value + &#39;)&#39;;
+            case &#39;eql&#39;:
+                return text + value.value;
+        }
+    }, &#39;&#39;);
+}
+
+console.log(showResult(greedyInstance.differences(start, end)));
+/*
+result:
+This is a test for (-see)(+know) how work the (+new )library
+*/
+</code><button>Copy</button></pre>
+<p>This code can be tested in the project&#39;s examples. To run the examples use the next command:</p>
+<pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">start</span>
+</code><button>Copy</button></pre>
+<a id="md:web-application-example" class="tsd-anchor"></a><h3><a href="#md:web-application-example">Web application example</a></h3><p>Import the library</p>
+<pre><code class="language-html5">&lt;!--Greedy algorithm--&gt;
+&lt;script src=&quot;lib/greedy.min.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+&lt;!--Levenshtein algorithm--&gt;
+&lt;script src=&quot;lib/levenshtein.min.js&quot; type=&quot;application/javascript&quot;&gt;&lt;/script&gt;
+</code><button>Copy</button></pre>
+<p>Example with greedy algorithm:</p>
+<pre><code class="language-html5">&lt;script type=&quot;application/javascript&quot;&gt;
+    var start = &#39;This is a test for see how work the library&#39;;
+    var end = &#39;This is a test for know how work the new library&#39;;
+    var alg = new Greedy(options);
+    var diffs = alg.differences(start, end);
+    console.log(diffs);
+&lt;/script&gt;
+</code><button>Copy</button></pre>
+<p>Example with the levenshtein algorithm:</p>
+<pre><code class="language-html5">&lt;script type=&quot;application/javascript&quot;&gt;
+    var start = &#39;This is a test for see how work the library&#39;;
+    var end = &#39;This is a test for know how work the new library&#39;;
+    var alg = new Levenshtein(options);
+    var diffs = alg.differences(start, end);
+    console.log(diffs);
+&lt;/script&gt;
+</code><button>Copy</button></pre>
+<a id="md:testing-code" class="tsd-anchor"></a><h2><a href="#md:testing-code">Testing code</a></h2><pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">test</span>
+</code><button>Copy</button></pre>
+<a id="md:built-with" class="tsd-anchor"></a><h2><a href="#md:built-with">Built With</a></h2><ul>
+<li><a href="https://webpack.js.org/">webpack</a> - For build the project</li>
+<li><a href="https://www.npmjs.com/">npm</a> - Dependency Management</li>
+<li><a href="https://jestjs.io/">jest</a> - Jest framework for test</li>
+</ul>
+<a id="md:contributing" class="tsd-anchor"></a><h2><a href="#md:contributing">Contributing</a></h2><p>All contributions are welcome.</p>
+<a id="md:versioning" class="tsd-anchor"></a><h2><a href="#md:versioning">Versioning</a></h2><p>We use <a href="http://semver.org/">SemVer</a> for versioning. For the versions available, see the <a href="https://github.com/wil92/string-mismatch/tags">tags on this repository</a>.</p>
+<a id="md:authors" class="tsd-anchor"></a><h2><a href="#md:authors">Authors</a></h2><ul>
+<li><strong>Guillermo González</strong> - <em>Initial work</em> - <a href="https://github.com/wil92">wil92</a></li>
+</ul>
+<a id="md:changelog" class="tsd-anchor"></a><h2><a href="#md:changelog"><a href="./CHANGELOG.md">CHANGELOG</a></a></h2><a id="md:license" class="tsd-anchor"></a><h2><a href="#md:license">License</a></h2><p>This project is licensed under the MIT License - see the <a href="https://gitlab.com/wil92/wankar-server/blob/development/LICENSE">LICENSE.md</a> file for details</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-index-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><h4 class="uppercase">Member Visibility</h4><form><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div><div class="tsd-theme-toggle"><h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:string-mismatch-library"><span>string-<wbr/>mismatch library</span></a><ul><li><a href="#md:install"><span>Install</span></a></li><li><a href="#md:getting-started"><span>Getting started</span></a></li><li><ul><li><a href="#md:nodejs-application-example"><span>Nodejs application example</span></a></li><li><a href="#md:web-application-example"><span>Web application example</span></a></li></ul></li><li><a href="#md:testing-code"><span>Testing code</span></a></li><li><a href="#md:built-with"><span>Built <wbr/>With</span></a></li><li><a href="#md:contributing"><span>Contributing</span></a></li><li><a href="#md:versioning"><span>Versioning</span></a></li><li><a href="#md:authors"><span>Authors</span></a></li><li><a href="#md:changelog"><span>CHANGELOG</span></a></li><li><a href="#md:license"><span>License</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="index.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>string-mismatch</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
