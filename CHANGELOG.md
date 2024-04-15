@@ -6,6 +6,7 @@
 - Added: Typedoc and integrate it with the project.
 - Added: Documentation in OperationType enum.
 - Added: docs to the project.
+- Updated: library documentation.
 
 ## v3.0.1
 
