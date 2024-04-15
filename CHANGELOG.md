@@ -2,7 +2,10 @@
 
 ## v3.0.2
 
-- Update typescript to version 5.4.5.
+- Updated: Outdated dependencies.
+- Added: Typedoc and integrate it with the project.
+- Added: Documentation in OperationType enum.
+- Added: docs to the project.
 
 ## v3.0.1
 

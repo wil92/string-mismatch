@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js",
+    "doc": "typedoc --options ./typedoc.json",
     "performance": "ts-node ./scripts/performance-test",
+    "pub": "npm run build && npm publish",
     "start": "node ./example/mismatch",
     "test": "jest",
-    "test:cov": "jest --coverage",
-    "pub": "npm run build && npm publish"
+    "test:cov": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
     "ts-jest": "29.1.2",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
+    "typedoc": "0.25.13",
     "typescript": "5.4.5",
     "webpack": "5.91.0",
     "webpack-cli": "5.1.4"

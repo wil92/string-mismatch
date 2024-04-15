@@ -1,0 +1,9 @@
+{
+  "entryPoints": [
+    "src/algorithms/algorithms.ts",
+    "src/algorithms/dice-coefficient.ts",
+    "src/algorithms/greedy.ts",
+    "src/algorithms/levenshtein.ts"
+  ],
+  "out": "docs"
+}
