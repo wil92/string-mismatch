@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.2
+
+- Update typescript to version 5.4.5.
+
 ## v3.0.1
 
 - Update README.md file.
