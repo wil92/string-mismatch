@@ -1,4 +1,5 @@
 const sm = require("../");
+
 const lev = sm.Levenshtein;
 const greedy = sm.Greedy;
 
@@ -6,11 +7,11 @@ function showResult(diffs) {
     return diffs.reduce(function (text, value) {
         switch (value.type) {
             case "del":
-                return text + "(-" + value.value + ")";
+                return `${text}(-${value.value})`;
             case "ins":
-                return text + "(+" + value.value + ")";
+                return `${text}(+${value.value})`;
             case "sub":
-                return text + "(-+" + value.value + ")";
+                return `${text}(-${value.previousValue}+${value.value})`;
             case "eql":
                 return text + value.value;
         }
