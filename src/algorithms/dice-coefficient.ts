@@ -8,9 +8,10 @@ import {Operation} from "../utils/operation";
  * The DiceCoefficient algorithm is a method for finding the similarity between two strings.
  * @see https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
  */
-export default class DiceCoefficient implements AlgorithmBase {
+export class DiceCoefficient implements AlgorithmBase {
 
-    constructor(private options: AlgorithmOptions = {ignoreSpaces: false, ignoreCase: true} as AlgorithmOptions) {}
+    constructor(private options: AlgorithmOptions = {ignoreSpaces: false, ignoreCase: true} as AlgorithmOptions) {
+    }
 
     /**
      * The method is not supported for this algorithm.
@@ -42,7 +43,7 @@ export default class DiceCoefficient implements AlgorithmBase {
      * @param endText The resulting string.
      * @returns a number between 0 and 1 that represents the similarity between two strings.
      */
-    diceCoefficientAlgorithm(startText: string, endText: string): number {
+    private diceCoefficientAlgorithm(startText: string, endText: string): number {
         const startSet = new Set();
         const endSet = new Set();
         let intersection = 0;
@@ -58,3 +59,5 @@ export default class DiceCoefficient implements AlgorithmBase {
         return 2 * intersection / (startSet.size + endSet.size);
     }
 }
+
+export default DiceCoefficient;

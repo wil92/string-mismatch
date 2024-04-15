@@ -5,6 +5,16 @@ import {OperationType} from "../utils/operation-type";
 import {compareChar} from "../utils/compare-char";
 import {Operation} from "../utils/operation";
 
+export interface GreedyAlgorithmOptions extends AlgorithmOptions {
+    /**
+     * The precision of the algorithm.
+     * This value is used to limit the number of rotations to find the matching substring.
+     * If this value is too high the algorithm will be n^2.
+     * @default 5
+     */
+    precision?: number;
+}
+
 interface SubOperations {
     fis: number;
     fil: number;
@@ -14,20 +24,16 @@ interface SubOperations {
     ins: string;
 }
 
-export interface GreedyAlgorithmOptions extends AlgorithmOptions {
-    precision?: number;
-}
-
 /**
  * Greedy algorithm
  */
-export default class Greedy implements AlgorithmBase {
+export class Greedy implements AlgorithmBase {
 
     constructor(public options: GreedyAlgorithmOptions = {
         ignoreSpaces: false,
         ignoreCase: true,
         precision: 5
-    } as AlgorithmOptions) {
+    } as GreedyAlgorithmOptions) {
     }
 
     /**
@@ -132,7 +138,7 @@ export default class Greedy implements AlgorithmBase {
      * @param rotation The rotation value.
      * @returns The first matching substring between the two strings.
      */
-    getMatchingSubstring(shorter: string, longer: string, rotation: number): SubOperations {
+    private getMatchingSubstring(shorter: string, longer: string, rotation: number): SubOperations {
         const ignoreCase = Boolean(this.options.ignoreCase);
         const shorterLength = shorter.length;
         const longerLength = longer.length;
@@ -157,3 +163,5 @@ export default class Greedy implements AlgorithmBase {
         return subResult;
     };
 }
+
+export default Greedy;

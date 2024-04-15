@@ -6,6 +6,10 @@ import {compareChar} from "../utils/compare-char";
 import {Operation} from "../utils/operation";
 
 export interface LevenshteinOptions extends AlgorithmOptions {
+    /**
+     * Enable or disable the substitution operation.
+     * @default true
+     */
     enableSubstitution: boolean;
 }
 
@@ -20,7 +24,7 @@ interface Position {
  * The allowed operations are insertion, deletion, and substitution.
  * @see https://en.wikipedia.org/wiki/Levenshtein_distance
  */
-export default class Levenshtein implements AlgorithmBase {
+export class Levenshtein implements AlgorithmBase {
     constructor(public options: LevenshteinOptions = {
         ignoreCase: true,
         ignoreSpaces: false,
@@ -34,7 +38,7 @@ export default class Levenshtein implements AlgorithmBase {
      * @param endText The resulting string.
      * @returns The list of operations to transform the start string into the end string.
      */
-    differences(startText: string, endText: string): Operation[] {
+    public differences(startText: string, endText: string): Operation[] {
         if (this.options.ignoreSpaces) {
             startText = eraseSpaces(startText);
             endText = eraseSpaces(endText);
@@ -75,7 +79,7 @@ export default class Levenshtein implements AlgorithmBase {
      * @param endText The resulting string.
      * @returns The Levenshtein distance between the two strings.
      */
-    distance(startText: string, endText: string): number {
+    public distance(startText: string, endText: string): number {
         if (this.options.ignoreSpaces) {
             startText = eraseSpaces(startText);
             endText = eraseSpaces(endText);
@@ -89,7 +93,7 @@ export default class Levenshtein implements AlgorithmBase {
      * @param subSolution The list of operations to compact.
      * @returns The compacted list of operations.
      */
-    compactSolution(subSolution: Operation[]): Operation[] {
+    private compactSolution(subSolution: Operation[]): Operation[] {
         const result: Operation[] = [];
         if (subSolution && subSolution.length > 0) {
             let sub = {...subSolution[0]};
@@ -111,7 +115,7 @@ export default class Levenshtein implements AlgorithmBase {
         return result;
     }
 
-    insertSubOperation(result: Operation[], sub: Operation): void {
+    private insertSubOperation(result: Operation[], sub: Operation): void {
         if (this.options.enableSubstitution || sub.type != OperationType.SUB_NAME) {
             result.push(sub);
         } else {
@@ -131,7 +135,7 @@ export default class Levenshtein implements AlgorithmBase {
      * @param calculatePath Whether to calculate the path or not.
      * @returns The matrix with the distances and the path.
      */
-    calculateMatrix(start: string, end: string, calculatePath: boolean = false): {
+    private calculateMatrix(start: string, end: string, calculatePath: boolean = false): {
         dp: number[][],
         path?: Position[][]
     } {
@@ -154,7 +158,7 @@ export default class Levenshtein implements AlgorithmBase {
      * @param dp The matrix to store the distances.
      * @param path The matrix to store the path.
      */
-    calculateLevenshtein(start: string, end: string, dp: number[][], path: Position[][] | undefined = undefined): void {
+    private calculateLevenshtein(start: string, end: string, dp: number[][], path: Position[][] | undefined = undefined): void {
         for (let i = 0; i <= start.length; i++) {
             dp[i][0] = i;
             if (path && i > 0) {
@@ -186,3 +190,5 @@ export default class Levenshtein implements AlgorithmBase {
         }
     }
 }
+
+export default Levenshtein;
