@@ -165,7 +165,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Guillermo González** - *Initial work* - [wil92](https://github.com/wil92)
 
-## [CHANGELOG](./https://github.com/wil92/string-mismatch/blob/master/CHANGELOG.md)
+## [CHANGELOG](https://github.com/wil92/string-mismatch/blob/master/CHANGELOG.md)
 
 ## License
 
