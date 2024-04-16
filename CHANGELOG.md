@@ -8,6 +8,7 @@
 - Added: docs to the project.
 - Updated: library documentation.
 - Updated: minor logic in example implementation.
+- Updated: minor changes in the README.md file.
 
 ## v3.0.1
 
